@@ -14,9 +14,8 @@ public class ConcreteListener implements Listener {
         if(event.getBlock().getType() == Material.DIAMOND_ORE && event.getPlayer().getStatistic(Statistic.MINE_BLOCK, Material.DIAMOND_ORE) == 0){
             Bukkit.broadcastMessage(
                     event.getPlayer().getDisplayName() + " a miné du diamand aux coordonnées " + new Coordinates(event.getBlock().getLocation()) + ".\n" +
-                    "Après vous faites ce que vous voulez mais on vous conseille de lui péter la gueule."
+                    "Après vous faites ce que vous voulez mais on vous conseille de lui péter la gueule. "
             );
-
         }
     }
 }
