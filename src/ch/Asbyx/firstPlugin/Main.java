@@ -1,6 +1,6 @@
-package fr.Asbyx.firstPlugin;
+package ch.Asbyx.firstPlugin;
 
-import fr.thechi2000asbyx.common.Coordinates;
+import ch.thechi2000asbyx.common.Coordinates;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
