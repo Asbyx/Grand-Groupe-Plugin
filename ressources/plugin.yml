@@ -1,0 +1,13 @@
+name : firstPlugin
+author: Asbyx
+version: 0.1
+description: Premier plugin !
+main: fr.Asbyx.firstPlugin.Main
+commands:
+  coucou:
+    description: Commande envoyant "Salut !" dans le chat
+    aliases: [cc, slt]
+
+  showCoordinates:
+    description: Send the player's coordinates in the global chat
+    aliases: [sc]
