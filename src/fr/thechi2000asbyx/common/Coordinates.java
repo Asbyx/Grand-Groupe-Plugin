@@ -1,4 +1,4 @@
-package fr.Asbyx.firstPlugin;
+package fr.thechi2000asbyx.common;
 
 import org.bukkit.Location;
 
