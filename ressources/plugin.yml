@@ -1,13 +1,19 @@
 name : firstPlugin
 author: Asbyx
-version: 0.1
+version: 0.2
 description: Premier plugin !
-main: fr.Asbyx.firstPlugin.Main
+main: ch.Asbyx.firstPlugin.Main
 commands:
   coucou:
     description: Send "Salut" in the global chat
     aliases: [cc, slt]
 
   showCoordinates:
-    description: Send the player's coordinates in the global chat
+    description: Send the player's coordinates in the global chat, or just to args[0] (name of the player)
     aliases: [sc]
+
+  startGame:
+    description: Send every player location every args[0] seconds
+
+  stopGame:
+    description: stop every scheduler
