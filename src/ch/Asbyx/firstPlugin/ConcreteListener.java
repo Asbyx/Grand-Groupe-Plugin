@@ -1,6 +1,6 @@
-package fr.Asbyx.firstPlugin;
+package ch.Asbyx.firstPlugin;
 
-import fr.thechi2000asbyx.common.Coordinates;
+import ch.thechi2000asbyx.common.Coordinates;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
