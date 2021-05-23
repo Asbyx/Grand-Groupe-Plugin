@@ -39,17 +39,22 @@ public class DistanceBoard
 
     public void addPlayer(Player player)
     {
-        distances.put(player, objective.getScore(player.getName()))
-                .setScore(Coordinates.distanceBetween(owner, player)); // TODO
+        if (player != owner)
+            distances.put(player, objective.getScore(player.getName()))
+                    .setScore(Coordinates.distanceBetween(owner, player)); // TODO
     }
 
     public void removePlayer(Player player)
     {
-        distances.get(player).setScore(-1);
+        if (player != owner)
+            distances.get(player).setScore(-1);
     }
 
     public void updatePlayer(Player player)
     {
-        distances.get(player).setScore(Coordinates.distanceBetween(owner, player));
+        if (player == owner)
+            distances.forEach((p, s) -> s.setScore(Coordinates.distanceBetween(p, player)));
+        else
+            distances.get(player).setScore(Coordinates.distanceBetween(owner, player));
     }
 }
