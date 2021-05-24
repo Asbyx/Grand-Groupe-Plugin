@@ -42,7 +42,6 @@ public class FKTeam
 	
 	public boolean isFlagDestroyed()
 	{
-		
 		if (flagLocation == null) return false;
 		
 		World world = Objects.requireNonNull(Bukkit.getWorld("world"));

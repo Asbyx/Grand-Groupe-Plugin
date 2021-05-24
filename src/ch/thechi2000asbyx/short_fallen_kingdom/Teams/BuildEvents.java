@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-public class BuildPermissions implements Listener
+public class BuildEvents implements Listener
 {
 	private static final List<Material> authorizedOOBMaterials = computeAuthorizedOOBMaterials();
 	

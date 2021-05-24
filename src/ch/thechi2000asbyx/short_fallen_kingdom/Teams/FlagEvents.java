@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;
 
-public class Flag implements Listener
+public class FlagEvents implements Listener
 {
 	@EventHandler
 	public void moveFlag(PlayerDropItemEvent event)
@@ -22,20 +22,22 @@ public class Flag implements Listener
 		
 		if (team == null) return;
 		
+		Bukkit.broadcastMessage("Team not null");
+		
 		if (item.getItemStack().getType() == Material.CLOCK)
 		{
+			Bukkit.broadcastMessage("Clock dropped");
+			
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("ShortFallenKingdom")),
 					() ->
 					{
-						if(!team.setFlagLocation(item.getLocation()))
+						if (!team.setFlagLocation(item.getLocation()))
 							player.sendMessage(ChatColor.RED + "Cannot place flag outside of the base");
 						
 						item.remove();
 						player.getInventory().addItem(new ItemStack(Material.CLOCK));
 					},
 					20);
-			
-			
 		}
 	}
 	
