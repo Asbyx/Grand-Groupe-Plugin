@@ -3,20 +3,26 @@ package ch.thechi2000asbyx.short_fallen_kingdom;
 import ch.thechi2000asbyx.common.Coordinates;
 import org.bukkit.*;
 import org.bukkit.block.Chest;
+import org.bukkit.entity.Creeper;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.*;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.sql.Date;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.Random;
 
-public class EventListener implements Listener {
+public class EventsManager implements Listener {
     private long lastMiddleChest, lastRandomChest;
     private final long timerOfMiddleChest, minTimeForRandomChest, maxTimeForRandomChest;
-    private int timerOfBloodNight, nightsPassed;
+    private final int timerOfBloodNight, radius;
+    private int nightsPassed;
+    private int totalDays = 1;
+    private boolean temp = false;
 
     /**
      * Construct the listener start the game !
@@ -26,17 +32,23 @@ public class EventListener implements Listener {
      * @param maxTimeForRandomChest: maximum time between 2 random chests
      * @param timerOfBloodNight:     number of nights between 2 blood nights
      */
-    EventListener(long timerOfMiddleChest, long minTimeForRandomChest, long maxTimeForRandomChest, int timerOfBloodNight) {
+    EventsManager(long timerOfMiddleChest, long minTimeForRandomChest, long maxTimeForRandomChest, int timerOfBloodNight, int radius) {
         lastMiddleChest = lastRandomChest = Date.from(Instant.now()).getTime();
         nightsPassed = 0;
+        this.radius = radius;
         this.timerOfMiddleChest = timerOfMiddleChest * 1000;
         this.minTimeForRandomChest = minTimeForRandomChest * 1000;
         this.maxTimeForRandomChest = maxTimeForRandomChest * 1000;
         this.timerOfBloodNight = timerOfBloodNight;
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "weather clear");
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "time set 1");
+
+        Bukkit.broadcastMessage("The game is on ! May the odds be with you !");
+        initMiddleChest();
     }
 
     @EventHandler
-    public void initEvent(PlayerMoveEvent event) {
+    public void manageEvents(PlayerMoveEvent event) {
         long now = Date.from(Instant.now()).getTime();
         if(event.getPlayer().getWorld() == Bukkit.getServer().getWorld("world")){
             World world = event.getPlayer().getWorld();
@@ -51,26 +63,62 @@ public class EventListener implements Listener {
                     spawnRandomChest(world);
                     lastRandomChest = now;
                 }
-                else if (new Random().nextInt((int) (1e6) + 1) == 1) {
+                else if (new Random().nextInt((int) (1e6)) == 1) {
                     spawnRandomChest(world);
                     lastRandomChest = now;
                 }
             }
 
-            if (world.getTime() == 0) nightsPassed++;
-
-            if (nightsPassed == timerOfBloodNight && world.getTime() == 18000) setBloodNight();
+            if (nightsPassed == timerOfBloodNight && world.getTime() >= 18000) {
+                setBloodNight(world);
+                nightsPassed = -1;
+            }
+            if (world.getTime() >= 0 && world.getTime() <= 50 && temp) {
+                temp = false;
+                Bukkit.broadcastMessage("[Server] Day " + ++totalDays + " !");
+                nightsPassed++;
+                if(nightsPassed == timerOfBloodNight) Bukkit.broadcastMessage("[Server] Next night will be bloody...");
+            }
+            if (world.getTime() >= 50 && world.getTime() <= 1000){
+                temp = true;
+            }
         }
     }
 
-    private void setBloodNight() {
+    public static void initMiddleChest(){
+        Bukkit.broadcastMessage("The middle chest is at : " + new Coordinates(Bukkit.getWorld("world").getSpawnLocation()));
+        if (Bukkit.getWorld("world").getSpawnLocation().getBlock().getType() != Material.CHEST)
+            Bukkit.getWorld("world").getSpawnLocation().getBlock().setType(Material.CHEST);
+    }
 
+    private void setBloodNight(World world) {
+        for (int i = 0; i < 200; i++) {
+            world.strikeLightning(world.getSpawnLocation().clone().add(new Random().nextInt(radius), 0, new Random().nextInt(radius)));
+            EntityType ent = mobs[new Random().nextInt(mobs.length)];
+            world.spawnEntity(world.getSpawnLocation().clone().add(new Random().nextInt(radius), 0, new Random().nextInt(radius)), ent);
+        }
+
+        world.getEntities().stream().filter(e -> e.getType() == EntityType.CREEPER).forEach(c -> {
+            ((Creeper) c).setPowered(true);
+        });
+
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "weather rain");
+    }
+
+    @EventHandler
+    public void onChargedCreeperDeath(EntityDeathEvent event){
+        if (event.getEntity().getType() == EntityType.CREEPER && ((Creeper) event.getEntity()).isPowered()){
+            event.getDrops().clear();
+            ItemStack tnt = new ItemStack(Material.TNT);
+            tnt.setAmount(new Random().nextInt(4) + 1);
+            event.getDrops().add(tnt);
+        }
     }
 
     private void spawnRandomChest(World world) {
-        Location middleCircle = world.getSpawnLocation().clone().add(new Vector(new Random().nextInt(100) - 50, 0, new Random().nextInt(100) - 50));
+        Location middleCircle = world.getSpawnLocation().clone().add(new Vector(new Random().nextInt(radius*2) - radius, 0, new Random().nextInt(radius*2) - radius));
         Location chestLocation = middleCircle.clone();
-        chestLocation.add(new Vector(new Random().nextInt(20), new Random().nextInt(20), 0));
+        chestLocation.add(new Vector(new Random().nextInt(20), 0, new Random().nextInt(20)));
 
         while(  world.getBlockAt(chestLocation.clone().add(0, 0, 0)).getType() != Material.AIR ||
                 world.getBlockAt(chestLocation.clone().add(0, -1, 0)).getType() == Material.AIR ){
@@ -134,5 +182,14 @@ public class EventListener implements Listener {
 
             Material.ARROW,
             Material.COOKED_BEEF
+    };
+    private final EntityType[] mobs = new EntityType[]{
+        EntityType.CREEPER,
+        EntityType.ZOMBIE,
+        EntityType.CAVE_SPIDER,
+        EntityType.SKELETON_HORSE,
+        EntityType.SKELETON,
+        EntityType.WITCH,
+        EntityType.SPIDER
     };
 }

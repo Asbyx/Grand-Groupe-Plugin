@@ -4,6 +4,15 @@ version: 0.1
 description: Fallen Kingdom Plugin
 api-version: 1.16
 main: ch.thechi2000asbyx.short_fallen_kingdom.Main
+commands:
+  startGame:
+    description: Start the game ! May the odds be with you
+
+  stopGame:
+    description: Stop the game.
+
+  middleChest:
+    description: Creates the middle chest and display its position to everyone
 
 #name : tomb
 #author: Asbyx
