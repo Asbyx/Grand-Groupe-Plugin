@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="DistancesScoreboard:jar">
-    <output-path>F:/Users/Ludovic/Desktop/Programmation/Java/Minecraft/plugins</output-path>
-    <root id="archive" name="DistancesScoreboard.jar">
-      <element id="module-output" name="PluginsMinecraftDeveloppement" />
-    </root>
-  </artifact>
-</component>

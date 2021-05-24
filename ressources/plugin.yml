@@ -1,9 +1,16 @@
-name : tomb
-author: Asbyx
+name : short_fallen_kingdow
+authors: [Asbyx, TheChi2000]
 version: 0.1
-description: Put a tomb at the death location of the player
+description: Fallen Kingdom Plugin
 api-version: 1.16
-main: ch.Asbyx.tomb.Main
+main: ch.thechi2000asbyx.short_fallen_kingdom.Main
+
+#name : tomb
+#author: Asbyx
+#version: 0.1
+#description: Put a tomb at the death location of the player
+#api-version: 1.16
+#main: ch.Asbyx.tomb.Main
 
 
 #name : firstPlugin
