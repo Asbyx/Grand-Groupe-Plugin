@@ -1,6 +1,7 @@
 package ch.thechi2000asbyx.short_fallen_kingdom;
 
-import org.bukkit.ChatColor;
+import ch.thechi2000asbyx.short_fallen_kingdom.Teams.*;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -8,6 +9,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
+        Bukkit.getPluginManager().registerEvents(new Flag(), this);
+        Bukkit.getPluginManager().registerEvents(new BuildPermissions(), this);
+        getCommand("team").setExecutor(new FKTeamCommands());
     }
 
     @Override
