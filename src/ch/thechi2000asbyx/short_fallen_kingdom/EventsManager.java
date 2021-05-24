@@ -151,8 +151,8 @@ public class EventsManager implements Listener {
             int index = new Random().nextInt(all.length);
             ItemStack item = new ItemStack(all[index]);
             item.setAmount(
-                    index <= notMuch ? new Random().nextInt(3) + 1 :
-                            index <= normal ? new Random().nextInt(15) + 1 : new Random().nextInt(31) + 1
+                    index <= notMuch ? new Random().nextInt(2) + 1 :
+                            index <= normal ? new Random().nextInt(5) + 1 : new Random().nextInt(10) + 1
             );
             content[i] = item;
         }
