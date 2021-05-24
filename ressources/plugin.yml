@@ -1,4 +1,4 @@
-name : short_fallen_kingdow
+name : short_fallen_kingdom
 authors: [Asbyx, TheChi2000]
 version: 0.1
 description: Fallen Kingdom Plugin
@@ -14,9 +14,10 @@ commands:
   middleChest:
     description: Creates the middle chest and display its position to everyone
 
-  team:
+  fkteam:
     description: Execute action on teams
     usage: /<command> <action> <args>
+#[create|addPlayer|setBaseLocation|getBaseLocation|teams|players]
 
 
 

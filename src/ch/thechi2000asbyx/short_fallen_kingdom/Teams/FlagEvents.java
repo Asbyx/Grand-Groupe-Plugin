@@ -1,5 +1,6 @@
 package ch.thechi2000asbyx.short_fallen_kingdom.Teams;
 
+import ch.thechi2000asbyx.short_fallen_kingdom.Main;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
@@ -28,7 +29,7 @@ public class FlagEvents implements Listener
 		{
 			Bukkit.broadcastMessage("Clock dropped");
 			
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("ShortFallenKingdom")),
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Objects.requireNonNull(Bukkit.getPluginManager().getPlugin(Main.NAME)),
 					() ->
 					{
 						if (!team.setFlagLocation(item.getLocation()))
@@ -61,7 +62,7 @@ public class FlagEvents implements Listener
 	
 	private void checkBreakFlag()
 	{
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("ShortFallenKingdom")),
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Objects.requireNonNull(Bukkit.getPluginManager().getPlugin(Main.NAME)),
 				() ->
 						FKTeam.allTeams.stream().filter(t -> !t.isEliminated() && t.isFlagDestroyed()).forEach(t ->
 						{

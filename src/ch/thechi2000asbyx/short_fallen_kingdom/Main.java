@@ -7,12 +7,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin
 {
+	public static final String NAME = "short_fallen_kingdom";
+	
 	@Override
 	public void onEnable()
 	{
 		Bukkit.getPluginManager().registerEvents(new FlagEvents(), this);
 		Bukkit.getPluginManager().registerEvents(new BuildEvents(), this);
-		getCommand("team").setExecutor(new FKTeamCommands());
+		getCommand("fkteam").setExecutor(new FKTeamCommands());
 	}
 	
 	@Override

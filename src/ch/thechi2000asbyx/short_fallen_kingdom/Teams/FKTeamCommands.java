@@ -107,6 +107,35 @@ public class FKTeamCommands implements CommandExecutor
 					commandSender.sendMessage(String.format("The base of %s is located at %s", team.getName(), new Coordinates(team.getBaseCenter()).toString()));
 				}
 			}
+			
+			case "teams":
+			{
+				if (strings.length != 1) return false;
+				
+				StringBuilder sb = new StringBuilder().append("[");
+				FKTeam.allTeams.forEach(t -> sb.append(String.format("'%s'", t.getName())));
+				commandSender.sendMessage(sb.append("]").toString());
+				
+				return true;
+			}
+			
+			case "players":
+			{
+				if (strings.length != 2) return false;
+				
+				FKTeam team = FKTeam.getTeam(strings[1]);
+				if (team == null)
+				{
+					commandSender.sendMessage(ChatColor.RED + "Unknown team");
+					return true;
+				}
+				
+				StringBuilder sb = new StringBuilder().append("[");
+				Bukkit.getOnlinePlayers().stream().filter(team::contains).forEach(t -> sb.append(String.format("'%s'", t.getName())));
+				commandSender.sendMessage(sb.append("]").toString());
+				
+				return true;
+			}
 		}
 		
 		return false;
