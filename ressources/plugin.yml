@@ -14,6 +14,12 @@ commands:
   middleChest:
     description: Creates the middle chest and display its position to everyone
 
+  team:
+    description: Execute action on teams
+    usage: /<command> <action> <args>
+
+
+
 #name : tomb
 #author: Asbyx
 #version: 0.1

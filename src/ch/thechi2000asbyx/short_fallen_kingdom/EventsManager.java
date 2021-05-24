@@ -44,6 +44,7 @@ public class EventsManager implements Listener {
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "time set 1");
 
         Bukkit.broadcastMessage("The game is on ! May the odds be with you !");
+        Bukkit.getWorld("world").setPVP(false);
         initMiddleChest();
     }
 
@@ -78,6 +79,11 @@ public class EventsManager implements Listener {
                 Bukkit.broadcastMessage("[Server] Day " + ++totalDays + " !");
                 nightsPassed++;
                 if(nightsPassed == timerOfBloodNight) Bukkit.broadcastMessage("[Server] Next night will be bloody...");
+
+                if (totalDays == 3) {
+                    world.setPVP(true);
+                    Bukkit.broadcastMessage("[Server] PvP is now allowed !");
+                }
             }
             if (world.getTime() >= 50 && world.getTime() <= 1000){
                 temp = true;
@@ -86,13 +92,13 @@ public class EventsManager implements Listener {
     }
 
     public static void initMiddleChest(){
-        Bukkit.broadcastMessage("The middle chest is at : " + new Coordinates(Bukkit.getWorld("world").getSpawnLocation()));
+        Bukkit.broadcastMessage("[Server] The middle chest is at : " + new Coordinates(Bukkit.getWorld("world").getSpawnLocation()));
         if (Bukkit.getWorld("world").getSpawnLocation().getBlock().getType() != Material.CHEST)
             Bukkit.getWorld("world").getSpawnLocation().getBlock().setType(Material.CHEST);
     }
 
     private void setBloodNight(World world) {
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < radius*2; i++) {
             world.strikeLightning(world.getSpawnLocation().clone().add(new Random().nextInt(radius), 0, new Random().nextInt(radius)));
             EntityType ent = mobs[new Random().nextInt(mobs.length)];
             world.spawnEntity(world.getSpawnLocation().clone().add(new Random().nextInt(radius), 0, new Random().nextInt(radius)), ent);
