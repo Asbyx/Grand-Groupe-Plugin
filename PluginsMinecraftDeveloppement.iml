@@ -15,19 +15,8 @@
       <sourceFolder url="file://$MODULE_DIR$/ressources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="adopt-openj9-1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://D:/perso/plugins/spigot-1.16.5.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://D:/perso/plugins/spigot-1.16.5.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="spigot-1.16.5" level="application" />
+    <orderEntry type="library" exported="" name="spigot-1.16.5" level="application" />
   </component>
 </module>
