@@ -1,12 +1,13 @@
 package ch.Asbyx.firstPlugin;
 
 import ch.thechi2000asbyx.common.Coordinates;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Statistic;
+import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.util.Vector;
 
 public class ConcreteListener implements Listener {
     @EventHandler
@@ -17,5 +18,21 @@ public class ConcreteListener implements Listener {
                     "Après vous faites ce que vous voulez mais on vous conseille de lui péter la gueule. "
             );
         }
+    }
+
+    @EventHandler
+    public void onTrap(BlockPlaceEvent event){
+        if (event.getBlock().getType() == Material.WHITE_WOOL){
+            World world = Bukkit.getWorld("world");
+
+            if (    world.getBlockAt(event.getBlock().getLocation().add(new Vector(0, -1, 0))).getType() == Material.PINK_WOOL &&
+                    world.getBlockAt(event.getBlock().getLocation().add(new Vector(0, -2, 0))).getType() == Material.PINK_WOOL &&
+                    world.getBlockAt(event.getBlock().getLocation().add(new Vector(1, -3, 0))).getType() == Material.PINK_WOOL &&
+                    world.getBlockAt(event.getBlock().getLocation().add(new Vector(-1, -3, 0))).getType() == Material.PINK_WOOL
+            ){
+                world.createExplosion(event.getBlock().getLocation().add(0, -4, 0), 20F);
+            }
+        }
+
     }
 }
