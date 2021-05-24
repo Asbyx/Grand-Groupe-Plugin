@@ -2,11 +2,10 @@ package ch.Asbyx.firstPlugin;
 
 import ch.thechi2000asbyx.common.Coordinates;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.util.Vector;
 
 public class ConcreteListener implements Listener {
@@ -21,18 +20,17 @@ public class ConcreteListener implements Listener {
     }
 
     @EventHandler
-    public void onTrap(BlockPlaceEvent event){
-        if (event.getBlock().getType() == Material.WHITE_WOOL){
-            World world = Bukkit.getWorld("world");
+    public void buildTotem(PlayerDropItemEvent event){
+        if (event.getItemDrop().getItemStack().getType() == Material.DIAMOND_HOE) {
+            event.getItemDrop().remove();
+            World world = event.getPlayer().getWorld();
+            world.getBlockAt(event.getPlayer().getLocation().add(new Vector(1, 0, 0))).setType(Material.OAK_FENCE);
+            world.getBlockAt(event.getPlayer().getLocation().add(new Vector(1, 1, 0))).setType(Material.OAK_FENCE);
+            world.getBlockAt(event.getPlayer().getLocation().add(new Vector(1, 2, 0))).setType(Material.OAK_FENCE);
+            world.getBlockAt(event.getPlayer().getLocation().add(new Vector(1, 2, 1))).setType(Material.DIAMOND_BLOCK);
+            world.getBlockAt(event.getPlayer().getLocation().add(new Vector(1, 2, -1))).setType(Material.DIAMOND_BLOCK);
 
-            if (    world.getBlockAt(event.getBlock().getLocation().add(new Vector(0, -1, 0))).getType() == Material.PINK_WOOL &&
-                    world.getBlockAt(event.getBlock().getLocation().add(new Vector(0, -2, 0))).getType() == Material.PINK_WOOL &&
-                    world.getBlockAt(event.getBlock().getLocation().add(new Vector(1, -3, 0))).getType() == Material.PINK_WOOL &&
-                    world.getBlockAt(event.getBlock().getLocation().add(new Vector(-1, -3, 0))).getType() == Material.PINK_WOOL
-            ){
-                world.createExplosion(event.getBlock().getLocation().add(0, -4, 0), 20F);
-            }
+            Bukkit.broadcastMessage(event.getPlayer().getDisplayName() + " est maintenant riche !");
         }
-
     }
 }

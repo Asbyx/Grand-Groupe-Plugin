@@ -60,7 +60,6 @@ public class Main extends JavaPlugin {
                 getServer().broadcastMessage("Fin de la partie !");
                 getServer().getScheduler().cancelTasks(this);
                 break;
-
         }
         return true;
     }
