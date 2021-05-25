@@ -31,7 +31,7 @@ public class EventsManager implements Listener
 	public EventsManager(long timerOfMiddleChest, long minTimeForRandomChest, long maxTimeForRandomChest, int timerOfBloodNight, int radius, int pvpAllowed)
 	{
 		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
-		this.lastMiddleChest       = this.lastRandomChest =  world.getGameTime();
+		this.lastMiddleChest       = this.lastRandomChest = world.getGameTime();
 		this.radius                = radius;
 		this.timerOfMiddleChest    = timerOfMiddleChest * TICK;
 		this.minTimeForRandomChest = minTimeForRandomChest * TICK;
@@ -46,7 +46,7 @@ public class EventsManager implements Listener
 		world.setPVP(false);
 		initMiddleChest(world);
 	}
-
+	
 	/**
 	 * Default parameters to start the game
 	 */
@@ -54,10 +54,11 @@ public class EventsManager implements Listener
 	{
 		this(30, 30, 60, 2, 100, 2);
 	}
-
-
+	
+	
 	/**
 	 * Update the game
+	 *
 	 * @param now: current game time (world.getGameTime)
 	 */
 	public void update(long now)
@@ -77,14 +78,14 @@ public class EventsManager implements Listener
 			nextRandomChest = getNextRandomChest(now);
 		}
 		
-		if (totalDays % timerOfBloodNight == 0 && world.getTime() == 18000)
+		if (totalDays % timerOfBloodNight == 1 && world.getTime() == 18000)
 		{
 			setBloodNight(world);
 		}
 		if (world.getTime() == 0)
 		{
 			Main.broadcast("Day " + ++totalDays + " !");
-			if (totalDays % timerOfBloodNight == 0) Main.broadcast("Next night will be bloody...");
+			if (totalDays % timerOfBloodNight == 1) Main.broadcast("Next night will be bloody...");
 			
 			if (totalDays == pvpAllowed)
 			{

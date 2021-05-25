@@ -7,10 +7,11 @@ import ch.thechi2000asbyx.short_fallen_kingdom.Teams.FKTeam;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
+import org.bukkit.event.*;
+import org.bukkit.event.player.*;
 import org.bukkit.scoreboard.*;
 
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class FKScoreboard implements Listener
@@ -19,57 +20,92 @@ public class FKScoreboard implements Listener
 	
 	private final FKTeam ownerTeam;
 	private final Player owner;
-	private final EventsManager eventsManager;
+	private EventsManager eventsManager;
 	private final Objective objective;
+	private final Scoreboard scoreboard;
 	private int id = -1;
+	
+	private final List<String> scores;
 	
 	public FKScoreboard(Player owner, EventsManager eventsManager)
 	{
 		this.owner         = owner;
 		this.eventsManager = eventsManager;
+		scores             = new ArrayList<>();
 		
-		Scoreboard scoreboard = Objects.requireNonNull(Bukkit.getScoreboardManager()).getNewScoreboard();
-		objective = scoreboard.registerNewObjective("side_bar_" + count, "dummy", "Fallen Kingdom - CTF");
-		ownerTeam = FKTeam.getTeam(owner);
+		scoreboard = Objects.requireNonNull(Bukkit.getScoreboardManager()).getNewScoreboard();
+		objective  = scoreboard.registerNewObjective("side_bar_" + count, "dummy", "Fallen Kingdom - CTF");
+		ownerTeam  = FKTeam.getTeam(owner);
 		++count;
 		
 		objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 		owner.setScoreboard(scoreboard);
+		
+		Bukkit.getPluginManager().registerEvents(this, Main.PLUGIN);
 		
 		start();
 	}
 	
 	public void update()
 	{
-		Objects.requireNonNull(objective.getScoreboard()).resetScores(objective.getName());
+		scores.forEach(scoreboard::resetScores);
+		scores.clear();
 		
-		AtomicInteger i = new AtomicInteger();
-		
-		objective.getScore("Kills: " + owner.getStatistic(Statistic.PLAYER_KILLS)).setScore(i.get());
+		scores.add("Kills: " + owner.getStatistic(Statistic.PLAYER_KILLS));
 		
 		if (ownerTeam != null)
 		{
-			ownerTeam.stream().filter(p -> p != owner).forEach(p -> objective.getScore(p.getName() + ": ").setScore(i.getAndIncrement()));
-			objective.getScore("Distance to base: " + ownerTeam.getBaseCenter().distanceTo(new Coordinates(owner.getLocation()))).setScore(i.getAndIncrement());
+			if (ownerTeam.hasOnlinePlayer())
+				ownerTeam.stream()
+						 .filter(p -> p != owner)
+						 .forEach(p -> scores.add(p.getName() + ": "));
+			scores.add("Distance to base: " + ownerTeam.getBaseCenter().distanceTo(new Coordinates(owner.getLocation())));
 		}
 		
-		objective.getScore(ChatColor.DARK_GREEN + "-=-=-=-=-=-=-=-=-").setScore(i.getAndIncrement());
-		objective.getScore("Random chest: " + eventsManager.getMaxTimerForRandomChest()).setScore(i.getAndIncrement());
-		objective.getScore("Blood night: " + eventsManager.getTimerOfBloodNight()).setScore(i.getAndIncrement());
-		objective.getScore("Middle chest: " + eventsManager.getTimerOfMiddleChest()).setScore(i.getAndIncrement());
-		objective.getScore("Pvp " + (eventsManager.getPvpAllowed() ? "enabled" : "disabled")).setScore(i.getAndIncrement());
-		objective.getScore("Events").setScore(i.getAndIncrement());
-		objective.getScore(ChatColor.DARK_GREEN + "=-=-=-=-=-=-=-=-=").setScore(i.getAndIncrement());
-		objective.getScore("Day: " + eventsManager.getTotalDays()).setScore(i.getAndIncrement());
+		scores.add(ChatColor.DARK_GREEN + "-=-=-=-=-=-=-=-=-");
+		scores.add("Random chest: " + ticksToMinSec(eventsManager.getMaxTimerForRandomChest()));
+		scores.add("Blood night: " + eventsManager.getTimerOfBloodNight());
+		scores.add("Middle chest: " + ticksToMinSec(eventsManager.getTimerOfMiddleChest()));
+		scores.add("Pvp " + (eventsManager.getPvpAllowed() ? "enabled" : "disabled"));
+		scores.add("Events");
+		scores.add(ChatColor.DARK_GREEN + "=-=-=-=-=-=-=-=-=");
+		scores.add("Day: " + eventsManager.getTotalDays());
+		
+		AtomicInteger i = new AtomicInteger();
+		scores.forEach(s -> objective.getScore(s).setScore(i.getAndIncrement()));
 	}
 	
 	private void start()
 	{
-		id = Main.SCHEDULER.scheduleSyncDelayedTask(Main.PLUGIN, this::update, 20);
+		id = Main.SCHEDULER.scheduleSyncRepeatingTask(Main.PLUGIN, this::update, 0, 5);
 	}
 	
 	public void stop()
 	{
 		Main.SCHEDULER.cancelTask(id);
+		eventsManager = null;
+	}
+	
+	@EventHandler
+	public void stop(PlayerQuitEvent event)
+	{
+		if (event.getPlayer() == owner) stop();
+	}
+	
+	@EventHandler
+	public void start(PlayerJoinEvent event)
+	{
+		if (eventsManager != null && event.getPlayer() == owner) start();
+	}
+	
+	private String ticksToMinSec(long ticks)
+	{
+		long secs = (ticks / 20) % 60,
+				min = ticks / 1200;
+		
+		if (min == 0)
+			return String.format("%ds", secs);
+		else
+			return String.format("%dm %ds", secs, min);
 	}
 }

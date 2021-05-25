@@ -170,6 +170,10 @@ public class FKTeam
 	{
 		return players.contains(player.getUniqueId());
 	}
+	public boolean hasOnlinePlayer()
+	{
+		return Bukkit.getOnlinePlayers().stream().anyMatch(p -> players.contains(p.getUniqueId()));
+	}
 	public Stream<Player> stream()
 	{
 		return players.stream().map(uuid -> Bukkit.getOnlinePlayers()
