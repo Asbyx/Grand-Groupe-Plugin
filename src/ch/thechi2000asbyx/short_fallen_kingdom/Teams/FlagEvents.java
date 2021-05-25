@@ -23,12 +23,8 @@ public class FlagEvents implements Listener
 		
 		if (team == null) return;
 		
-		Bukkit.broadcastMessage("Team not null");
-		
 		if (item.getItemStack().getType() == Material.CLOCK)
 		{
-			Bukkit.broadcastMessage("Clock dropped");
-			
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Objects.requireNonNull(Bukkit.getPluginManager().getPlugin(Main.NAME)),
 					() ->
 					{
