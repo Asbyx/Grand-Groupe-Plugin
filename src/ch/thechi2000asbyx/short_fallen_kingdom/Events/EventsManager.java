@@ -93,15 +93,21 @@ public class EventsManager implements Listener
 			}
 		}
 	}
-	
-	
+
+	/**
+	 * Spawn the chest at the world spawn location and display his position to everyone
+	 * @param world: overworld
+	 */
 	public static void initMiddleChest(World world)
 	{
 		Main.broadcast("The middle chest is at : " + new Coordinates(world.getSpawnLocation()));
 		if (world.getSpawnLocation().getBlock().getType() != Material.CHEST)
 			world.getSpawnLocation().getBlock().setType(Material.CHEST);
 	}
-	
+
+	/**
+	 * @return the current parameters used in a String
+	 */
 	public String getGameParameters()
 	{
 		return String.format("The middle chest is filled every %s ticks\n" +

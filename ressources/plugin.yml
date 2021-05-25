@@ -1,6 +1,6 @@
 name : short_fallen_kingdom
 authors: [Asbyx, TheChi2000]
-version: 0.1
+version: 0.2
 description: Fallen Kingdom Plugin
 api-version: 1.16
 main: ch.thechi2000asbyx.short_fallen_kingdom.Main
