@@ -1,5 +1,6 @@
 package ch.thechi2000asbyx.short_fallen_kingdom.Events;
 
+import ch.thechi2000asbyx.common.AbstractListener;
 import ch.thechi2000asbyx.common.Coordinates;
 import ch.thechi2000asbyx.short_fallen_kingdom.Main;
 import org.bukkit.*;
@@ -12,7 +13,7 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public class EventsManager implements Listener {
+public class EventsManager extends AbstractListener {
 	public static final int TICK = 20;
 	private long lastMiddleChest, lastRandomChest, nextRandomChest;
 	private final long timerOfMiddleChest, minTimeForRandomChest, maxTimeForRandomChest;
@@ -43,8 +44,9 @@ public class EventsManager implements Listener {
 		Main.broadcast("The game is on ! May the odds be with you !");
 		world.setPVP(false);
 		initMiddleChest(world);
-	}
 
+		enable();
+	}
 	/**
 	 * Default parameters to start the game
 	 */
@@ -59,6 +61,8 @@ public class EventsManager implements Listener {
 	 * @param now: current game time (world.getGameTime)
 	 */
 	public void update(long now) {
+		if (isDisabled()) return;
+
 		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
 
 		if ((now - lastMiddleChest) >= timerOfMiddleChest) {
@@ -85,7 +89,6 @@ public class EventsManager implements Listener {
 			}
 		}
 	}
-
 	/**
 	 * Spawn the chest at the world spawn location and display his position to everyone
 	 *
@@ -96,7 +99,6 @@ public class EventsManager implements Listener {
 		if (world.getSpawnLocation().getBlock().getType() != Material.CHEST)
 			world.getSpawnLocation().getBlock().setType(Material.CHEST);
 	}
-
 	/**
 	 * @return the current parameters used in a String
 	 */
@@ -109,9 +111,10 @@ public class EventsManager implements Listener {
 				timerOfMiddleChest, minTimeForRandomChest, maxTimeForRandomChest, timerOfBloodNight, radius, pvpAllowed
 		);
 	}
-
 	@EventHandler
 	public void onChargedCreeperDeath(EntityDeathEvent event) {
+		if (isDisabled()) return;
+
 		if (event.getEntity().getType() == EntityType.CREEPER && ((Creeper) event.getEntity()).isPowered()) {
 			event.getDrops().clear();
 			ItemStack tnt = new ItemStack(Material.TNT);

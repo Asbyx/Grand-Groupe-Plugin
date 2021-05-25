@@ -1,5 +1,6 @@
 package ch.thechi2000asbyx.common;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -11,25 +12,39 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 
 import java.util.Objects;
 
-public class TntBow extends abstractListener {
-    @EventHandler
-    public void onTntProjectileLaunch(ProjectileLaunchEvent event){
-        if(event.getEntity().getType() == EntityType.ARROW && event.getEntity().getShooter() instanceof Player){
-            Player player = (Player) event.getEntity().getShooter();
-            Arrow arrow = (Arrow) event.getEntity();
+public class TntBow extends AbstractListener {
+	private float power = 2F;
 
-            if(player.getInventory().getItemInOffHand().getType() == Material.TNT){
-                arrow.setCustomName("tntArrow");
-                arrow.setColor(Color.RED);
-            }
-        }
-    }
+	@EventHandler
+	public void onTntProjectileLaunch(ProjectileLaunchEvent event) {
+		if (isDisabled()) {
+			Bukkit.broadcastMessage("aie aie aie");
+			return;
+		}
 
-    @EventHandler
-    public void onTntProjectileArrive(ProjectileHitEvent event){
-        if(Objects.equals(event.getEntity().getCustomName(), "tntArrow")) {
-            event.getEntity().getWorld().createExplosion(event.getEntity().getLocation(), 2F);
-            event.getEntity().remove();
-        }
-    }
+		if (event.getEntity().getType() == EntityType.ARROW && event.getEntity().getShooter() instanceof Player) {
+			Player player = (Player) event.getEntity().getShooter();
+			Arrow arrow = (Arrow) event.getEntity();
+
+			if (player.getInventory().getItemInOffHand().getType() == Material.TNT) {
+				//fixme consume the tnt
+				arrow.setCustomName("tntArrow");
+				arrow.setColor(Color.RED);
+			}
+		}
+	}
+
+	@EventHandler
+	public void onTntProjectileArrive(ProjectileHitEvent event) {
+		if (isDisabled()) return;
+
+		if (Objects.equals(event.getEntity().getCustomName(), "tntArrow")) {
+			event.getEntity().getWorld().createExplosion(event.getEntity().getLocation(), power);
+			event.getEntity().remove();
+		}
+	}
+
+	public void setPower(float value){
+		power = value;
+	}
 }

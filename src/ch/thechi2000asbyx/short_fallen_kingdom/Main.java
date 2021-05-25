@@ -1,18 +1,13 @@
 package ch.thechi2000asbyx.short_fallen_kingdom;
 
-import ch.Asbyx.tomb.DeathListener;
-import ch.thechi2000asbyx.common.TntBow;
 import ch.thechi2000asbyx.short_fallen_kingdom.Events.EventsCommands;
 import ch.thechi2000asbyx.short_fallen_kingdom.Scoreboards.FKScoreboard;
 import ch.thechi2000asbyx.short_fallen_kingdom.Teams.*;
 import org.bukkit.*;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import java.util.Locale;
 import java.util.Objects;
 
 public class Main extends JavaPlugin implements Listener {
@@ -32,6 +27,7 @@ public class Main extends JavaPlugin implements Listener {
 
         Objects.requireNonNull(getCommand("fkteam")).setExecutor(new FKTeamCommands());
         Objects.requireNonNull(getCommand("game")).setExecutor(new EventsCommands());
+        Objects.requireNonNull(getCommand("rules")).setExecutor(new rulesCommands());
 
         FKTeam.loadTeamsFromConfig();
     }

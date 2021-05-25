@@ -1,5 +1,6 @@
 package ch.Asbyx.tomb;
 
+import ch.thechi2000asbyx.common.DeathListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
