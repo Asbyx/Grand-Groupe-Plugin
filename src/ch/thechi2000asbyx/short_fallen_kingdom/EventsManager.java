@@ -47,7 +47,7 @@ public class EventsManager implements Listener {
     }
 
     EventsManager(){
-        this(30, 30, 60, 1, 100, 2);
+        this(30, 30, 60, 2, 100, 2);
     }
 
     public void update(long now) {
@@ -81,6 +81,16 @@ public class EventsManager implements Listener {
         Main.broadcast("The middle chest is at : " + new Coordinates(world.getSpawnLocation()));
         if (world.getSpawnLocation().getBlock().getType() != Material.CHEST)
             world.getSpawnLocation().getBlock().setType(Material.CHEST);
+    }
+
+    public String getGameParameters(){
+        return String.format("The middle chest is filled every %s ticks\n" +
+                "The random chest spawn in range of %s-%s ticks\n" +
+                "There is a blood night every %s nights\n" +
+                "The radius for the events is %s blocs\n" +
+                "PvP is allowed at day %s",
+                timerOfMiddleChest, minTimeForRandomChest, maxTimeForRandomChest, timerOfBloodNight, radius, pvpAllowed
+                );
     }
 
     @EventHandler

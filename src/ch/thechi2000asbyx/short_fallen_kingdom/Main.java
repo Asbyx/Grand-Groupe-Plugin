@@ -10,6 +10,7 @@ public class Main extends JavaPlugin
 {
 	public static JavaPlugin PLUGIN;
 	public static BukkitScheduler SCHEDULER;
+	private EventsManager eventsManager;
 	private int eventsId;
 
 	@Override
@@ -18,6 +19,7 @@ public class Main extends JavaPlugin
 		PLUGIN = this;
 		SCHEDULER = getServer().getScheduler();
 		eventsId = -1;
+		eventsManager = null;
 
 		Bukkit.getPluginManager().registerEvents(new FlagEvents(), this);
 		Bukkit.getPluginManager().registerEvents(new BuildEvents(), this);
@@ -35,6 +37,7 @@ public class Main extends JavaPlugin
 		switch (command.getName())
 		{
 			case "startGame":
+				if(eventsId != -1) break;
 				try
 				{
 					if (args.length != 6 && args.length != 1) throw new NumberFormatException();
@@ -43,10 +46,9 @@ public class Main extends JavaPlugin
 						if(!s.equals("default")) Integer.parseInt(s);
 					}
 
-					EventsManager events;
-					if(args[0].equals("default")) events = new EventsManager();
-					else events = new EventsManager(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]));
-					eventsId = SCHEDULER.runTaskTimer(PLUGIN, () -> events.update(getServer().getWorld("world").getGameTime()), 0, 1).getTaskId();
+					if(args[0].equals("default")) eventsManager = new EventsManager();
+					else eventsManager = new EventsManager(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]));
+					eventsId = SCHEDULER.runTaskTimer(PLUGIN, () -> eventsManager.update(getServer().getWorld("world").getGameTime()), 0, 1).getTaskId();
 				}
 				catch (NumberFormatException e)
 				{
@@ -59,14 +61,21 @@ public class Main extends JavaPlugin
 							"<day where PvP is allowed>" + ChatColor.WHITE);
 				}
 				break;
-			
+
+			case "getGameParameters":
+				if(eventsManager == null)  sender.sendMessage(ChatColor.RED + "The game hasn't start yet !");
+				else sender.sendMessage(eventsManager.getGameParameters());
+				break;
+
 			case "stopGame":
 				if(eventsId == -1) {
 					sender.sendMessage(ChatColor.RED + "The game hasn't start yet !");
 					break;
 				}
-				broadcast("The game has been stopped !");
 				SCHEDULER.cancelTask(eventsId);
+				eventsId = -1;
+				eventsManager = null;
+				broadcast("The game is over !");
 				break;
 			
 			case "middleChest":

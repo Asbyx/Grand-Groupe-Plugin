@@ -9,6 +9,9 @@ commands:
     description: Start the game ! May the odds be with you
     permission: op
 
+  getGameParameters:
+    description: Return all current game parameters
+
   stopGame:
     description: Stop the game.
     permission: op
