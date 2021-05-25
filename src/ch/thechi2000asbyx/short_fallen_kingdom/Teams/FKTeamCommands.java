@@ -25,13 +25,13 @@ public class FKTeamCommands implements CommandExecutor
 				return terminate(commandSender, strings);
 			case "revive":
 				return revive(commandSender, strings);
-			case "addPlayer":
+			case "addplayer":
 				return addPlayer(commandSender, strings);
-			case "removePlayer":
+			case "removeplayer":
 				return removePlayer(commandSender, strings);
-			case "setBaseLocation":
+			case "setbaselocation":
 				return setBaseLocation(commandSender, strings);
-			case "getBaseLocation":
+			case "getbaselocation":
 				return getBaseLocation(commandSender, strings);
 			case "teams":
 				return teams(commandSender, strings);
@@ -279,7 +279,7 @@ public class FKTeamCommands implements CommandExecutor
 		return true;
 	}
 	
-	private enum HelpStrings
+	protected enum HelpStrings
 	{
 		HELP(false, "help", new ArgumentsDescription[]
 				{
@@ -304,7 +304,7 @@ public class FKTeamCommands implements CommandExecutor
 				}),
 		REMOVE_PLAYER(true, "removePlayer", new ArgumentsDescription[]
 				{
-						new ArgumentsDescription("Remove a player from his team", 1, new String[]{ "The name of the team" })
+						new ArgumentsDescription("Remove a player from his team", 1, new String[]{ "The name of the player" })
 				}),
 		SET_BASE_LOCATION(true, "setBaseLocation", new ArgumentsDescription[]
 				{
