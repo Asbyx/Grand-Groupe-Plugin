@@ -27,6 +27,12 @@ public class FKScoreboard implements Listener
 	
 	private final List<String> scores;
 	
+	/**
+	 * Create a Scoreboard for a given Player, using the values from the EventsManager
+	 *
+	 * @param owner         the Player who owns the scoreboard (i.e. it will be displayed on his screen and use his data)
+	 * @param eventsManager the EventsManager containing the data to be displayed
+	 */
 	public FKScoreboard(Player owner, EventsManager eventsManager)
 	{
 		this.owner         = owner;
@@ -42,11 +48,27 @@ public class FKScoreboard implements Listener
 		owner.setScoreboard(scoreboard);
 		
 		Bukkit.getPluginManager().registerEvents(this, Main.PLUGIN);
-		
-		start();
 	}
 	
-	public void update()
+	/**
+	 * Display the Scoreboard and start updating its data every 5 ticks
+	 */
+	public void start()
+	{
+		id = Main.SCHEDULER.scheduleSyncRepeatingTask(Main.PLUGIN, this::update, 0, 5);
+	}
+	
+	/**
+	 * Hide the Scoreboard and stop updating it
+	 */
+	public void stop()
+	{
+		objective.setDisplaySlot(null);
+		Main.SCHEDULER.cancelTask(id);
+		eventsManager = null;
+	}
+	
+	private void update()
 	{
 		scores.forEach(scoreboard::resetScores);
 		scores.clear();
@@ -55,10 +77,9 @@ public class FKScoreboard implements Listener
 		
 		if (ownerTeam != null)
 		{
-			if (ownerTeam.hasOnlinePlayer())
-				ownerTeam.stream()
-						 .filter(p -> p != owner)
-						 .forEach(p -> scores.add(p.getName() + ": "));
+			ownerTeam.stream()
+					 .filter(p -> p != owner)
+					 .forEach(p -> scores.add(p.getName() + ": "));
 			scores.add("Distance to base: " + ownerTeam.getBaseCenter().distanceTo(new Coordinates(owner.getLocation())));
 		}
 		
@@ -73,17 +94,6 @@ public class FKScoreboard implements Listener
 		
 		AtomicInteger i = new AtomicInteger();
 		scores.forEach(s -> objective.getScore(s).setScore(i.getAndIncrement()));
-	}
-	
-	private void start()
-	{
-		id = Main.SCHEDULER.scheduleSyncRepeatingTask(Main.PLUGIN, this::update, 0, 5);
-	}
-	
-	public void stop()
-	{
-		Main.SCHEDULER.cancelTask(id);
-		eventsManager = null;
 	}
 	
 	@EventHandler

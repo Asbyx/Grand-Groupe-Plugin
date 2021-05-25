@@ -39,6 +39,7 @@ public class EventsCommands implements CommandExecutor
 						eventsId = Main.SCHEDULER.runTaskTimer(Main.PLUGIN, () -> eventsManager.update(Main.PLUGIN.getServer().getWorld("world").getGameTime()), 0, 1).getTaskId();
 						
 						scoreboards = Bukkit.getOnlinePlayers().stream().map(p -> new FKScoreboard(p, eventsManager)).collect(Collectors.toList());
+						scoreboards.forEach(FKScoreboard::start);
 					}
 					catch (NumberFormatException e)
 					{
