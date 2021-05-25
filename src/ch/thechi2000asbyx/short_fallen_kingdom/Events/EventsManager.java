@@ -31,7 +31,7 @@ public class EventsManager implements Listener
 	public EventsManager(long timerOfMiddleChest, long minTimeForRandomChest, long maxTimeForRandomChest, int timerOfBloodNight, int radius, int pvpAllowed)
 	{
 		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
-		this.lastMiddleChest       = world.getGameTime();
+		this.lastMiddleChest       = this.lastRandomChest =  world.getGameTime();
 		this.radius                = radius;
 		this.timerOfMiddleChest    = timerOfMiddleChest * TICK;
 		this.minTimeForRandomChest = minTimeForRandomChest * TICK;
@@ -46,13 +46,20 @@ public class EventsManager implements Listener
 		world.setPVP(false);
 		initMiddleChest(world);
 	}
-	
+
+	/**
+	 * Default parameters to start the game
+	 */
 	public EventsManager()
 	{
 		this(30, 30, 60, 2, 100, 2);
 	}
-	
-	
+
+
+	/**
+	 * Update the game
+	 * @param now: current game time (world.getGameTime)
+	 */
 	public void update(long now)
 	{
 		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
