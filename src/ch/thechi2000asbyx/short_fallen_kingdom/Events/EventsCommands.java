@@ -25,16 +25,13 @@ public class EventsCommands implements CommandExecutor {
                     if (eventsId != -1) break;
                     try {
                         if (args.length != 7 && args.length != 2) throw new IllegalArgumentException();
-                        for (String s : args) {
-                            if (!s.equals("default")) Integer.parseInt(s);
-                        }
 
                         if (args[1].equals("default")) eventsManager = new EventsManager();
-                        else
-                            eventsManager = new EventsManager(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]), Integer.parseInt(args[6]));
+                        else eventsManager = new EventsManager(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]), Integer.parseInt(args[6]));
+
                         eventsId = Main.SCHEDULER.runTaskTimer(Main.PLUGIN, () -> eventsManager.update(Main.PLUGIN.getServer().getWorld("world").getGameTime()), 0, 1).getTaskId();
                     } catch (NumberFormatException e) {
-                        sender.sendMessage(ChatColor.RED + "Invalid arguments for command startGame: \n" +
+                        sender.sendMessage(ChatColor.RED + "Invalid arguments:\n" +
                                 "<number of seconds between each middle chest>\n" +
                                 "<minimum number of seconds between each random chest>\n" +
                                 "<maximum number of seconds between each random chest>\n" +
@@ -42,7 +39,7 @@ public class EventsCommands implements CommandExecutor {
                                 "<radius of random events, center is the server spawn location> (must include both bases, or stop just in front of them)\n" +
                                 "<day where PvP is allowed>");
                     } catch (IllegalArgumentException i){
-
+                        sender.sendMessage(ChatColor.RED + "Invalid number of parameters.");
                     }
                 } else {
                     sender.sendMessage("You are not allowed to use this command");

@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class EventsManager implements Listener {
     public static final int TICK = 20;
-    private long lastMiddleChest, nextRandomChest;
+    private long lastMiddleChest, lastRandomChest, nextRandomChest;
     private final long timerOfMiddleChest, minTimeForRandomChest, maxTimeForRandomChest;
     private final int timerOfBloodNight, radius, pvpAllowed;
     private int totalDays = 1;
@@ -47,14 +47,13 @@ public class EventsManager implements Listener {
         initMiddleChest(world);
     }
 
-    public EventsManager(){
+    public EventsManager() {
         this(30, 30, 60, 2, 100, 2);
     }
 
 
     public void update(long now) {
         World world = Objects.requireNonNull(Bukkit.getWorld("world"));
-        Main.broadcast(String.valueOf(getTimerOfMiddleChest()));
 
         if ((now - lastMiddleChest) >= timerOfMiddleChest) {
             lastMiddleChest = now;
@@ -62,6 +61,7 @@ public class EventsManager implements Listener {
         }
 
         if (now >= nextRandomChest) {
+            lastRandomChest = now;
             spawnRandomChest(world);
             nextRandomChest = getNextRandomChest(now);
         }
@@ -87,14 +87,14 @@ public class EventsManager implements Listener {
             world.getSpawnLocation().getBlock().setType(Material.CHEST);
     }
 
-    public String getGameParameters(){
+    public String getGameParameters() {
         return String.format("The middle chest is filled every %s ticks\n" +
-                "The random chest spawn in range of %s-%s ticks\n" +
-                "There is a blood night every %s nights\n" +
-                "The radius for the events is %s blocs\n" +
-                "PvP is allowed at day %s",
+                        "The random chest spawn in range of %s-%s ticks\n" +
+                        "There is a blood night every %s nights\n" +
+                        "The radius for the events is %s blocs\n" +
+                        "PvP is allowed at day %s",
                 timerOfMiddleChest, minTimeForRandomChest, maxTimeForRandomChest, timerOfBloodNight, radius, pvpAllowed
-                );
+        );
     }
 
     @EventHandler
@@ -110,9 +110,9 @@ public class EventsManager implements Listener {
 
     private void setBloodNight(World world) {
         for (int i = 0; i < radius * 2; i++) {
-            world.strikeLightning(world.getSpawnLocation().clone().add(new Random().nextInt(radius*2) - radius, 0, new Random().nextInt(radius*2) - radius));
+            world.strikeLightning(world.getSpawnLocation().clone().add(new Random().nextInt(radius * 2) - radius, 0, new Random().nextInt(radius * 2) - radius));
             EntityType ent = mobs[new Random().nextInt(mobs.length)];
-            world.spawnEntity(world.getSpawnLocation().clone().add(new Random().nextInt(radius*2) - radius, 0, new Random().nextInt(radius*2) - radius), ent);
+            world.spawnEntity(world.getSpawnLocation().clone().add(new Random().nextInt(radius * 2) - radius, 0, new Random().nextInt(radius * 2) - radius), ent);
         }
 
         world.getEntities().stream().filter(e -> e.getType() == EntityType.CREEPER).forEach(c -> ((Creeper) c).setPowered(true));
@@ -164,17 +164,17 @@ public class EventsManager implements Listener {
     }
 
 
-    public long getTimerOfMiddleChest() {
-        return timerOfMiddleChest + lastMiddleChest - Bukkit.getWorld("world").getGameTime();
+    public long getTimerOfMiddleChest(long now) {
+        return timerOfMiddleChest + lastMiddleChest - now;
     }
 
     public int getTimerOfBloodNight() {
-        int rem =  timerOfBloodNight - (totalDays % timerOfBloodNight);
+        int rem = timerOfBloodNight - (totalDays % timerOfBloodNight);
         return rem == timerOfBloodNight ? 0 : rem;
     }
 
-    public int getRadius() {
-        return radius;
+    public long getMaxTimerForRandomChest(long now) {
+        return maxTimeForRandomChest + lastRandomChest - now;
     }
 
     public int getPvpAllowed() {
