@@ -44,39 +44,81 @@ public class NudeBow extends AbstractListener {
 			Material chest = playerInventory.getChestplate() == null ? Material.AIR : playerInventory.getChestplate().getType();
 			Material helmet = playerInventory.getHelmet() == null ? Material.AIR : playerInventory.getHelmet().getType();
 
-			boots = toNude(boots);
+			switch (boots){
+				case NETHERITE_BOOTS:
+					boots = Material.DIAMOND_BOOTS;
+					break;
+
+				case DIAMOND_BOOTS:
+					boots = Material.IRON_BOOTS;
+					break;
+
+				case IRON_BOOTS:
+					boots = Material.LEATHER_BOOTS;
+					break;
+
+				case LEATHER_BOOTS:
+					boots = Material.AIR;
+					break;
+			}
+			switch (legging){
+				case NETHERITE_LEGGINGS:
+					legging = Material.DIAMOND_LEGGINGS;
+					break;
+
+				case DIAMOND_LEGGINGS:
+					legging = Material.IRON_LEGGINGS;
+					break;
+
+				case IRON_LEGGINGS:
+					legging = Material.LEATHER_LEGGINGS;
+					break;
+
+				case LEATHER_LEGGINGS:
+					legging = Material.AIR;
+					break;
+			}
+			switch (chest){
+				case NETHERITE_CHESTPLATE:
+					chest = Material.DIAMOND_CHESTPLATE;
+					break;
+
+				case DIAMOND_CHESTPLATE:
+					chest = Material.IRON_CHESTPLATE;
+					break;
+
+				case IRON_CHESTPLATE:
+					chest = Material.LEATHER_CHESTPLATE;
+					break;
+
+				case LEATHER_CHESTPLATE:
+					chest = Material.AIR;
+					break;
+			}
+			switch (helmet){
+				case NETHERITE_HELMET:
+					helmet = Material.DIAMOND_HELMET;
+					break;
+
+				case DIAMOND_HELMET:
+					helmet = Material.IRON_HELMET;
+					break;
+
+				case IRON_HELMET:
+					helmet = Material.LEATHER_HELMET;
+					break;
+
+				case LEATHER_HELMET:
+					helmet = Material.AIR;
+					break;
+			}
+
 			playerInventory.setBoots(new ItemStack(boots));
-			legging = toNude(legging);
 			playerInventory.setLeggings(new ItemStack(legging));
-			chest = toNude(chest);
 			playerInventory.setChestplate(new ItemStack(chest));
-			helmet = toNude(helmet);
-			playerInventory.setLeggings(new ItemStack(helmet));
+			playerInventory.setHelmet(new ItemStack(helmet));
 
 			event.getEntity().remove();
 		}
 	}
-
-	private Material toNude(Material material) {
-		switch (material){
-			case NETHERITE_BOOTS:
-				material = Material.DIAMOND_BOOTS;
-				break;
-
-			case DIAMOND_BOOTS:
-				material = Material.IRON_BOOTS;
-				break;
-
-			case IRON_BOOTS:
-				material = Material.LEATHER_BOOTS;
-				break;
-
-			case LEATHER_BOOTS:
-				material = Material.AIR;
-				break;
-		}
-		return material;
-	}
-
-
 }
