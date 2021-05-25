@@ -5,6 +5,14 @@ description: Fallen Kingdom Plugin
 api-version: 1.16
 main: ch.thechi2000asbyx.short_fallen_kingdom.Main
 commands:
+  allowTntBow:
+    description: allow the TNT bow to be used
+    permission: op
+
+  allowTomb:
+    description: allow the tomb (chest appears on deathOfPlayer) to be used
+    permission: op
+
   game:
     startGame:
       description: Start the game ! May the odds be with you
