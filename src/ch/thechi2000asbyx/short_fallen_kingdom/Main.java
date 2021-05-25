@@ -16,8 +16,7 @@ public class Main extends JavaPlugin implements Listener
 	private FKScoreboard test;
 	
 	@Override
-	public void onEnable()
-	{
+	public void onEnable() {
 		PLUGIN    = this;
 		SCHEDULER = getServer().getScheduler();
 		
@@ -26,13 +25,13 @@ public class Main extends JavaPlugin implements Listener
 		Bukkit.getPluginManager().registerEvents(this, this);
 		
 		getCommand("fkteam").setExecutor(new FKTeamCommands());
+		getCommand("fkteam").setTabCompleter(new FKTeamTabCompleter());
 		getCommand("game").setExecutor(new EventsCommands());
 		
 		FKTeam.loadTeamsFromConfig();
 	}
 	
-	public static void broadcast(String arg)
-	{
+	public static void broadcast(String arg) {
 		getPlugin(Main.class).getServer().broadcastMessage(ChatColor.BLUE + "[Server] " + arg + ChatColor.WHITE);
 	}
 }
