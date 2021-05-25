@@ -1,8 +1,12 @@
 package ch.thechi2000asbyx.short_fallen_kingdom.Teams;
 
+import ch.thechi2000asbyx.common.Coordinates;
 import org.bukkit.*;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.*;
 import org.bukkit.entity.Player;
 
+import java.io.IOException;
 import java.util.*;
 
 public class FKTeam
@@ -11,19 +15,44 @@ public class FKTeam
 	
 	public final static List<FKTeam> allTeams = new ArrayList<>();
 	
-	private final List<UUID> players;
+	private List<UUID> players;
 	private final String name;
-	//private final Team bukkitTeam;
-	private Location baseCenter;
-	private Location flagLocation;
 	private boolean isEliminated;
+	private Coordinates baseCenter;
+	private Coordinates flagLocation;
+	
+	private FileConfiguration config;
 	
 	private FKTeam(String name/*, ChatColor color*/)
 	{
-		this.name    = name;
-		players      = new ArrayList<>();
-		baseCenter   = new Location(null, 0, 0, 0);
-		isEliminated = false;
+		this.name = name;
+		
+		try
+		{
+			config = new YamlConfiguration();
+			
+			try
+			{
+				config.load("teams.yml");
+			}
+			catch (InvalidConfigurationException e)
+			{
+				e.printStackTrace();
+			}
+			
+			isEliminated = config.getBoolean(name + ".isEliminated");
+			baseCenter   = (Coordinates) config.get(name + ".base-center");
+			flagLocation = (Coordinates) config.get(name + ".flag-location");
+			players      = (List<UUID>) config.getList(name + ".players");
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+		players      = players == null ? new ArrayList<>() : players;
+		baseCenter   = baseCenter == null ? new Coordinates(0, 0, 0) : baseCenter;
+		flagLocation = flagLocation == null ? new Coordinates(0, 0, 0) : flagLocation;
 		
 		allTeams.add(this);
 	}
@@ -32,9 +61,9 @@ public class FKTeam
 	{
 		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
 		
-		int x = flagLocation.getBlockX(),
-				y = flagLocation.getBlockY(),
-				z = flagLocation.getBlockZ();
+		int x = flagLocation.x,
+				y = flagLocation.y,
+				z = flagLocation.z;
 		
 		world.getBlockAt(x, y, z).setType(Material.AIR);
 		world.getBlockAt(x, y + 1, z).setType(Material.AIR);
@@ -46,9 +75,9 @@ public class FKTeam
 		
 		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
 		
-		int x = flagLocation.getBlockX(),
-				y = flagLocation.getBlockY(),
-				z = flagLocation.getBlockZ();
+		int x = flagLocation.x,
+				y = flagLocation.y,
+				z = flagLocation.z;
 		
 		return world.getBlockAt(x, y, z).getType() == Material.AIR
 				|| world.getBlockAt(x, y + 1, z).getType() == Material.AIR;
@@ -61,7 +90,7 @@ public class FKTeam
 		if (this.flagLocation != null) removeOldFlag();
 		
 		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
-		this.flagLocation = flagLocation;
+		this.flagLocation = new Coordinates(flagLocation);
 		
 		int x = flagLocation.getBlockX(),
 				y = flagLocation.getBlockY(),
@@ -85,10 +114,10 @@ public class FKTeam
 	
 	public void setBaseLocation(Location base)
 	{
-		baseCenter = base;
+		baseCenter = new Coordinates(base);
 	}
 	
-	public Location getBaseCenter()
+	public Coordinates getBaseCenter()
 	{
 		return baseCenter;
 	}
@@ -99,9 +128,9 @@ public class FKTeam
 	}
 	public boolean isInBase(Location location, boolean checkY)
 	{
-		int dx = location.getBlockX() - baseCenter.getBlockX(),
-				dy = location.getBlockY() - baseCenter.getBlockY(),
-				dz = location.getBlockZ() - baseCenter.getBlockZ();
+		int dx = location.getBlockX() - baseCenter.x,
+				dy = location.getBlockY() - baseCenter.y,
+				dz = location.getBlockZ() - baseCenter.z;
 		
 		return Math.abs(dx) <= BASE_SIDE_LENGTH / 2
 				&& (!checkY || Math.abs(dy) <= 20)

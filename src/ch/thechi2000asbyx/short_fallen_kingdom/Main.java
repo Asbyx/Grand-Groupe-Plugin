@@ -1,5 +1,6 @@
 package ch.thechi2000asbyx.short_fallen_kingdom;
 
+import ch.thechi2000asbyx.common.Coordinates;
 import ch.thechi2000asbyx.short_fallen_kingdom.Teams.*;
 import org.bukkit.*;
 import org.bukkit.command.*;
@@ -7,14 +8,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin
 {
-	public static final String NAME = "short_fallen_kingdom";
+	public static JavaPlugin PLUGIN;
 	
 	@Override
 	public void onEnable()
 	{
+		PLUGIN = this;
+		
 		Bukkit.getPluginManager().registerEvents(new FlagEvents(), this);
 		Bukkit.getPluginManager().registerEvents(new BuildEvents(), this);
 		getCommand("fkteam").setExecutor(new FKTeamCommands());
+		
+		Coordinates c = Coordinates.fromString("[1, 2, 3]");
 	}
 	
 	@Override

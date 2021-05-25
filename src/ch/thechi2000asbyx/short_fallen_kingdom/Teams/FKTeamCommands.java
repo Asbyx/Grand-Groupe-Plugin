@@ -1,6 +1,5 @@
 package ch.thechi2000asbyx.short_fallen_kingdom.Teams;
 
-import ch.thechi2000asbyx.common.Coordinates;
 import org.bukkit.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -73,7 +72,7 @@ public class FKTeamCommands implements CommandExecutor
 						Integer.parseInt(strings[4])
 				));
 				
-				Bukkit.broadcastMessage("Base location of  " + team.getName() + " set to " + new Coordinates(team.getBaseCenter()).toString());
+				Bukkit.broadcastMessage("Base location of  " + team.getName() + " set to " + team.getBaseCenter());
 				
 				return true;
 			}
@@ -91,7 +90,7 @@ public class FKTeamCommands implements CommandExecutor
 							return true;
 						}
 						
-						commandSender.sendMessage(String.format("Your base is located at %s", new Coordinates(team.getBaseCenter()).toString()));
+						commandSender.sendMessage(String.format("Your base is located at %s", team.getBaseCenter()));
 						return true;
 					}
 				}
@@ -104,7 +103,7 @@ public class FKTeamCommands implements CommandExecutor
 						return true;
 					}
 					
-					commandSender.sendMessage(String.format("The base of %s is located at %s", team.getName(), new Coordinates(team.getBaseCenter()).toString()));
+					commandSender.sendMessage(String.format("The base of %s is located at %s", team.getName(), team.getBaseCenter()));
 				}
 			}
 			

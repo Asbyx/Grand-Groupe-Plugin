@@ -9,8 +9,6 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Objects;
-
 public class FlagEvents implements Listener
 {
 	@EventHandler
@@ -25,7 +23,7 @@ public class FlagEvents implements Listener
 		
 		if (item.getItemStack().getType() == Material.CLOCK)
 		{
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Objects.requireNonNull(Bukkit.getPluginManager().getPlugin(Main.NAME)),
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN,
 					() ->
 					{
 						if (!team.setFlagLocation(item.getLocation()))
@@ -58,7 +56,7 @@ public class FlagEvents implements Listener
 	
 	private void checkBreakFlag()
 	{
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Objects.requireNonNull(Bukkit.getPluginManager().getPlugin(Main.NAME)),
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN,
 				() ->
 						FKTeam.allTeams.stream().filter(t -> !t.isEliminated() && t.isFlagDestroyed()).forEach(t ->
 						{
