@@ -1,6 +1,7 @@
-package ch.thechi2000asbyx.short_fallen_kingdom;
+package ch.thechi2000asbyx.short_fallen_kingdom.Events;
 
 import ch.thechi2000asbyx.common.Coordinates;
+import ch.thechi2000asbyx.short_fallen_kingdom.Main;
 import org.bukkit.*;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Creeper;
@@ -28,7 +29,7 @@ public class EventsManager implements Listener {
      * @param maxTimeForRandomChest: maximum time between 2 random chests
      * @param timerOfBloodNight:     number of nights between 2 blood nights
      */
-    EventsManager(long timerOfMiddleChest, long minTimeForRandomChest, long maxTimeForRandomChest, int timerOfBloodNight, int radius, int pvpAllowed) {
+    public EventsManager(long timerOfMiddleChest, long minTimeForRandomChest, long maxTimeForRandomChest, int timerOfBloodNight, int radius, int pvpAllowed) {
         World world = Objects.requireNonNull(Bukkit.getWorld("world"));
         this.lastMiddleChest = world.getGameTime();
         this.radius = radius;
@@ -46,7 +47,7 @@ public class EventsManager implements Listener {
         initMiddleChest(world);
     }
 
-    EventsManager(){
+    public EventsManager(){
         this(30, 30, 60, 2, 100, 2);
     }
 
