@@ -1,6 +1,5 @@
 package ch.thechi2000asbyx.common;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -18,7 +17,6 @@ public class TntBow extends AbstractListener {
 	@EventHandler
 	public void onTntProjectileLaunch(ProjectileLaunchEvent event) {
 		if (isDisabled()) {
-			Bukkit.broadcastMessage("aie aie aie");
 			return;
 		}
 
@@ -27,7 +25,7 @@ public class TntBow extends AbstractListener {
 			Arrow arrow = (Arrow) event.getEntity();
 
 			if (player.getInventory().getItemInOffHand().getType() == Material.TNT) {
-				//fixme consume the tnt
+				player.getInventory().getItemInOffHand().setAmount(player.getInventory().getItemInOffHand().getAmount() - 1);
 				arrow.setCustomName("tntArrow");
 				arrow.setColor(Color.RED);
 			}
