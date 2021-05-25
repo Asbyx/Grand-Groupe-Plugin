@@ -24,7 +24,7 @@ public class EventsCommands implements CommandExecutor {
                 if (sender.isOp()) {
                     if (eventsId != -1) break;
                     try {
-                        if (args.length != 7 && args.length != 2) throw new NumberFormatException();
+                        if (args.length != 7 && args.length != 2) throw new IllegalArgumentException();
                         for (String s : args) {
                             if (!s.equals("default")) Integer.parseInt(s);
                         }
@@ -41,6 +41,8 @@ public class EventsCommands implements CommandExecutor {
                                 "<number of nights between each blood night>\n" +
                                 "<radius of random events, center is the server spawn location> (must include both bases, or stop just in front of them)\n" +
                                 "<day where PvP is allowed>");
+                    } catch (IllegalArgumentException i){
+
                     }
                 } else {
                     sender.sendMessage("You are not allowed to use this command");

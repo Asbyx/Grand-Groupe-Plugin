@@ -51,8 +51,10 @@ public class EventsManager implements Listener {
         this(30, 30, 60, 2, 100, 2);
     }
 
+
     public void update(long now) {
         World world = Objects.requireNonNull(Bukkit.getWorld("world"));
+        Main.broadcast(String.valueOf(getTimerOfMiddleChest()));
 
         if ((now - lastMiddleChest) >= timerOfMiddleChest) {
             lastMiddleChest = now;
@@ -77,6 +79,7 @@ public class EventsManager implements Listener {
             }
         }
     }
+
 
     public static void initMiddleChest(World world) {
         Main.broadcast("The middle chest is at : " + new Coordinates(world.getSpawnLocation()));
@@ -104,6 +107,7 @@ public class EventsManager implements Listener {
         }
     }
 
+
     private void setBloodNight(World world) {
         for (int i = 0; i < radius * 2; i++) {
             world.strikeLightning(world.getSpawnLocation().clone().add(new Random().nextInt(radius*2) - radius, 0, new Random().nextInt(radius*2) - radius));
@@ -129,7 +133,7 @@ public class EventsManager implements Listener {
         }
 
         world.getBlockAt(chestLocation).setType(Material.CHEST);
-        ((Chest) world.getBlockAt(chestLocation).getState()).getBlockInventory().addItem(generateItems(8, 9, 11, stuff));
+        ((Chest) world.getBlockAt(chestLocation).getState()).getBlockInventory().addItem(generateItems(8, 7, 12, stuff));
         Main.broadcast("A chest has spawned near " + new Coordinates(middleCircle) + ": the stuff is waiting for you !");
     }
 
@@ -160,6 +164,28 @@ public class EventsManager implements Listener {
     }
 
 
+    public long getTimerOfMiddleChest() {
+        return timerOfMiddleChest + lastMiddleChest - Bukkit.getWorld("world").getGameTime();
+    }
+
+    public int getTimerOfBloodNight() {
+        int rem =  timerOfBloodNight - (totalDays % timerOfBloodNight);
+        return rem == timerOfBloodNight ? 0 : rem;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public int getPvpAllowed() {
+        return pvpAllowed;
+    }
+
+    public int getTotalDays() {
+        return totalDays;
+    }
+
+
     private final Material[] useful = new Material[]{
             Material.TNT,
             Material.DIAMOND,
@@ -175,15 +201,17 @@ public class EventsManager implements Listener {
     };
     private final Material[] stuff = new Material[]{
             Material.IRON_HELMET,
+            Material.DIAMOND_HELMET,
             Material.IRON_CHESTPLATE,
             Material.IRON_LEGGINGS,
+            Material.DIAMOND_LEGGINGS,
             Material.IRON_BOOTS,
             Material.DIAMOND_BOOTS,
-            Material.DIAMOND_SWORD,
-            Material.IRON_SWORD,
             Material.DIAMOND_PICKAXE,
-            Material.BOW,
 
+            Material.IRON_SWORD,
+            Material.DIAMOND_SWORD,
+            Material.BOW,
             Material.GOLDEN_APPLE,
             Material.DIAMOND,
 
