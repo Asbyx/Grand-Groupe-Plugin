@@ -7,9 +7,11 @@ main: ch.thechi2000asbyx.short_fallen_kingdom.Main
 commands:
   startGame:
     description: Start the game ! May the odds be with you
+    permission: op
 
   stopGame:
     description: Stop the game.
+    permission: op
 
   middleChest:
     description: Creates the middle chest and display its position to everyone
