@@ -26,7 +26,7 @@ public class Main extends JavaPlugin implements Listener
 		Bukkit.getPluginManager().registerEvents(this, this);
 		
 		getCommand("fkteam").setExecutor(new FKTeamCommands());
-		getCommand("events").setExecutor(new EventsCommands());
+		getCommand("game").setExecutor(new EventsCommands());
 		
 		FKTeam.loadTeamsFromConfig();
 	}

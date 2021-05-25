@@ -5,7 +5,7 @@ description: Fallen Kingdom Plugin
 api-version: 1.16
 main: ch.thechi2000asbyx.short_fallen_kingdom.Main
 commands:
-  events:
+  game:
     startGame:
       description: Start the game ! May the odds be with you
       permission: op
