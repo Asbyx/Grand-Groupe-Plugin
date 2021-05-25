@@ -23,11 +23,30 @@ public class FlagEvents implements Listener
 		
 		if (item.getItemStack().getType() == Material.CLOCK)
 		{
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN,
+			Main.SCHEDULER.scheduleSyncDelayedTask(Main.PLUGIN,
 					() ->
 					{
-						if (!team.setFlagLocation(item.getLocation()))
-							player.sendMessage(ChatColor.RED + "Cannot place flag outside of the base");
+						switch (team.setFlagLocation(item.getLocation()))
+						{
+							case NONE:
+								team.stream().forEach(p -> p.sendMessage(ChatColor.GREEN + "Flag moved to " + team.getFlagLocation()));
+								break;
+							case OUTSIDE_BASE:
+								player.sendMessage(ChatColor.RED + "Cannot place flag outside of the base");
+								break;
+							case INVALID_HEIGHT:
+								player.sendMessage(ChatColor.RED + "Cannot place the flag further than 20 blocks above/under the center of the base");
+								break;
+							case INVALID_WORLD:
+								player.sendMessage(ChatColor.RED + "Cannot place the flag in another dimension");
+								break;
+							case BLOCKING_BLOCKS:
+								player.sendMessage(ChatColor.RED + "Cannot place the flag, there are blocks on the way");
+								break;
+							case TEAM_ELIMINATED:
+								player.sendMessage(ChatColor.RED + "Cannot place the flag, your team was eliminated");
+								break;
+						}
 						
 						item.remove();
 						player.getInventory().addItem(new ItemStack(Material.CLOCK));
@@ -56,13 +75,13 @@ public class FlagEvents implements Listener
 	
 	private void checkBreakFlag()
 	{
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN,
+		Main.SCHEDULER.scheduleSyncDelayedTask(Main.PLUGIN,
 				() ->
 						FKTeam.allTeams.stream().filter(t -> !t.isEliminated() && t.isFlagDestroyed()).forEach(t ->
 						{
 							t.eliminate();
-							Bukkit.broadcastMessage(ChatColor.GREEN + "The team " + t.getName() + " was eliminated");
+							Main.broadcast(ChatColor.GREEN + "The team " + t.getName() + " was eliminated");
 						}),
-				1);
+				5);
 	}
 }

@@ -1,5 +1,6 @@
 package ch.thechi2000asbyx.short_fallen_kingdom.Teams;
 
+import ch.thechi2000asbyx.short_fallen_kingdom.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.*;
@@ -38,6 +39,13 @@ public class BuildEvents implements Listener
 		player.sendMessage(ChatColor.RED + "You cannot build here");
 		//if (player.getGameMode() == GameMode.SURVIVAL) player.getInventory().addItem(new ItemStack(event.getMaterial()));
 		event.setBuildable(false);
+		
+		Main.SCHEDULER.scheduleSyncDelayedTask(Main.PLUGIN, () ->
+				{
+					player.getInventory().addItem(new ItemStack(event.getMaterial(), 1));
+					player.getInventory().removeItem(new ItemStack(event.getMaterial(), 1));
+				},
+				1);
 	}
 	
 	@EventHandler

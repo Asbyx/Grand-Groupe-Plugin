@@ -15,11 +15,11 @@ public class Coordinates
 		y = location.getBlockY();
 		z = location.getBlockZ();
 	}
-	public Coordinates(int i, int i1, int i2)
+	public Coordinates(int x, int y, int z)
 	{
-		x = i;
-		y = i1;
-		z = i2;
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 	
 	@Override
@@ -30,10 +30,10 @@ public class Coordinates
 	
 	public static Coordinates fromString(String s)
 	{
-		Pattern pattern = Pattern.compile("^\\[(\\d+), (\\d+), (\\d+)]$");
+		Pattern pattern = Pattern.compile("\\[(-?\\d+), (-?\\d+), (-?\\d+)]");
 		Matcher matcher = pattern.matcher(s);
 		
-		if (!matcher.matches()) throw new IllegalArgumentException();
+		if (!matcher.matches()) throw new IllegalArgumentException(s);
 		
 		return new Coordinates(
 				Integer.parseInt(matcher.group(1)),
