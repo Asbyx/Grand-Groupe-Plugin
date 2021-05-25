@@ -152,6 +152,7 @@ public class FKTeam
 		
 		return FlagPlacementProblems.NONE;
 	}
+
 	private void removeOldFlag()
 	{
 		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
