@@ -17,7 +17,7 @@ public class FKTeamCommands implements CommandExecutor
 	@Override
 	public boolean onCommand(@Nonnull CommandSender commandSender, @Nonnull Command command, @Nonnull String s, String[] strings)
 	{
-		switch (strings[0])
+		switch (strings[0].toLowerCase())
 		{
 			case "create":
 				return create(commandSender, strings);
@@ -177,13 +177,13 @@ public class FKTeamCommands implements CommandExecutor
 				Integer.parseInt(strings[3]),
 				Integer.parseInt(strings[4])
 		));
-
+		
 		createBase(team.getBaseCenter());
-
+		
 		Main.broadcast("Base location of " + team.getName() + " set to " + team.getBaseCenter());
 		return true;
 	}
-
+	
 	private static boolean getBaseLocation(CommandSender commandSender, String[] strings)
 	{
 		if (strings.length == 1 && commandSender instanceof Player)
@@ -194,7 +194,7 @@ public class FKTeamCommands implements CommandExecutor
 				commandSender.sendMessage(ChatColor.RED + "You have no team. You are alone. How sad...");
 				return true;
 			}
-
+			
 			commandSender.sendMessage(String.format("Your base is located at %s", team.getBaseCenter()));
 			return true;
 		}
@@ -206,43 +206,43 @@ public class FKTeamCommands implements CommandExecutor
 				commandSender.sendMessage(ChatColor.RED + "Unknown team");
 				return true;
 			}
-
+			
 			commandSender.sendMessage(String.format("The base of %s is located at %s", team.getName(), team.getBaseCenter()));
 		}
 		else
 			return false;
 		return true;
 	}
-
+	
 	private static boolean teams(CommandSender commandSender, String[] strings)
 	{
 		if (strings.length != 1) return false;
-
+		
 		StringBuilder sb = new StringBuilder().append("[");
 		FKTeam.allTeams.forEach(t -> sb.append(String.format("'%s'", t.getName())));
 		commandSender.sendMessage(sb.append("]").toString());
-
+		
 		return true;
 	}
-
+	
 	private static boolean players(CommandSender commandSender, String[] strings)
 	{
 		if (strings.length != 2) return false;
-
+		
 		FKTeam team = FKTeam.getTeam(strings[1]);
 		if (team == null)
 		{
 			commandSender.sendMessage(ChatColor.RED + "Unknown team");
 			return true;
 		}
-
+		
 		StringBuilder sb = new StringBuilder().append("[");
 		Bukkit.getOnlinePlayers().stream().filter(team::contains).forEach(t -> sb.append(String.format("'%s'", t.getName())));
 		commandSender.sendMessage(sb.append("]").toString());
-
+		
 		return true;
 	}
-
+	
 	private static boolean help(CommandSender commandSender, String[] strings)
 	{
 		if (strings.length == 1)
@@ -259,15 +259,15 @@ public class FKTeamCommands implements CommandExecutor
 		else if (strings.length == 2)
 		{
 			HelpStrings helpStrings = HelpStrings.ALL.stream().filter(h -> h.commandName.equals(strings[1])).findFirst().orElse(null);
-
+			
 			if (helpStrings == null)
 			{
 				commandSender.sendMessage(ChatColor.RED + "Unknown command");
 				return true;
 			}
-
+			
 			commandSender.sendMessage("Help about /fkteam " + helpStrings.commandName + ": ");
-
+			
 			Arrays.stream(helpStrings.argumentsDescriptions).forEach(ad ->
 			{
 				commandSender.sendMessage(ad.description + ": " + (ad.argumentsCount == 0 ? "No" : ad.argumentsCount) + " argument" + (ad.argumentsCount <= 1 ? "" : "s"));
@@ -278,7 +278,7 @@ public class FKTeamCommands implements CommandExecutor
 			return false;
 		return true;
 	}
-
+	
 	private enum HelpStrings
 	{
 		HELP(false, "help", new ArgumentsDescription[]
@@ -328,24 +328,24 @@ public class FKTeamCommands implements CommandExecutor
 				{
 						new ArgumentsDescription("Prints all the names of the player from a team", 1, new String[]{ "The name of the team" })
 				});
-
+		
 		HelpStrings(boolean opRequired, String commandName, ArgumentsDescription[] argumentsDescriptions)
 		{
 			this.opRequired            = opRequired;
 			this.argumentsDescriptions = argumentsDescriptions;
 			this.commandName           = commandName;
 		}
-
+		
 		public final boolean opRequired;
-
+		
 		public final String commandName;
 		public final ArgumentsDescription[] argumentsDescriptions;
 		public static final List<HelpStrings> ALL = Arrays.stream(values()).collect(Collectors.toList());
-
+		
 	}
 	private static class ArgumentsDescription
 	{
-
+		
 		public final String description;
 		public final int argumentsCount;
 		public final String[] argumentsHelp;
@@ -355,19 +355,24 @@ public class FKTeamCommands implements CommandExecutor
 			this.argumentsCount = argumentsCount;
 			this.argumentsHelp  = argumentsHelp;
 		}
-
+		
 	}
-
-	private static void createBase(Coordinates location) {
+	
+	private static void createBase(Coordinates location)
+	{
 		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
-
-		for (int z = -7; z <= 7; z += 14) {
-			for (int x = -7; x <= 7; x += 2) {
+		
+		for (int z = -7; z <= 7; z += 14)
+		{
+			for (int x = -7; x <= 7; x += 2)
+			{
 				world.getBlockAt(new Location(world, location.x + x, world.getHighestBlockYAt(location.x + x, location.z + z), location.z + z)).setType(Material.COBBLESTONE);
 			}
 		}
-		for (int x = -7; x <= 7; x += 14) {
-			for (int z = -7; z <= 7; z += 2) {
+		for (int x = -7; x <= 7; x += 14)
+		{
+			for (int z = -7; z <= 7; z += 2)
+			{
 				world.getBlockAt(new Location(world, location.x + x, world.getHighestBlockYAt(location.x + x, location.z + z), location.z + z)).setType(Material.COBBLESTONE);
 			}
 		}
