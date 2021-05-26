@@ -2,21 +2,22 @@ package ch.thechi2000asbyx.short_fallen_kingdom;
 
 import ch.thechi2000asbyx.short_fallen_kingdom.Commands.FKTabCompleter;
 import ch.thechi2000asbyx.short_fallen_kingdom.Events.EventsCommands;
-import ch.thechi2000asbyx.short_fallen_kingdom.Scoreboards.FKScoreboard;
+import ch.thechi2000asbyx.short_fallen_kingdom.Scoreboards.Compass;
 import ch.thechi2000asbyx.short_fallen_kingdom.Teams.*;
 import org.bukkit.*;
-import org.bukkit.event.Listener;
+import org.bukkit.event.*;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import java.util.Objects;
+import java.util.*;
 
 public class Main extends JavaPlugin implements Listener
 {
 	public static JavaPlugin PLUGIN;
 	public static BukkitScheduler SCHEDULER;
 	
-	private FKScoreboard test;
+	private final List<Compass> compasses = new ArrayList<>();
 	
 	@Override
 	public void onEnable() {

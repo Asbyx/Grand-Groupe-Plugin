@@ -6,7 +6,6 @@ import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.*;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
@@ -40,12 +39,7 @@ public class BuildEvents extends AbstractListener
 		player.sendMessage(ChatColor.RED + "You cannot build here");
 		event.setBuildable(false);
 		
-		Main.SCHEDULER.scheduleSyncDelayedTask(Main.PLUGIN, () ->
-				{
-					player.getInventory().addItem(new ItemStack(event.getMaterial(), 1));
-					player.getInventory().removeItem(new ItemStack(event.getMaterial(), 1));
-				},
-				1);
+		Main.SCHEDULER.scheduleSyncDelayedTask(Main.PLUGIN, player::updateInventory, 1);
 	}
 	
 	@EventHandler

@@ -161,6 +161,20 @@ public class FKTeam
 	}
 	
 	/**
+	 * @return the total count of players in the team (including offline ones)
+	 */
+	public int playersCount() {
+		return players.size();
+	}
+	
+	/**
+	 * @return the count of players of the team currently online;
+	 */
+	public int onlinePlayersCount() {
+		return (int) stream().count();
+	}
+	
+	/**
 	 * Add a player to the team
 	 *
 	 * @param player the player to be added
@@ -218,6 +232,8 @@ public class FKTeam
 			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), String.format("title %s subtitle clear", p.getName()));
 			
 		});
+		
+		stream().forEach(p -> p.setGameMode(GameMode.SPECTATOR));
 		
 		isEliminated = true;
 		save();

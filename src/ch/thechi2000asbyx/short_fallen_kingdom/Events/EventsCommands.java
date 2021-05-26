@@ -1,8 +1,8 @@
 package ch.thechi2000asbyx.short_fallen_kingdom.Events;
 
 import ch.thechi2000asbyx.short_fallen_kingdom.Main;
-import ch.thechi2000asbyx.short_fallen_kingdom.Scoreboards.FKScoreboard;
-import ch.thechi2000asbyx.short_fallen_kingdom.Teams.FKTeam;
+import ch.thechi2000asbyx.short_fallen_kingdom.Scoreboards.*;
+import ch.thechi2000asbyx.short_fallen_kingdom.Teams.*;
 import org.bukkit.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -15,11 +15,22 @@ public class EventsCommands implements CommandExecutor
 {
 	private int eventsId;
 	private EventsManager eventsManager;
+	private final FlagEvents flagEvents;
+	private final BuildEvents buildEvents;
 	private List<FKScoreboard> scoreboards;
+	private List<Compass> compasses;
 	
 	public EventsCommands() {
 		eventsId      = -1;
 		eventsManager = null;
+		
+		flagEvents = new FlagEvents();
+		flagEvents.disable();
+		Bukkit.getPluginManager().registerEvents(flagEvents, Main.PLUGIN);
+		
+		buildEvents = new BuildEvents();
+		buildEvents.disable();
+		Bukkit.getPluginManager().registerEvents(buildEvents, Main.PLUGIN);
 	}
 	
 	@Override
@@ -62,8 +73,13 @@ public class EventsCommands implements CommandExecutor
 				
 				eventsId = Main.SCHEDULER.runTaskTimer(Main.PLUGIN, () -> eventsManager.update(Objects.requireNonNull(Bukkit.getWorld("world")).getGameTime()), 0, 1).getTaskId();
 				
+				flagEvents.enable();
+				buildEvents.enable();
+				
 				scoreboards = Bukkit.getOnlinePlayers().stream().map(p -> new FKScoreboard(p, eventsManager)).collect(Collectors.toList());
 				scoreboards.forEach(FKScoreboard::start);
+				
+				compasses = Bukkit.getOnlinePlayers().stream().map(p -> new Compass(p, eventsManager)).collect(Collectors.toList());
 				
 				Bukkit.getOnlinePlayers().stream().filter(p -> FKTeam.getTeam(p) != null).forEach(this::initPlayer);
 				FKTeam.allTeams.forEach(FKTeam::init);
@@ -99,7 +115,11 @@ public class EventsCommands implements CommandExecutor
 			eventsId      = -1;
 			eventsManager = null;
 			
+			flagEvents.disable();
+			buildEvents.disable();
+			
 			if (scoreboards != null) scoreboards.forEach(FKScoreboard::stop);
+			if (compasses != null) compasses.forEach(Compass::disable);
 			
 			Main.broadcast("The game is over !");
 		}
@@ -121,7 +141,7 @@ public class EventsCommands implements CommandExecutor
 		player.setFoodLevel(20);
 		player.getActivePotionEffects().forEach(e -> player.removePotionEffect(e.getType()));
 		
-		player.getInventory().addItem(new ItemStack(Material.BREAD, 5), new ItemStack(Material.CLOCK));
+		player.getInventory().addItem(new ItemStack(Material.BREAD, 5), new ItemStack(Material.CLOCK), new ItemStack(Material.COMPASS));
 		
 		player.setInvulnerable(true);
 		player.teleport(FKTeam.getTeam(player).getBaseCenter().add(0, 30, 0).toOverworldLocation());
