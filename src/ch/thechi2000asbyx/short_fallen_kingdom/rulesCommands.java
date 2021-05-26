@@ -1,6 +1,6 @@
 package ch.thechi2000asbyx.short_fallen_kingdom;
 
-import ch.thechi2000asbyx.common.DeathListener;
+import ch.thechi2000asbyx.common.DeathChest;
 import ch.thechi2000asbyx.common.AbstractListener;
 import ch.thechi2000asbyx.common.NudeBow;
 import ch.thechi2000asbyx.common.TntBow;
@@ -18,7 +18,7 @@ public class rulesCommands implements CommandExecutor {
 
     public rulesCommands(){
         listeners.add(new TntBow());
-        listeners.add(new DeathListener());
+        listeners.add(new DeathChest());
         listeners.add(new NudeBow());
 
         listeners.forEach(abstractListener -> {

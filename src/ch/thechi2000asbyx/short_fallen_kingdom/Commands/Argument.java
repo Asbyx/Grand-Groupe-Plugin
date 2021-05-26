@@ -22,10 +22,16 @@ public enum Argument
 	GET_BASE_LOCATION("getBaseLocation"),
 	TEAMS("teams"),
 	PLAYERS("players"),
+
 	START_GAME("startGame"),
 	STOP_GAME("stopGame"),
 	GET_GAME_PARAMETERS("getGameParameters", c -> Misc.list("getGameParameters", "getParameters", "parameters"), true),
 	MIDDLECHEST("middleChest"),
+
+	TNT_BOW("tntBow"),
+	NUDE_BOW("nudeBow"),
+	DEATH_CHEST("deathChest"),
+
 	PLAYER("Name of a player", c -> Bukkit.getOnlinePlayers().stream()
 										  .map(Player::getName)
 										  .collect(Collectors.toList())),
@@ -41,6 +47,8 @@ public enum Argument
 	COMMAND("A command", c -> Commands.ALL.stream().map(co -> co.commandName).collect(Collectors.toList())),
 	STRING("A string", c -> Misc.list()),
 	INT("An integer", c -> Misc.list()),
+	FLOAT("A float", c -> Misc.list()),
+	BOOLEAN("A boolean", c -> Misc.list()),
 	DEFAULT("default", c -> Misc.list("default"));
 	
 	public final String description;

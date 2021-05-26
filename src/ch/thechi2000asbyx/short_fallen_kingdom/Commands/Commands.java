@@ -6,8 +6,7 @@ import java.util.List;
 
 import static ch.thechi2000asbyx.short_fallen_kingdom.Commands.Argument.*;
 
-public enum Commands
-{
+public enum Commands {
 	HELP(false,
 			"fkteam",
 			"help",
@@ -70,26 +69,42 @@ public enum Commands
 	MIDDLE_CHEST(false,
 			"game",
 			"middleChest",
-			new ArgumentList("Display the coordinated of the middle chest and respawn it if it was gone", Argument.MIDDLECHEST));
-	
-	
+			new ArgumentList("Display the coordinated of the middle chest and respawn it if it was gone", Argument.MIDDLECHEST)),
+
+	TNT_BOW(true,
+			"rules",
+			"tntBow",
+			new ArgumentList("Enable ort disable the tnt bow", Argument.TNT_BOW, BOOLEAN),
+			new ArgumentList("Set the power of the tnt bow", Argument.TNT_BOW, FLOAT)),
+	NUDE_BOW(true,
+			"rules",
+			"nudeBow",
+			new ArgumentList("Enable or disable the nude bow", Argument.NUDE_BOW, BOOLEAN)),
+	DEAT_CHEST(true,
+			"rules",
+			"deathChest",
+			new ArgumentList("Enable or disable the nude bow", Argument.DEATH_CHEST, BOOLEAN))
+	;
+
+
 	Commands(
 			boolean opRequired, String
 			commandLabel,
 			String commandName, List<ArgumentList> argumentsList) {
-		this.opRequired    = opRequired;
-		this.commandLabel  = commandLabel;
-		this.commandName   = commandName;
+		this.opRequired = opRequired;
+		this.commandLabel = commandLabel;
+		this.commandName = commandName;
 		this.argumentsList = argumentsList;
 	}
+
 	Commands(boolean opRequired, String commandLabel, String commandName, ArgumentList... args) {
 		this(opRequired, commandLabel, commandName, Misc.list(args));
 	}
-	
+
 	public final boolean opRequired;
-	
+
 	public final String commandLabel, commandName;
 	public final List<ArgumentList> argumentsList;
-	
+
 	public static final List<Commands> ALL = Misc.list(values());
 }

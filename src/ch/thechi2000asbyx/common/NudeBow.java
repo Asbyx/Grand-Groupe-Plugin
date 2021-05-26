@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
@@ -25,7 +24,7 @@ public class NudeBow extends AbstractListener {
 			Player player = (Player) event.getEntity().getShooter();
 			Arrow arrow = (Arrow) event.getEntity();
 
-			if (player.getInventory().getItemInOffHand().getType() == Material.ANVIL) {
+			if (player.getInventory().getItemInOffHand().getType() == Material.EMERALD) {
 				player.getInventory().getItemInOffHand().setAmount(player.getInventory().getItemInOffHand().getAmount() - 1);
 				arrow.setCustomName("nudeArrow");
 				arrow.setColor(Color.FUCHSIA);
