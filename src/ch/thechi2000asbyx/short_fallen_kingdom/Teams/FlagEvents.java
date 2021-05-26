@@ -4,24 +4,24 @@ import ch.thechi2000asbyx.common.AbstractListener;
 import ch.thechi2000asbyx.short_fallen_kingdom.Main;
 import org.bukkit.*;
 import org.bukkit.entity.*;
-import org.bukkit.event.*;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class FlagEvents extends AbstractListener {
+public class FlagEvents extends AbstractListener
+{
 	@EventHandler
 	public void moveFlag(PlayerDropItemEvent event) {
 		if (isDisabled()) return;
-
+		
 		Item item = event.getItemDrop();
-		World world = item.getWorld();
 		Player player = event.getPlayer();
 		FKTeam team = FKTeam.getTeam(player);
-
+		
 		if (team == null) return;
-
+		
 		if (item.getItemStack().getType() == Material.CLOCK) {
 			Main.SCHEDULER.scheduleSyncDelayedTask(Main.PLUGIN,
 					() ->
@@ -46,32 +46,32 @@ public class FlagEvents extends AbstractListener {
 								player.sendMessage(ChatColor.RED + "Cannot place the flag, your team was eliminated");
 								break;
 						}
-
+						
 						item.remove();
 						player.getInventory().addItem(new ItemStack(Material.CLOCK));
 					},
 					20);
 		}
 	}
-
+	
 	@EventHandler
 	public void checkBreakFlag(EntityExplodeEvent event) {
 		if (isDisabled()) return;
 		checkBreakFlag();
 	}
-
+	
 	@EventHandler
 	public void checkBreakFlag(BlockBurnEvent event) {
 		if (isDisabled()) return;
 		checkBreakFlag();
 	}
-
+	
 	@EventHandler
 	public void checkBreakFlag(BlockBreakEvent event) {
 		if (isDisabled()) return;
 		checkBreakFlag();
 	}
-
+	
 	private void checkBreakFlag() {
 		Main.SCHEDULER.scheduleSyncDelayedTask(Main.PLUGIN,
 				() ->
