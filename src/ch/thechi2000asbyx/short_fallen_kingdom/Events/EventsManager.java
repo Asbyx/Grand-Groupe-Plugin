@@ -115,11 +115,15 @@ public class EventsManager extends AbstractListener
 				timerOfMiddleChest, minTimeForRandomChest, maxTimeForRandomChest, timerOfBloodNight, radius, pvpAllowed
 		);
 	}
+
 	@EventHandler
 	public void onChargedCreeperDeath(EntityDeathEvent event) {
+		Bukkit.broadcastMessage("entity death");
 		if (isDisabled()) return;
-		
+		Bukkit.broadcastMessage("enable");
+
 		if (event.getEntity().getType() == EntityType.CREEPER && ((Creeper) event.getEntity()).isPowered()) {
+			Bukkit.broadcastMessage("charged creeper");
 			event.getDrops().clear();
 			ItemStack tnt = new ItemStack(Material.TNT);
 			tnt.setAmount(new Random().nextInt(4) + 1);
@@ -178,6 +182,7 @@ public class EventsManager extends AbstractListener
 					index <= notMuch ? new Random().nextInt(2) + 1 :
 					index <= normal ? new Random().nextInt(5) + 1 : new Random().nextInt(10) + 1
 			);
+			item.setAmount(Math.min(item.getAmount(), item.getMaxStackSize()));
 			content[i] = item;
 		}
 		return content;

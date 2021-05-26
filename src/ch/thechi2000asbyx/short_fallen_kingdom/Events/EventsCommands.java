@@ -68,11 +68,11 @@ public class EventsCommands implements CommandExecutor
 				if (args.length != 7 && args.length != 2) throw new IllegalArgumentException();
 				
 				if (args[1].equals("default")) eventsManager = new EventsManager();
-				else
-					eventsManager = new EventsManager(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]), Integer.parseInt(args[6]));
-				
+				else eventsManager = new EventsManager(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]), Integer.parseInt(args[6]));
+
+				Bukkit.getPluginManager().registerEvents(eventsManager, Main.PLUGIN);
 				eventsId = Main.SCHEDULER.runTaskTimer(Main.PLUGIN, () -> eventsManager.update(Objects.requireNonNull(Bukkit.getWorld("world")).getGameTime()), 0, 1).getTaskId();
-				
+
 				flagEvents.enable();
 				buildEvents.enable();
 				
