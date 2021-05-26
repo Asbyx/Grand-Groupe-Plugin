@@ -53,13 +53,9 @@ public enum Argument
 		this.ignoredInHelp = ignoredInHelp;
 	}
 	Argument(String description, Function<CommandSender, List<String>> tabCompletion) {
-		this.description   = description;
-		this.tabCompletion = tabCompletion;
-		this.ignoredInHelp = false;
+		this(description, tabCompletion, false);
 	}
 	Argument(String name) {
-		this.description   = name;
-		this.tabCompletion = c -> Misc.list(description);
-		this.ignoredInHelp = true;
+		this(name, c -> Misc.list(name), true);
 	}
 }

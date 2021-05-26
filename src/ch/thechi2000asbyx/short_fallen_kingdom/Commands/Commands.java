@@ -66,7 +66,11 @@ public enum Commands
 	GET_GAME_PARAMETERS(false,
 			"game",
 			"getGameParameters",
-			new ArgumentList("Prints all the parameters describing the current game", Argument.GET_GAME_PARAMETERS));
+			new ArgumentList("Prints all the parameters describing the current game", Argument.GET_GAME_PARAMETERS)),
+	MIDDLE_CHEST(false,
+			"game",
+			"middleChest",
+			new ArgumentList("Display the coordinated of the middle chest and respawn it if it was gone", Argument.MIDDLECHEST));
 	
 	
 	Commands(
