@@ -1,5 +1,6 @@
 package ch.thechi2000asbyx.short_fallen_kingdom.Teams;
 
+import ch.thechi2000asbyx.common.AbstractListener;
 import ch.thechi2000asbyx.short_fallen_kingdom.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -9,12 +10,10 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-public class BuildEvents implements Listener
-{
+public class BuildEvents extends AbstractListener {
 	private static final List<Material> authorizedOOBMaterials = computeAuthorizedOOBMaterials();
-	
-	private static List<Material> computeAuthorizedOOBMaterials()
-	{
+
+	private static List<Material> computeAuthorizedOOBMaterials() {
 		ArrayList<Material> l = new ArrayList<>();
 		l.add(Material.TNT);
 		l.add(Material.TORCH);
@@ -25,21 +24,22 @@ public class BuildEvents implements Listener
 		l.add(Material.WATER_BUCKET);
 		return l;
 	}
-	
+
 	@EventHandler
-	public void checkBlockBuild(BlockCanBuildEvent event)
-	{
+	public void checkBlockBuild(BlockCanBuildEvent event) {
+		if (isDisabled()) return;
+
 		Player player = Objects.requireNonNull(event.getPlayer());
 		FKTeam playerTeam = FKTeam.getTeam(player);
-		
+
 		if (playerTeam == null
 				|| playerTeam.isInBase(event.getBlock().getLocation())
 				|| authorizedOOBMaterials.contains(event.getMaterial())) return;
-		
+
 		player.sendMessage(ChatColor.RED + "You cannot build here");
 		//if (player.getGameMode() == GameMode.SURVIVAL) player.getInventory().addItem(new ItemStack(event.getMaterial()));
 		event.setBuildable(false);
-		
+
 		Main.SCHEDULER.scheduleSyncDelayedTask(Main.PLUGIN, () ->
 				{
 					player.getInventory().addItem(new ItemStack(event.getMaterial(), 1));
@@ -47,14 +47,14 @@ public class BuildEvents implements Listener
 				},
 				1);
 	}
-	
+
 	@EventHandler
-	public void checkBlockBreak(BlockBreakEvent event)
-	{
+	public void checkBlockBreak(BlockBreakEvent event) {
+		if (isDisabled()) return;
+
 		FKTeam playerTeam = FKTeam.getTeam(event.getPlayer());
-		
-		if (FKTeam.allTeams.stream().anyMatch(team -> playerTeam != team && team.isInBase(event.getBlock().getLocation())))
-		{
+
+		if (FKTeam.allTeams.stream().anyMatch(team -> playerTeam != team && team.isInBase(event.getBlock().getLocation()))) {
 			event.setCancelled(true);
 			event.setDropItems(false);
 			event.setExpToDrop(0);
