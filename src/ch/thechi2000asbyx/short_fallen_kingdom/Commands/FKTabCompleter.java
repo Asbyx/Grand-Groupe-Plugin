@@ -1,6 +1,5 @@
 package ch.thechi2000asbyx.short_fallen_kingdom.Commands;
 
-import ch.thechi2000asbyx.short_fallen_kingdom.Commands.*;
 import org.bukkit.command.*;
 
 import javax.annotation.Nonnull;
