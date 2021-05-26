@@ -12,16 +12,20 @@ import java.util.stream.Collectors;
 
 public enum Argument
 {
-	HELP("help", c -> Misc.list("help"), true),
-	CREATE("create", c -> Misc.list("create"), true),
-	REVIVE("revive", c -> Misc.list("revive"), true),
-	TERMINATE("terminate", c -> Misc.list("terminate"), true),
-	ADD_PLAYER("addPlayer", c -> Misc.list("addPlayer"), true),
-	REMOVE_PLAYER("removePlayer", c -> Misc.list("removePlayer"), true),
-	SET_BASE_LOCATION("setBaseLocation", c -> Misc.list("setBaseLocation"), true),
-	GET_BASE_LOCATION("getBaseLocation", c -> Misc.list("getBaseLocation"), true),
-	TEAMS("teams", c -> Misc.list("teams"), true),
-	PLAYERS("players", c -> Misc.list("players"), true),
+	HELP("help"),
+	CREATE("create"),
+	REVIVE("revive"),
+	TERMINATE("terminate"),
+	ADD_PLAYER("addPlayer"),
+	REMOVE_PLAYER("removePlayer"),
+	SET_BASE_LOCATION("setBaseLocation"),
+	GET_BASE_LOCATION("getBaseLocation"),
+	TEAMS("teams"),
+	PLAYERS("players"),
+	START_GAME("startGame"),
+	STOP_GAME("stopGame"),
+	GET_GAME_PARAMETERS("getGameParameters", c -> Misc.list("getGameParameters", "getParameters", "parameters"), true),
+	MIDDLECHEST("middleChest"),
 	PLAYER("Name of a player", c -> Bukkit.getOnlinePlayers().stream()
 										  .map(Player::getName)
 										  .collect(Collectors.toList())),
@@ -35,20 +39,27 @@ public enum Argument
 	COORD_Z("Z-axis coordinate", c -> c instanceof Player ? Misc.list(String.valueOf(((Player) c).getLocation().getZ()), "~")
 														  : Misc.list()),
 	COMMAND("A command", c -> Commands.ALL.stream().map(co -> co.commandName).collect(Collectors.toList())),
-	STRING("A string", c -> Misc.list());
+	STRING("A string", c -> Misc.list()),
+	INT("An integer", c -> Misc.list()),
+	DEFAULT("default", c -> Misc.list("default"));
 	
 	public final String description;
 	public final Function<CommandSender, List<String>> tabCompletion;
 	public final boolean ignoredInHelp;
 	
-	Argument(String description, Function<CommandSender, List<String>> tabCompletion, boolean countedInHelp) {
+	Argument(String description, Function<CommandSender, List<String>> tabCompletion, boolean ignoredInHelp) {
 		this.description   = description;
 		this.tabCompletion = tabCompletion;
-		this.ignoredInHelp = countedInHelp;
+		this.ignoredInHelp = ignoredInHelp;
 	}
 	Argument(String description, Function<CommandSender, List<String>> tabCompletion) {
 		this.description   = description;
 		this.tabCompletion = tabCompletion;
 		this.ignoredInHelp = false;
+	}
+	Argument(String name) {
+		this.description   = name;
+		this.tabCompletion = c -> Misc.list(description);
+		this.ignoredInHelp = true;
 	}
 }
