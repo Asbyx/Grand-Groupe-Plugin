@@ -2,8 +2,11 @@ package ch.thechi2000asbyx.short_fallen_kingdom.Events;
 
 import ch.thechi2000asbyx.short_fallen_kingdom.Main;
 import ch.thechi2000asbyx.short_fallen_kingdom.Scoreboards.FKScoreboard;
+import ch.thechi2000asbyx.short_fallen_kingdom.Teams.FKTeam;
 import org.bukkit.*;
 import org.bukkit.command.*;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -61,6 +64,9 @@ public class EventsCommands implements CommandExecutor
 				
 				scoreboards = Bukkit.getOnlinePlayers().stream().map(p -> new FKScoreboard(p, eventsManager)).collect(Collectors.toList());
 				scoreboards.forEach(FKScoreboard::start);
+				
+				Bukkit.getOnlinePlayers().stream().filter(p -> FKTeam.getTeam(p) != null).forEach(this::initPlayer);
+				FKTeam.allTeams.forEach(FKTeam::init);
 			}
 			catch (NumberFormatException e) {
 				sender.sendMessage(ChatColor.RED + "Invalid arguments:\n" +
@@ -76,7 +82,7 @@ public class EventsCommands implements CommandExecutor
 			}
 		}
 		else {
-			sender.sendMessage("You are not allowed to use this command");
+			sender.sendMessage(ChatColor.RED + "You are not allowed to use this command");
 		}
 	}
 	private void getGameParameters(CommandSender sender) {
@@ -104,5 +110,22 @@ public class EventsCommands implements CommandExecutor
 						"stopgame : stop the current game"
 		);
 		sender.sendMessage("parameters : display the current game parameters\n" + "middlechest : show the coordinates of the middle chest");
+	}
+	
+	private void initPlayer(Player player) {
+		player.setGameMode(GameMode.SURVIVAL);
+		player.getInventory().clear();
+		player.setExp(0);
+		player.setLevel(0);
+		player.setHealth(20);
+		player.setFoodLevel(20);
+		player.getActivePotionEffects().forEach(e -> player.removePotionEffect(e.getType()));
+		
+		player.getInventory().addItem(new ItemStack(Material.BREAD, 5), new ItemStack(Material.CLOCK));
+		
+		player.setInvulnerable(true);
+		player.teleport(FKTeam.getTeam(player).getBaseCenter().add(0, 30, 0).toOverworldLocation());
+		
+		Main.SCHEDULER.scheduleSyncDelayedTask(Main.PLUGIN, () -> player.setInvulnerable(false), 200);
 	}
 }

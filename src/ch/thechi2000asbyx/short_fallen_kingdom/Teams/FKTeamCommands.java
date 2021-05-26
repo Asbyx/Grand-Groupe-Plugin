@@ -1,6 +1,5 @@
 package ch.thechi2000asbyx.short_fallen_kingdom.Teams;
 
-import ch.thechi2000asbyx.common.Coordinates;
 import ch.thechi2000asbyx.short_fallen_kingdom.Commands.Commands;
 import ch.thechi2000asbyx.short_fallen_kingdom.Main;
 import net.md_5.bungee.api.ChatColor;
@@ -10,7 +9,6 @@ import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
-import java.util.Objects;
 
 public class FKTeamCommands implements CommandExecutor
 {
@@ -68,7 +66,7 @@ public class FKTeamCommands implements CommandExecutor
 		if (strings.length != 2) return false;
 		
 		FKTeam team = FKTeam.getTeam(strings[1]);
-		team.eliminate();
+		team.terminate();
 		
 		Main.broadcast("Team " + team.getName() + " successfully terminated");
 		return true;
@@ -139,22 +137,63 @@ public class FKTeamCommands implements CommandExecutor
 			return true;
 		}
 		
-		if (strings.length != 5) return false;
+		FKTeam team = null;
+		Location location = null;
 		
-		FKTeam team = FKTeam.getTeam(strings[1]);
-		if (team == null) {
-			commandSender.sendMessage(ChatColor.RED + "Unknown team");
-			return false;
+		if (strings.length == 1 && commandSender instanceof Player) {
+			Player player = (Player) commandSender;
+			
+			team = FKTeam.getTeam(player);
+			if (team == null) {
+				commandSender.sendMessage(ChatColor.RED + "You have no team. You are alone. How sad...");
+				return true;
+			}
+			
+			location = player.getLocation();
+		}
+		else if (strings.length == 2 && commandSender instanceof Player) {
+			Player player = (Player) commandSender;
+			
+			team = FKTeam.getTeam(strings[1]);
+			if (team == null) {
+				commandSender.sendMessage(ChatColor.RED + "Unknown team");
+				return false;
+			}
+			
+			location = player.getLocation();
+		}
+		else if (strings.length == 4) {
+			Player player = (Player) commandSender;
+			team = FKTeam.getTeam(player);
+			if (team == null) {
+				commandSender.sendMessage(ChatColor.RED + "You have no team. You are alone. How sad...");
+				return true;
+			}
+			
+			location = new Location(
+					Bukkit.getWorld("world"),
+					Double.parseDouble(strings[1]),
+					Double.parseDouble(strings[2]),
+					Double.parseDouble(strings[3])
+			);
+		}
+		else if (strings.length == 5) {
+			team = FKTeam.getTeam(strings[1]);
+			if (team == null) {
+				commandSender.sendMessage(ChatColor.RED + "Unknown team");
+				return false;
+			}
+			
+			location = new Location(
+					Bukkit.getWorld("world"),
+					Double.parseDouble(strings[2]),
+					Double.parseDouble(strings[3]),
+					Double.parseDouble(strings[4])
+			);
 		}
 		
-		team.setBaseCenter(new Location(
-				Bukkit.getWorld("world"),
-				Integer.parseInt(strings[2]),
-				Integer.parseInt(strings[3]),
-				Integer.parseInt(strings[4])
-		));
-		
-		createBase(team.getBaseCenter());
+		assert team != null;
+		team.setBaseCenter(location);
 		
 		Main.broadcast("Base location of " + team.getName() + " set to " + team.getBaseCenter());
 		return true;
@@ -240,21 +279,6 @@ public class FKTeamCommands implements CommandExecutor
 		else
 			return false;
 		return true;
-	}
-	
-	private static void createBase(Coordinates location) {
-		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
-		
-		for (int z = -7; z <= 7; z += 14) {
-			for (int x = -7; x <= 7; x += 2) {
-				world.getBlockAt(new Location(world, location.x + x, world.getHighestBlockYAt(location.x + x, location.z + z), location.z + z)).setType(Material.COBBLESTONE);
-			}
-		}
-		for (int x = -7; x <= 7; x += 14) {
-			for (int z = -7; z <= 7; z += 2) {
-				world.getBlockAt(new Location(world, location.x + x, world.getHighestBlockYAt(location.x + x, location.z + z), location.z + z)).setType(Material.COBBLESTONE);
-			}
-		}
 	}
 }
 

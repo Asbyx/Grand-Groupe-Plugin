@@ -1,6 +1,6 @@
 package ch.thechi2000asbyx.common;
 
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 
 import java.util.regex.*;
@@ -9,27 +9,23 @@ public class Coordinates
 {
 	public final int x, y, z;
 	
-	public Coordinates(Location location)
-	{
+	public Coordinates(Location location) {
 		x = location.getBlockX();
 		y = location.getBlockY();
 		z = location.getBlockZ();
 	}
-	public Coordinates(int x, int y, int z)
-	{
+	public Coordinates(int x, int y, int z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return String.format("[%d, %d, %d]", x, y, z);
 	}
 	
-	public static Coordinates fromString(String s)
-	{
+	public static Coordinates fromString(String s) {
 		Pattern pattern = Pattern.compile("\\[(-?\\d+), (-?\\d+), (-?\\d+)]");
 		Matcher matcher = pattern.matcher(s);
 		
@@ -42,8 +38,21 @@ public class Coordinates
 		);
 	}
 	
-	public int distanceTo(Coordinates that)
-	{
+	public Location toOverworldLocation() {
+		return new Location(Bukkit.getWorld("world"), x, y, z);
+	}
+	public Coordinates add(Coordinates that) {
+		return new Coordinates(x + that.x,
+				y + that.y,
+				z + that.z);
+	}
+	public Coordinates add(int x, int y, int z) {
+		return new Coordinates(x + this.x,
+				y + this.y,
+				z + this.z);
+	}
+	
+	public int distanceTo(Coordinates that) {
 		int dx = that.x - x,
 				dy = that.y - y,
 				dz = that.z - z;
@@ -51,17 +60,14 @@ public class Coordinates
 		return (int) Math.sqrt(dx * dx + dy * dy + dz * dz);
 	}
 	
-	public static int distanceBetween(Location a, Location b)
-	{
+	public static int distanceBetween(Location a, Location b) {
 		int dx = a.getBlockX() - b.getBlockX(),
 				dy = a.getBlockY() - b.getBlockY(),
 				dz = a.getBlockZ() - b.getBlockZ();
 		
 		return (int) Math.sqrt(dx * dx + dy * dy + dz * dz);
 	}
-	
-	public static int distanceBetween(Player a, Player b)
-	{
+	public static int distanceBetween(Player a, Player b) {
 		return distanceBetween(a.getLocation(), b.getLocation());
 	}
 }
