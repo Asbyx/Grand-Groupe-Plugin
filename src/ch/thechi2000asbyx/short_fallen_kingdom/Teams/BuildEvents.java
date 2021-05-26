@@ -1,6 +1,6 @@
 package ch.thechi2000asbyx.short_fallen_kingdom.Teams;
 
-import ch.thechi2000asbyx.common.AbstractListener;
+import ch.thechi2000asbyx.common.*;
 import ch.thechi2000asbyx.short_fallen_kingdom.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -11,19 +11,13 @@ import java.util.*;
 
 public class BuildEvents extends AbstractListener
 {
-	private static final List<Material> authorizedOOBMaterials = computeAuthorizedOOBMaterials();
-	
-	private static List<Material> computeAuthorizedOOBMaterials() {
-		ArrayList<Material> l = new ArrayList<>();
-		l.add(Material.TNT);
-		l.add(Material.TORCH);
-		l.add(Material.REDSTONE_TORCH);
-		l.add(Material.FLINT_AND_STEEL);
-		l.add(Material.BUCKET);
-		l.add(Material.LAVA_BUCKET);
-		l.add(Material.WATER_BUCKET);
-		return l;
-	}
+	private static final List<Material> authorizedOOBMaterials = Misc.list(Material.TNT,
+			Material.TORCH,
+			Material.REDSTONE_TORCH,
+			Material.FLINT_AND_STEEL,
+			Material.BUCKET,
+			Material.LAVA_BUCKET,
+			Material.WATER_BUCKET);
 	
 	@EventHandler
 	public void checkBlockBuild(BlockCanBuildEvent event) {
