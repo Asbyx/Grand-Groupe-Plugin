@@ -8,10 +8,12 @@ import com.mojang.datafixers.util.Pair;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.*;
-import org.bukkit.inventory.meta.*;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -29,7 +31,7 @@ public class Compass extends AbstractListener
 	public Compass(Player owner, EventsManager eventsManager) {
 		this.owner         = owner;
 		team               = FKTeam.getTeam(owner);
-		inventory          = Bukkit.createInventory(owner, 27, "Choose a target");
+		inventory          = Bukkit.createInventory(owner, 27, "Choose a target - " + owner.getName());
 		this.eventsManager = eventsManager;
 		map                = new HashMap<>();
 		
@@ -49,17 +51,26 @@ public class Compass extends AbstractListener
 	}
 	
 	@EventHandler
+	public void removeCompassOnDeath(PlayerDeathEvent event) {
+		if (event.getEntity() == owner) event.getDrops().removeIf(i -> i.getType() == Material.COMPASS);
+	}
+	
+	@EventHandler
+	public void addCompassOnRespawn(PlayerRespawnEvent event) {
+		if (event.getPlayer() == owner) event.getPlayer().getInventory().addItem(new ItemStack(Material.COMPASS));
+	}
+	
+	@EventHandler
 	public void openGui(PlayerInteractEvent event) {
-		if (isDisabled()) return;
+		if (isDisabled() || event.getPlayer() != owner) return;
 		
 		ItemStack item = event.getItem();
-		if (item == null || item.getType() != Material.COMPASS) return;
-		
-		map.clear();
-		inventory.clear();
+		if (item == null
+				|| item.getType() != Material.COMPASS
+				|| !(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK))
+			return;
 		
 		List<Pair<ItemStack, Location>> list = new ArrayList<>();
-		
 		
 		list.add(new Pair<>(middleChestItem, Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation()));
 		if (eventsManager.getRandomChestCenter() != null) list.add(new Pair<>(randomChestItem, eventsManager.getRandomChestCenter()));
@@ -72,19 +83,6 @@ public class Compass extends AbstractListener
 			stack.setItemMeta(meta);
 			
 			list.add(new Pair<>(stack, t.getBaseCenter().toOverworldLocation()));
-		});
-		
-		team.stream().filter(p -> p != owner).forEach(p ->
-		{
-			ItemStack stack = new ItemStack(Material.PLAYER_HEAD);
-			ItemMeta meta = Objects.requireNonNull(stack.getItemMeta());
-			
-			meta.setDisplayName(p.getName());
-			((SkullMeta) meta).setOwningPlayer(p);
-			
-			stack.setItemMeta(meta);
-			
-			list.add(new Pair<>(stack, p.getLocation()));
 		});
 		
 		AtomicInteger i = new AtomicInteger();

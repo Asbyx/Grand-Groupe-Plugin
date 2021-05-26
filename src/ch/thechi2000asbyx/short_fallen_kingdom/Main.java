@@ -24,8 +24,6 @@ public class Main extends JavaPlugin implements Listener
 		PLUGIN    = this;
 		SCHEDULER = getServer().getScheduler();
 		
-		Bukkit.getPluginManager().registerEvents(new FlagEvents(), this);
-		Bukkit.getPluginManager().registerEvents(new BuildEvents(), this);
 		Bukkit.getPluginManager().registerEvents(this, this);
 		
 		Objects.requireNonNull(getCommand("fkteam")).setExecutor(new FKTeamCommands());

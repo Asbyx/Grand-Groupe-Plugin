@@ -9,6 +9,7 @@ import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
+import java.util.stream.Collectors;
 
 public class FKTeamCommands implements CommandExecutor
 {
@@ -224,11 +225,7 @@ public class FKTeamCommands implements CommandExecutor
 	}
 	private static boolean teams(CommandSender commandSender, String[] strings) {
 		if (strings.length != 1) return false;
-		
-		StringBuilder sb = new StringBuilder().append("[");
-		FKTeam.allTeams.forEach(t -> sb.append(String.format("'%s'", t.getName())));
-		commandSender.sendMessage(sb.append("]").toString());
-		
+		commandSender.sendMessage(FKTeam.allTeams.stream().map(FKTeam::getName).collect(Collectors.joining(", ")));
 		return true;
 	}
 	private static boolean players(CommandSender commandSender, String[] strings) {
@@ -240,10 +237,7 @@ public class FKTeamCommands implements CommandExecutor
 			return true;
 		}
 		
-		StringBuilder sb = new StringBuilder().append("[");
-		Bukkit.getOnlinePlayers().stream().filter(team::contains).forEach(t -> sb.append(String.format("'%s'", t.getName())));
-		commandSender.sendMessage(sb.append("]").toString());
-		
+		commandSender.sendMessage(team.stream().map(Player::getName).collect(Collectors.joining(", ")));
 		return true;
 	}
 	private static boolean help(CommandSender commandSender, String[] strings) {

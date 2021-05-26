@@ -121,26 +121,24 @@ public class FKTeam
 	 * @return a value indicating whether a problem occurred, and if yes, which one it is
 	 */
 	public FlagPlacementProblems setFlagLocation(Location flagLocation) {
+		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
+		int x = flagLocation.getBlockX(),
+				y = flagLocation.getBlockY(),
+				z = flagLocation.getBlockZ();
+		
 		if (isEliminated()) return FlagPlacementProblems.TEAM_ELIMINATED;
 		if (flagLocation.getWorld() == null || flagLocation.getWorld().getEnvironment() != World.Environment.NORMAL)
 			return FlagPlacementProblems.INVALID_WORLD;
 		if (!isInBase(flagLocation)) return FlagPlacementProblems.OUTSIDE_BASE;
 		if (!checkFlagHeight(flagLocation.getBlockY())) return FlagPlacementProblems.INVALID_HEIGHT;
 		
-		if (this.flagLocation != null) removeOldFlag();
-		
-		
-		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
-		this.flagLocation = new Coordinates(flagLocation);
-		
-		int x = flagLocation.getBlockX(),
-				y = flagLocation.getBlockY(),
-				z = flagLocation.getBlockZ();
-		
 		if (world.getBlockAt(x, y, z).getType() != Material.AIR
 				|| world.getBlockAt(x, y + 1, z).getType() != Material.AIR)
 			return FlagPlacementProblems.BLOCKING_BLOCKS;
 		
+		if (this.flagLocation != null) removeOldFlag();
+		
+		this.flagLocation = new Coordinates(flagLocation);
 		world.getBlockAt(x, y, z).setType(Material.OAK_FENCE);
 		world.getBlockAt(x, y + 1, z).setType(Material.BLACK_WOOL);
 		

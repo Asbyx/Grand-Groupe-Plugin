@@ -6,8 +6,8 @@ import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.*;
-import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.entity.*;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
 public class FlagEvents extends AbstractListener
@@ -52,6 +52,16 @@ public class FlagEvents extends AbstractListener
 					},
 					20);
 		}
+	}
+	
+	@EventHandler
+	public void removeClockOnDeath(PlayerDeathEvent event) {
+		event.getDrops().removeIf(i -> i.getType() == Material.CLOCK);
+	}
+	
+	@EventHandler
+	public void addClockOnRespawn(PlayerRespawnEvent event) {
+		event.getPlayer().getInventory().addItem(new ItemStack(Material.CLOCK));
 	}
 	
 	@EventHandler

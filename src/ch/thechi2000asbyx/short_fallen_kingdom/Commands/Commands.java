@@ -69,7 +69,7 @@ public enum Commands {
 	MIDDLE_CHEST(false,
 			"game",
 			"middleChest",
-			new ArgumentList("Display the coordinated of the middle chest and respawn it if it was gone", Argument.MIDDLECHEST)),
+			new ArgumentList("Display the coordinated of the middle chest and respawn it if it was gone", Argument.MIDDLE_CHEST)),
 
 	TNT_BOW(true,
 			"rules",

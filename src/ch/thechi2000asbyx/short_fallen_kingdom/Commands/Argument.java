@@ -26,7 +26,7 @@ public enum Argument
 	START_GAME("startGame"),
 	STOP_GAME("stopGame"),
 	GET_GAME_PARAMETERS("getGameParameters", c -> Misc.list("getGameParameters", "getParameters", "parameters"), true),
-	MIDDLECHEST("middleChest"),
+	MIDDLE_CHEST("middleChest"),
 
 	TNT_BOW("tntBow"),
 	NUDE_BOW("nudeBow"),
