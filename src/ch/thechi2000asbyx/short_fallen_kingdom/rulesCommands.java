@@ -6,7 +6,6 @@ import ch.thechi2000asbyx.common.NudeBow;
 import ch.thechi2000asbyx.common.TntBow;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -36,15 +35,15 @@ public class rulesCommands implements CommandExecutor {
                     if(arg[1].equalsIgnoreCase("true") || arg[1].equalsIgnoreCase("false")){
                         if (Boolean.parseBoolean(arg[1])) {
                             listeners.get(0).enable();
-                            Main.broadcast("Tnt Bow enabled");
+                            enable("Tnt bow");
                         }
                         else {
                             listeners.get(0).disable();
-                            Main.broadcast("Tnt Bow disabled");
+                            disable("Tnt bow");
                         }
                     } else {
                         try {
-                            ((TntBow)listeners.get(0)).setPower(Float.parseFloat(arg[1]));
+                            ((TntBow) listeners.get(0)).setPower(Float.parseFloat(arg[1]));
                         } catch (NumberFormatException e) {
                             sender.sendMessage(ChatColor.RED + "Invalid arguments: boolean (enabling) or float value (set the power)");
                         }
@@ -54,24 +53,32 @@ public class rulesCommands implements CommandExecutor {
                 case "nudebow":
                     if (Boolean.parseBoolean(arg[1])) {
                         listeners.get(2).enable();
-                        Main.broadcast("Nude Bow enabled");
+                        enable("Nude Bow");
                     } else {
                         listeners.get(2).disable();
-                        Main.broadcast("Nude Bow disabled");
+                        disable("Nude Bow");
                     }
                     break;
 
                 case "tomb":
                     if (Boolean.parseBoolean(arg[1])) {
                         listeners.get(1).enable();
-                        Main.broadcast("Death chest enabled");
+                        enable("Deat chest");
                     } else {
                         listeners.get(1).disable();
-                        Main.broadcast("Death chest disabled");
+                        disable("Death chest");
                     }
                     break;
             }
         }
         return true;
+    }
+
+    private void disable(String str){
+        Main.broadcast(str + ChatColor.RED + " disabled");
+    }
+
+    private void enable(String str){
+        Main.broadcast(str + ChatColor.GREEN + " enabled");
     }
 }
