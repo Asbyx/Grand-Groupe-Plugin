@@ -1,6 +1,6 @@
-package ch.thechi2000asbyx.short_fallen_kingdom.Commands;
+package ch.thechi2000asbyx.common.tabCompleter;
 
-import ch.thechi2000asbyx.common.Misc;
+import ch.thechi2000asbyx.common.utils.Misc;
 
 import java.util.List;
 

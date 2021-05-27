@@ -1,6 +1,6 @@
 package ch.thechi2000asbyx.short_fallen_kingdom.Events;
 
-import ch.thechi2000asbyx.short_fallen_kingdom.Main;
+import ch.thechi2000asbyx.common.Main;
 import ch.thechi2000asbyx.short_fallen_kingdom.Scoreboards.*;
 import ch.thechi2000asbyx.short_fallen_kingdom.Teams.*;
 import org.bukkit.*;
@@ -35,9 +35,9 @@ public class EventsCommands implements CommandExecutor
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		switch (args[0].toLowerCase()) {
+		switch (args[1].toLowerCase()) {
 			case "startgame":
-				startGame(sender, args);
+				startGame(sender, Arrays.copyOfRange(args, 1, args.length));
 				break;
 			
 			case "parameters":
@@ -62,6 +62,7 @@ public class EventsCommands implements CommandExecutor
 	}
 	
 	private void startGame(CommandSender sender, String[] args) {
+		Bukkit.broadcastMessage(Arrays.toString(args));
 		if (sender.isOp()) {
 			if (eventsId != -1) return;
 			try {
@@ -94,7 +95,7 @@ public class EventsCommands implements CommandExecutor
 						"<day where PvP is allowed>");
 			}
 			catch (IllegalArgumentException i) {
-				sender.sendMessage(ChatColor.RED + "Invalid number of parameters.");
+				sender.sendMessage(String.format(ChatColor.RED + "Invalid number of parameters (%s).", args.length));
 			}
 		}
 		else {
@@ -131,7 +132,6 @@ public class EventsCommands implements CommandExecutor
 		);
 		sender.sendMessage("parameters : display the current game parameters\n" + "middlechest : show the coordinates of the middle chest");
 	}
-	
 	private void initPlayer(Player player) {
 		player.setGameMode(GameMode.SURVIVAL);
 		player.getInventory().clear();

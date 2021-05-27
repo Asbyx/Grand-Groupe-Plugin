@@ -1,9 +1,9 @@
-package ch.thechi2000asbyx.short_fallen_kingdom;
+package ch.thechi2000asbyx.common;
 
-import ch.thechi2000asbyx.common.DeathChest;
-import ch.thechi2000asbyx.common.AbstractListener;
-import ch.thechi2000asbyx.common.NudeBow;
-import ch.thechi2000asbyx.common.TntBow;
+import ch.thechi2000asbyx.common.listeners.AbstractListener;
+import ch.thechi2000asbyx.common.listeners.DeathChest;
+import ch.thechi2000asbyx.common.listeners.NudeBow;
+import ch.thechi2000asbyx.common.listeners.TntBow;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

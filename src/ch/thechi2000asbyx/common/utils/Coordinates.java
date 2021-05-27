@@ -1,4 +1,4 @@
-package ch.thechi2000asbyx.common;
+package ch.thechi2000asbyx.common.utils;
 
 import org.bukkit.*;
 import org.bukkit.entity.Player;

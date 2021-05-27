@@ -1,4 +1,4 @@
-package ch.thechi2000asbyx.common;
+package ch.thechi2000asbyx.common.utils;
 
 import com.google.common.collect.*;
 

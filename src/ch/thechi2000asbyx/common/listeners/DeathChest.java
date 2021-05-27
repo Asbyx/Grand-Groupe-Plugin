@@ -1,5 +1,6 @@
-package ch.thechi2000asbyx.common;
+package ch.thechi2000asbyx.common.listeners;
 
+import ch.thechi2000asbyx.common.utils.Coordinates;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Chest;

@@ -1,7 +1,7 @@
 package ch.thechi2000asbyx.short_fallen_kingdom.Teams;
 
-import ch.thechi2000asbyx.common.Coordinates;
-import ch.thechi2000asbyx.short_fallen_kingdom.Main;
+import ch.thechi2000asbyx.common.utils.Coordinates;
+import ch.thechi2000asbyx.common.Main;
 import org.bukkit.*;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.*;

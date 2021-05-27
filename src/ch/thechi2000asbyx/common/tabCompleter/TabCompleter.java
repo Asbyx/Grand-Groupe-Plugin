@@ -1,18 +1,17 @@
-package ch.thechi2000asbyx.short_fallen_kingdom.Commands;
+package ch.thechi2000asbyx.common.tabCompleter;
 
 import org.bukkit.command.*;
-
 import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static ch.thechi2000asbyx.short_fallen_kingdom.Commands.Commands.*;
+import static ch.thechi2000asbyx.common.tabCompleter.Commands.*;
 
-public class FKTabCompleter implements TabCompleter
+
+public class TabCompleter implements org.bukkit.command.TabCompleter
 {
 	@Override
 	public List<String> onTabComplete(@Nonnull CommandSender commandSender, @Nonnull Command command, @Nonnull String label, String[] strings) {
-		
 		return getValidArgumentLists(commandSender, label, strings).stream()
 																   .map(l -> l.arguments.get(strings.length - 1)
 																		   .tabCompletion.apply(commandSender).stream()
@@ -22,7 +21,6 @@ public class FKTabCompleter implements TabCompleter
 	}
 	
 	private List<ArgumentList> getValidArgumentLists(CommandSender sender, String label, String[] strings) {
-		
 		return ALL.stream().filter(c -> !c.opRequired || sender.isOp())
 				  .filter(c -> label.equals(c.commandLabel))
 				  .map(c -> c.argumentsList.stream().filter(l ->

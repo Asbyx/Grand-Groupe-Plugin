@@ -1,7 +1,8 @@
 package ch.thechi2000asbyx.short_fallen_kingdom.Teams;
 
-import ch.thechi2000asbyx.common.*;
-import ch.thechi2000asbyx.short_fallen_kingdom.Main;
+import ch.thechi2000asbyx.common.listeners.AbstractListener;
+import ch.thechi2000asbyx.common.Main;
+import ch.thechi2000asbyx.common.utils.Misc;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

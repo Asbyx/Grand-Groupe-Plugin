@@ -1,7 +1,8 @@
 package ch.thechi2000asbyx.short_fallen_kingdom.Events;
 
-import ch.thechi2000asbyx.common.*;
-import ch.thechi2000asbyx.short_fallen_kingdom.Main;
+import ch.thechi2000asbyx.common.listeners.AbstractListener;
+import ch.thechi2000asbyx.common.Main;
+import ch.thechi2000asbyx.common.utils.Coordinates;
 import org.bukkit.*;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.*;
@@ -118,9 +119,7 @@ public class EventsManager extends AbstractListener
 
 	@EventHandler
 	public void onChargedCreeperDeath(EntityDeathEvent event) {
-		Bukkit.broadcastMessage("entity death");
 		if (isDisabled()) return;
-		Bukkit.broadcastMessage("enable");
 
 		if (event.getEntity().getType() == EntityType.CREEPER && ((Creeper) event.getEntity()).isPowered()) {
 			Bukkit.broadcastMessage("charged creeper");

@@ -1,4 +1,4 @@
-package ch.thechi2000asbyx.common;
+package ch.thechi2000asbyx.common.listeners;
 
 import org.bukkit.Color;
 import org.bukkit.Material;

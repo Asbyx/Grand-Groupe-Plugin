@@ -1,7 +1,7 @@
 package ch.thechi2000asbyx.short_fallen_kingdom.Teams;
 
-import ch.thechi2000asbyx.short_fallen_kingdom.Commands.Commands;
-import ch.thechi2000asbyx.short_fallen_kingdom.Main;
+import ch.thechi2000asbyx.common.tabCompleter.Commands;
+import ch.thechi2000asbyx.common.Main;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.*;
 import org.bukkit.*;
@@ -9,33 +9,36 @@ import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class FKTeamCommands implements CommandExecutor
 {
 	@Override
 	public boolean onCommand(@Nonnull CommandSender commandSender, @Nonnull Command command, @Nonnull String s, String[] strings) {
-		switch (strings[0].toLowerCase()) {
+		String[] args = Arrays.copyOfRange(strings, 1, strings.length);
+
+		switch (strings[1].toLowerCase()) {
 			case "create":
-				return create(commandSender, strings);
+				return create(commandSender,  args);
 			case "terminate":
-				return terminate(commandSender, strings);
+				return terminate(commandSender, args);
 			case "revive":
-				return revive(commandSender, strings);
+				return revive(commandSender, args);
 			case "addplayer":
-				return addPlayer(commandSender, strings);
+				return addPlayer(commandSender, args);
 			case "removeplayer":
-				return removePlayer(commandSender, strings);
+				return removePlayer(commandSender, args);
 			case "setbaselocation":
-				return setBaseLocation(commandSender, strings);
+				return setBaseLocation(commandSender, args);
 			case "getbaselocation":
-				return getBaseLocation(commandSender, strings);
+				return getBaseLocation(commandSender, args);
 			case "teams":
-				return teams(commandSender, strings);
+				return teams(commandSender, args);
 			case "players":
-				return players(commandSender, strings);
+				return players(commandSender, args);
 			case "help":
-				return help(commandSender, strings);
+				return help(commandSender, args);
 		}
 		
 		return false;
@@ -46,7 +49,7 @@ public class FKTeamCommands implements CommandExecutor
 			Main.broadcast(ChatColor.RED + "You do not have the permission to use this command");
 			return true;
 		}
-		
+
 		if (strings.length != 2) return false;
 		
 		FKTeam team = FKTeam.registerNewTeam(strings[1]);

@@ -1,8 +1,8 @@
 package ch.thechi2000asbyx.short_fallen_kingdom.Scoreboards;
 
-import ch.thechi2000asbyx.common.AbstractListener;
+import ch.thechi2000asbyx.common.listeners.AbstractListener;
 import ch.thechi2000asbyx.short_fallen_kingdom.Events.EventsManager;
-import ch.thechi2000asbyx.short_fallen_kingdom.Main;
+import ch.thechi2000asbyx.common.Main;
 import ch.thechi2000asbyx.short_fallen_kingdom.Teams.FKTeam;
 import com.mojang.datafixers.util.Pair;
 import org.bukkit.*;

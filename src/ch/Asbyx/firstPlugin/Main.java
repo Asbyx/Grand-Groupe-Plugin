@@ -1,18 +1,12 @@
 package ch.Asbyx.firstPlugin;
 
-import ch.thechi2000asbyx.common.Coordinates;
-import org.bukkit.Bukkit;
+import ch.thechi2000asbyx.common.utils.Coordinates;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import java.time.Instant;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.stream.Collectors;
 
 public class Main extends JavaPlugin {

@@ -1,6 +1,6 @@
 package ch.Asbyx.firstPlugin;
 
-import ch.thechi2000asbyx.common.Coordinates;
+import ch.thechi2000asbyx.common.utils.Coordinates;
 import org.bukkit.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
