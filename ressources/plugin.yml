@@ -1,7 +1,7 @@
 name : LeGrandGroupePlugin
 authors: [Asbyx, TheChi2000]
 version: 0.3
-description: Fallen Kingdom Plugin
+description: Grand Plugin Plugin
 api-version: 1.16
 main: ch.grandgroupe.common.Main
 commands:

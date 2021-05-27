@@ -1,7 +1,6 @@
 package ch.grandgroupe.common;
 
 import ch.grandgroupe.common.tabCompleter.TabCompleter;
-import ch.grandgroupe.minigames.coop_defense.CoopCommands;
 import ch.grandgroupe.minigames.short_fallen_kingdom.Events.EventsCommands;
 import ch.grandgroupe.minigames.short_fallen_kingdom.FKExecutor;
 import ch.grandgroupe.minigames.short_fallen_kingdom.Teams.*;
@@ -24,15 +23,14 @@ public class Main extends JavaPlugin
 		
 		registerCommand("fk", new FKExecutor(new EventsCommands(), new FKTeamCommands()));
 		registerCommand("rules", new RulesCommands());
-		registerCommand("coop", new CoopCommands());
-		
+
 		FKTeam.loadTeamsFromConfig();
 	}
 	
 	private void registerCommand(String name, CommandExecutor executor) {
-		PluginCommand c = Objects.requireNonNull(getCommand(name));
-		c.setExecutor(executor);
-		c.setTabCompleter(new TabCompleter());
+		PluginCommand command = Objects.requireNonNull(getCommand(name));
+		command.setExecutor(executor);
+		command.setTabCompleter(new TabCompleter());
 	}
 	
 	public static void broadcast(String arg) {
