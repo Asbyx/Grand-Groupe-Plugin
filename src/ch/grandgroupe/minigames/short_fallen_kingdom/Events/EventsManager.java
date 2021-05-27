@@ -67,9 +67,9 @@ public class EventsManager extends AbstractListener
 	 */
 	public void update(long now) {
 		if (isDisabled()) return;
-		
+
 		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
-		
+
 		if ((now - lastMiddleChest) >= timerOfMiddleChest) {
 			lastMiddleChest = now;
 			spawnMiddleChest(world);
@@ -122,7 +122,6 @@ public class EventsManager extends AbstractListener
 		if (isDisabled()) return;
 
 		if (event.getEntity().getType() == EntityType.CREEPER && ((Creeper) event.getEntity()).isPowered()) {
-			Bukkit.broadcastMessage("charged creeper");
 			event.getDrops().clear();
 			ItemStack tnt = new ItemStack(Material.TNT);
 			tnt.setAmount(new Random().nextInt(4) + 1);
@@ -132,7 +131,7 @@ public class EventsManager extends AbstractListener
 	
 	
 	private void setBloodNight(World world) {
-		for (int i = 0; i < radius * 2; i++) {
+		for (int i = 0; i < radius * radius / 10.0; i++) {
 			world.strikeLightning(world.getSpawnLocation().clone().add(new Random().nextInt(radius * 2) - radius, 0, new Random().nextInt(radius * 2) - radius));
 			EntityType ent = mobs[new Random().nextInt(mobs.length)];
 			world.spawnEntity(world.getSpawnLocation().clone().add(new Random().nextInt(radius * 2) - radius, 0, new Random().nextInt(radius * 2) - radius), ent);

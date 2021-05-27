@@ -62,12 +62,11 @@ public class EventsCommands implements CommandExecutor
 	}
 	
 	private void startGame(CommandSender sender, String[] args) {
-		Bukkit.broadcastMessage(Arrays.toString(args));
 		if (sender.isOp()) {
 			if (eventsId != -1) return;
 			try {
 				if (args.length != 7 && args.length != 2) throw new IllegalArgumentException();
-				
+
 				if (args[1].equals("default")) eventsManager = new EventsManager();
 				else eventsManager = new EventsManager(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]), Integer.parseInt(args[6]));
 
