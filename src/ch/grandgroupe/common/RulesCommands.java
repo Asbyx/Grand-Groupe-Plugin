@@ -10,10 +10,10 @@ import org.bukkit.command.CommandSender;
 import java.util.ArrayList;
 import java.util.List;
 
-public class rulesCommands implements CommandExecutor {
+public class RulesCommands implements CommandExecutor {
     private final List<AbstractListener> listeners = new ArrayList<>();
 
-    public rulesCommands(){
+    public RulesCommands(){
         listeners.add(new TntBow());
         listeners.add(new DeathChest());
         listeners.add(new NudeBow());
