@@ -1,6 +1,6 @@
 package ch.thechi2000.distances_scoreboard;
 
-import ch.thechi2000asbyx.common.utils.Coordinates;
+import ch.grandgroupe.common.utils.Coordinates;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
