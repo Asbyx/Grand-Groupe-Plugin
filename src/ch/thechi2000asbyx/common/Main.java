@@ -23,9 +23,7 @@ public class Main extends JavaPlugin implements Listener {
 	public void onEnable() {
 		PLUGIN = this;
 		SCHEDULER = getServer().getScheduler();
-		/*fixme*/
-		Bukkit.getPluginManager().registerEvents(new Harvester(), this);
-		Bukkit.getPluginManager().registerEvents(this, this);
+		Bukkit.getPluginManager().registerEvents(this, this); //fixme wtf ?
 
 		Objects.requireNonNull(getCommand("fk")).setExecutor(new FKExecutor(new EventsCommands(), new FKTeamCommands()));
 		Objects.requireNonNull(getCommand("rules")).setExecutor(new rulesCommands());

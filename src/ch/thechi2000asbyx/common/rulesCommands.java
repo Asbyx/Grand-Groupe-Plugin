@@ -1,9 +1,6 @@
 package ch.thechi2000asbyx.common;
 
-import ch.thechi2000asbyx.common.listeners.AbstractListener;
-import ch.thechi2000asbyx.common.listeners.DeathChest;
-import ch.thechi2000asbyx.common.listeners.NudeBow;
-import ch.thechi2000asbyx.common.listeners.TntBow;
+import ch.thechi2000asbyx.common.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -20,6 +17,7 @@ public class rulesCommands implements CommandExecutor {
         listeners.add(new TntBow());
         listeners.add(new DeathChest());
         listeners.add(new NudeBow());
+        listeners.add(new Harvester());
 
         listeners.forEach(abstractListener -> {
             abstractListener.disable();
@@ -33,45 +31,50 @@ public class rulesCommands implements CommandExecutor {
             switch (arg[0].toLowerCase()) {
                 case "tntbow":
                     if(arg[1].equalsIgnoreCase("true") || arg[1].equalsIgnoreCase("false")){
-                        if (Boolean.parseBoolean(arg[1])) {
-                            listeners.get(0).enable();
-                            enable("Tnt bow");
-                        }
-                        else {
-                            listeners.get(0).disable();
-                            disable("Tnt bow");
-                        }
+                        enabler(Boolean.parseBoolean(arg[1]), 0, "Tnt Bow");
                     } else {
                         try {
                             ((TntBow) listeners.get(0)).setPower(Float.parseFloat(arg[1]));
+                            Main.broadcast("Power of Tnt bow set to: " + ChatColor.GOLD + Float.parseFloat(arg[1]));
                         } catch (NumberFormatException e) {
                             sender.sendMessage(ChatColor.RED + "Invalid arguments: boolean (enabling) or float value (set the power)");
                         }
                     }
                     break;
 
-                case "nudebow":
-                    if (Boolean.parseBoolean(arg[1])) {
-                        listeners.get(2).enable();
-                        enable("Nude Bow");
-                    } else {
-                        listeners.get(2).disable();
-                        disable("Nude Bow");
-                    }
+                case "deathchest":
+                    enabler(Boolean.parseBoolean(arg[1]), 1, "Death chest");
                     break;
 
-                case "tomb":
-                    if (Boolean.parseBoolean(arg[1])) {
-                        listeners.get(1).enable();
-                        enable("Deat chest");
+                case "nudebow":
+                    enabler(Boolean.parseBoolean(arg[1]), 2, "Nude Bow");
+                    break;
+
+                case "harvester":
+                    if(arg[1].equalsIgnoreCase("true") || arg[1].equalsIgnoreCase("false")){
+                        enabler(Boolean.parseBoolean(arg[1]), 3, "Harvester");
                     } else {
-                        listeners.get(1).disable();
-                        disable("Death chest");
+                        try {
+                            ((Harvester) listeners.get(3)).setRadius(Integer.parseInt(arg[1]));
+                            Main.broadcast("Radius of action of the harvester set to: " + ChatColor.GOLD + Integer.parseInt(arg[1]));
+                        } catch (NumberFormatException e) {
+                            sender.sendMessage(ChatColor.RED + "Invalid arguments: boolean (enabling) or float value (set the radius)");
+                        }
                     }
                     break;
             }
         }
         return true;
+    }
+
+    private void enabler(boolean newValue, int index, String name){
+        if (newValue) {
+            listeners.get(index).enable();
+            enable(name);
+        } else {
+            listeners.get(index).disable();
+            disable(name);
+        }
     }
 
     private void disable(String str){

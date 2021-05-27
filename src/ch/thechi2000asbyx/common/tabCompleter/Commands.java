@@ -32,6 +32,12 @@ public enum Commands {
 			"deathChest",
 			new ArgumentList("Enable or disable the nude bow", Argument.DEATH_CHEST, BOOLEAN)
 	),
+	HARVESTER(true,
+			"rules",
+			"harvester",
+			new ArgumentList("Enable or disable the harvester", Argument.HARVESTER, BOOLEAN),
+			new ArgumentList("Set the radius of action of the harvester", Argument.HARVESTER, INT)
+	),
 
 	/*#####################################################################################################################*/
 	/*FK*/
