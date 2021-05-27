@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PluginsMinecraftDeveloppement.iml" filepath="$PROJECT_DIR$/PluginsMinecraftDeveloppement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GrandGroupePlugins.iml" filepath="$PROJECT_DIR$/GrandGroupePlugins.iml" />
     </modules>
   </component>
 </project>

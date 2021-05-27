@@ -1,6 +1,6 @@
 name : LeGrandGroupePlugin
 authors: [Asbyx, TheChi2000]
-version: 0.2
+version: 0.3
 description: Fallen Kingdom Plugin
 api-version: 1.16
 main: ch.thechi2000asbyx.common.Main
@@ -15,6 +15,7 @@ commands:
     nudeBow:
       description: allow the nude bow to be used
       permission: op
+    harvester: allow the harvester to be used
 
   fk:
     game:
@@ -32,35 +33,3 @@ commands:
     teams:
       description: Execute action on teams
       usage: /<command> <action> <args>
-#[create|addPlayer|setBaseLocation|getBaseLocation|teams|players]
-
-
-
-#name : tomb
-#author: Asbyx
-#version: 0.1
-#description: Put a tomb at the death location of the player
-#api-version: 1.16
-#main: ch.Asbyx.tomb.Main
-
-
-#name : firstPlugin
-#author: Asbyx
-#version: 0.2
-#description: Premier plugin !
-#api-version: 1.16
-#main: ch.Asbyx.firstPlugin.Main
-#commands:
-#  coucou:
-#    description: Send "Salut" in the global chat
-#    aliases: [cc, slt]
-#
-#  showCoordinates:
-#    description: Send the player's coordinates in the global chat, or just to args[0] (name of the player)
-#    aliases: [sc]
-#
-#  startGame:
-#    description: Send every player location every args[0] seconds
-#
-#  stopGame:
-#    description: stop every scheduler
