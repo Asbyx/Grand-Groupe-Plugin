@@ -7,8 +7,8 @@ Aucune limite si ce n'est celle de l'imagination, du respect et surtout du fun !
 ### Je n'ai jamais pluginné :(
 Pas de problème ! On va faire un petit apperçu et un mini-tuto pour que tu te sentes à l'aise avec la méthode de travail, et on te conseillera une chaîne formidable qui fait même des tutos à jour (si si, nous non-plus on n'y croyait pas)
 
-### J'ai déjà pluginné, qu'est-ce que je fais là ? -.-
-Descend de ton piédestale, ici on code pour le fun, ce qui va suivre va juste être une review de comment Ludovic et moi-même avons imaginé le plugin pour que tes features soient implémentées correctement et dans le respect du travail des autres (c'est toujours plus agréable comme ça)
+### J'ai déjà pluginné, qu'est ce que je fais là ? -.-
+Descend de ton piedestal, ici on code pour le fun, ce qui va suivre va juste être une review de comment Ludovic et moi-même avons imaginé le plugin pour que tes features soient implémentées correctement et dans le respect du travail des autres (c'est toujours plus agréable comme ça)
 
 ### Je ne veux pas pluginner mais j'ai pleins de chouettes idées ! :D
 Eh bien tu as 2 choix:
@@ -17,7 +17,7 @@ Eh bien tu as 2 choix:
 
 ### Je veux pluginner mais je n'ai pas d'imagination :(
 Pas de problème, on a des idées pour toi ! Dans Issues tout le monde peut ajouter une idée qu'il aimerait voir implémentée dans le plugin: pleins de choses à faire !
-Si tu es débutant, on te conseille évidemment de commencer par les good-first-issues, ce sont des issues qui ne demande pas une maîtrise du pluginnage selon nous.
+Si tu es débutant, on te conseille évidemment de commencer par les good-first-issues, ce sont des issues qu'on pense ne pas demander une maîtrise du pluginnage pour être implémentée.
 
 
 ## Review de l'implémentation actuelle (v0.3)
@@ -41,7 +41,7 @@ Dans **grandgroupe**, on divise les packages ainsi:
     - Contient tous les minijeux: **UN ET UN SEUL PACKAGE PAR MINIJEU !!!**  
   
 Une fois le dans le package du minijeu, l'implémentation est libre. On demande juste à ce que la javadoc soit faites pour les méthodes 
-publiques qui ne sont pas des Event (sauf si elles décrivent mal ce qu'elles font) pour les minijeux, et une javadoc complète pour les 
+publiques qui ne sont pas des Event (sauf si elle décrivent mal ce qu'elles font) pour les minijeux, et une javadoc complète pour les 
 classes de **common**.
 
 ## Prérequis
@@ -77,7 +77,7 @@ Tu peux aussi override `enable` et `disable` pour des comportements spécifiques
 
 Ensuite, c'est à toi de fouiller dans la doc de spigot pour savoir quelles méthodes sont disponibles pour implémenter facilement ta feature ! Regarde dans les différentes classes de **listeners** pour avoir des exemples :)  
 
-Si tu n'es pas un boomer comme Eugène, tu peux aller voir cette chaîne qui expliquer tout super bien: https://www.youtube.com/c/CodedRed
+Si tu n'es un boomer comme Eugène, tu peux aller voir cette chaîne qui expliquer tout super bien: https://www.youtube.com/c/CodedRed
 
 On te donne quand même un exemple.
 ### Étape 1: On crée la feature.
