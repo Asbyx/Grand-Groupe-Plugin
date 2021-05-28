@@ -11,6 +11,10 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 
 import java.util.Objects;
 
+/**
+ * Tnt bow: If a player use a bow and have a TNT block in his left hand, the arrow he will throw will explode at the impact and the TNT block will be consumed.
+ * 			The power of the explosion can be set by using /rules tntBow [float]
+ */
 public class TntBow extends AbstractListener {
 	private float power = 2F;
 
@@ -42,6 +46,10 @@ public class TntBow extends AbstractListener {
 		}
 	}
 
+	/**
+	 * Set the power of the explosion at value (TNT = 4F)
+	 * @param value new value of the explosion
+	 */
 	public void setPower(float value){
 		power = value;
 	}

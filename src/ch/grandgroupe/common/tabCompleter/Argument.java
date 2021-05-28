@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Enumeration of all possible Arguments
+ * Please add yours with respect of the convention, at the right place
+ */
 public enum Argument {
 	/*RULES*/
 	TNT_BOW("tntBow"),

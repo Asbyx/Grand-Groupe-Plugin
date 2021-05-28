@@ -1,7 +1,7 @@
 # Grand-Groupe-Plugin
 
 ## Bienvenue !
-Tu es sur le point de rentrer dans le monde incroyable du pluginnage, du moins dans le monde du pluginnage dans le GrandGroupe :)  
+Tu es sur le point de rentrer dans le monde incroyable du pluginnage, du moins dans le monde du pluginnage du GrandGroupe :)  
 Aucune limite si ce n'est celle de l'imagination, du respect et surtout du fun !
 
 ### Je n'ai jamais pluginné :(
@@ -17,7 +17,7 @@ Eh bien tu as 2 choix:
 
 ### Je veux pluginner mais je n'ai pas d'imagination :(
 Pas de problème, on a des idées pour toi ! Dans Issues tout le monde peut ajouter une idée qu'il aimerait voir implémentée dans le plugin: pleins de choses à faire !
-Si tu es débutant, on te conseille évidemment de commencer par les good-first-issues, ce sont des issues qu'on pense ne pas demander une maîtrise du pluginnage pour être implémentée.
+Si tu es débutant, on te conseille évidemment de commencer par les good-first-issues, ce sont des issues ne demande pas une maîtrise du pluginnage pour être implémentées, selon nous.
 
 
 ## Review de l'implémentation actuelle (v0.3)
@@ -38,7 +38,9 @@ Dans **grandgroupe**, on divise les packages ainsi:
     - La classe Main, qui lance le plugin (et qui doit être unique)
     - La classe rulesCommands, sur laquelle on reviendra plus tard
 2. minigames
-    - Contient tous les minijeux: **UN ET UN SEUL PACKAGE PAR MINIJEU !!!**  
+    - Contient tous les minijeux:  
+      Un minijeu n'est pas qu'un petit truc dans le plugin, c'est un mode de jeu jouable, qui a un début et une fin, et qui doit être indépendant des autres minijeux.   
+      **UN ET UN SEUL PACKAGE PAR MINIJEU !!!**  
   
 Une fois le dans le package du minijeu, l'implémentation est libre. On demande juste à ce que la javadoc soit faites pour les méthodes 
 publiques qui ne sont pas des Event (sauf si elle décrivent mal ce qu'elles font) pour les minijeux, et une javadoc complète pour les 
@@ -47,13 +49,17 @@ classes de **common**.
 ## Prérequis
 *Tuto pour Windows + IntelliJ, pour les autres allez aussi sur le lien ci-dessous, tout est super bien documenté.*  
 Installation de Spigot : https://www.spigotmc.org/wiki/spigot-installation/  
-Il faut juste installer spigot en lui même, c'est suffisant. Ensuite crée un fichier **start.bat** ou **init.bat** selon si tu veux avoir Ludovic ou Eugène en tant qu'ennemi (team **start.bat** on est là) qui contient cette commande:
+  
+Il faut juste installer spigot en lui même, c'est suffisant (juste le .jar, que tu mets dans un dossier). Ensuite crée un fichier **start.bat** ou **init.bat** selon si tu veux avoir Ludovic ou Eugène en tant qu'ennemi (team **start.bat** on est là) qui contient cette commande:
 `@echo off
 java -jar spigot<version installée>.jar -nogui`  
-Cette librairie permet de lancer un serveur Minecraft en local utilisant les plugins donnés, en lançant ton **start.bat**. Tu peux jouer dans ton serveur avec le minecraft normal: multiplayer: ip = localhost.  
-On t'invite à lancer ton **start.bat** pour tout initialiser. La première fois ça devrait s'arrêter très tôt, un fichier nommé eula.txt a été créé, dedans met eula à true pour accepter l'eula de mojang. Une fois que c'est fait, relance **start.bat** et ton serveur devrait se lancer correctement. Pour l'arrêter, tape la commande `stop` ou ferme simplement la console (la 2e option ne sauvegardera pas ton monde).  
+Spigot permet de lancer un serveur Minecraft en local utilisant les plugins donnés, en lançant ton **start.bat**. Tu peux jouer dans ton serveur avec le minecraft normal: multiplayer: ip = localhost.  
+  
+On t'invite à lancer ton **start.bat** pour tout initialiser. La première fois ça devrait s'arrêter très tôt; un fichier nommé eula.txt a été créé. Dedans met eula à true pour accepter l'eula de mojang. Une fois que c'est fait, relance **start.bat** et ton serveur devrait se lancer correctement. Pour l'arrêter, tape la commande `stop` ou ferme simplement la console (la 2e option ne sauvegardera pas ton monde).  
 
-Dans IntelliJ (les utilisateurs d'Eclipse démerdez-vous avez votre IDE nul), dans Project Settings:  
+Dans IntelliJ *(les utilisateurs d'Eclipse démerdez-vous avez votre IDE nul)*, clonez le repository à part du dossier tout spigot. Vous pouvez le faire, mais on le déconseille.  
+
+Dans Project Settings:
 - Project: tu dois utiliser adopt-openj9-1.8 et le SDK doit être en version 8
 - Modules: Dependencies: ajoute `spigot<version>.jar` et sélectionne-le
 - Artifacts: Ajoute un JAR, from modules with depedencies:

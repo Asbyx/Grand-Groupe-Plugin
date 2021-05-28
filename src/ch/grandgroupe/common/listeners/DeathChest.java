@@ -9,6 +9,9 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 
+/**
+ * Death Chest: If a player dies, a chest at his death coordinates appears, and his coordinates are displayed to everyone playing.
+ */
 public class DeathChest extends AbstractListener {
     @EventHandler
     public void onDeath(PlayerDeathEvent event){

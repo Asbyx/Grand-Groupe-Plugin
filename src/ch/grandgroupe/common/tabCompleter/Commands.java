@@ -6,6 +6,10 @@ import java.util.List;
 
 import static ch.grandgroupe.common.tabCompleter.Argument.*;
 
+/**
+ * Enumeration of all commands available
+ * Please add yours with respect of the convention, at the right place
+ */
 public enum Commands {
 	//fixme make the help command global
 	HELP(false,
@@ -112,7 +116,8 @@ public enum Commands {
 			"game",
 			new ArgumentList("Display the coordinated of the middle chest and respawn it if it was gone", Argument.GAME, Argument.MIDDLE_CHEST)
 	)
-	/*#####################################################################################################################*/;
+	/*#####################################################################################################################*/
+	;
 
 
 	Commands(
@@ -130,9 +135,7 @@ public enum Commands {
 	}
 
 	public final boolean opRequired;
-
 	public final String commandLabel, commandName;
 	public final List<ArgumentList> argumentsList;
-
 	public static final List<Commands> ALL = Misc.list(values());
 }

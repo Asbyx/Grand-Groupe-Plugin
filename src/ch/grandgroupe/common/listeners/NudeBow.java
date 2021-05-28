@@ -2,6 +2,7 @@ package ch.grandgroupe.common.listeners;
 
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -11,8 +12,13 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Nude Bow: if a player use a bow and have an emerald in his left hand, the arrow he will throw will downgrade all the armor of the player who has been hit and the emerald will be consumed.
+ * Downgrade: if the armor have enchantement it is removed, if not, it does likes this: Netherite -> Diamond -> Iron -> Leather -> Nude :D
+ */
 public class NudeBow extends AbstractListener {
 	@EventHandler
 	public void onTntProjectileLaunch(ProjectileLaunchEvent event) {
@@ -36,7 +42,7 @@ public class NudeBow extends AbstractListener {
 	public void onTntProjectileArrive(ProjectileHitEvent event) {
 		if (isDisabled()) return;
 
-		if (Objects.equals(event.getEntity().getCustomName(), "nudeArrow") && event.getHitEntity() instanceof Player) {
+		if (Objects.equals(event.getEntity().getCustomName(), "nudeArrow") && event.getHitEntity() instanceof Player) { //fixme generalize
 			PlayerInventory playerInventory = ((Player) event.getHitEntity()).getInventory();
 			Material boots = playerInventory.getBoots() == null ? Material.AIR : playerInventory.getBoots().getType();
 			Material legging = playerInventory.getLeggings() == null ? Material.AIR : playerInventory.getLeggings().getType();
@@ -112,11 +118,30 @@ public class NudeBow extends AbstractListener {
 					break;
 			}
 
-			playerInventory.setBoots(new ItemStack(boots));
-			playerInventory.setLeggings(new ItemStack(legging));
-			playerInventory.setChestplate(new ItemStack(chest));
-			playerInventory.setHelmet(new ItemStack(helmet));
-
+			if(playerInventory.getHelmet().getEnchantments().isEmpty()) playerInventory.setHelmet(new ItemStack(helmet));
+			else {
+				Map<Enchantment, Integer> enchantments = playerInventory.getHelmet().getEnchantments();
+				enchantments.forEach((k, v) -> playerInventory.getHelmet().removeEnchantment(k));
+			}
+			
+			if(playerInventory.getChestplate().getEnchantments().isEmpty()) playerInventory.setChestplate(new ItemStack(chest));
+			else {
+				Map<Enchantment, Integer> enchantments = playerInventory.getChestplate().getEnchantments();
+				enchantments.forEach((k, v) -> playerInventory.getChestplate().removeEnchantment(k));
+			}
+			
+			if(playerInventory.getLeggings().getEnchantments().isEmpty()) playerInventory.setLeggings(new ItemStack(legging));
+			else {
+				Map<Enchantment, Integer> enchantments = playerInventory.getLeggings().getEnchantments();
+				enchantments.forEach((k, v) -> playerInventory.getLeggings().removeEnchantment(k));
+			}
+			
+			if(playerInventory.getBoots().getEnchantments().isEmpty()) playerInventory.setBoots(new ItemStack(boots));
+			else {
+				Map<Enchantment, Integer> enchantments = playerInventory.getBoots().getEnchantments();
+				enchantments.forEach((k, v) -> playerInventory.getBoots().removeEnchantment(k));
+			}
+			
 			event.getEntity().remove();
 		}
 	}

@@ -16,12 +16,18 @@ import org.bukkit.util.Vector;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Harvester: 	If the player destroy grass or flowers or sapling with the harvester, all nearby grass, flowers and saplings will be broke too.
+ * 				If the player destroy wheat with the harvester, all nearby ready-to-be-collected wheat will be broke too.
+ * 				A Harvester can be crafted by crafting a diamond hoe but with an emerald on top of the sticks.
+ * 				The radius of action of the harvester can be modified by the command: /rules harvester [int]
+ */
 public class Harvester extends AbstractListener {
 	private int radius = 1;
 	private final ShapedRecipe recipe1;
 	private final ShapedRecipe recipe2;
 	private final NamespacedKey key1 = new NamespacedKey(Main.PLUGIN, "harvester1");
-	private final NamespacedKey key2 =  new NamespacedKey(Main.PLUGIN, "harvester2");
+	private final NamespacedKey key2 = new NamespacedKey(Main.PLUGIN, "harvester2");
 
 
 	public Harvester() {
@@ -32,13 +38,21 @@ public class Harvester extends AbstractListener {
 		harvester.setItemMeta(meta);
 
 		recipe1 = new ShapedRecipe(key1, harvester);
-		recipe1.shape(" ed", " | ", " | ");
+		recipe1.shape(
+				" ed",
+				" | ",
+				" | "
+		);
 		recipe1.setIngredient('|', STICK);
 		recipe1.setIngredient('e', EMERALD);
 		recipe1.setIngredient('d', DIAMOND);
 
 		recipe2 = new ShapedRecipe(key2, harvester);
-		recipe2.shape("de ", " | ", " | ");
+		recipe2.shape(
+				"de ",
+				" | ",
+				" | "
+		);
 		recipe2.setIngredient('|', STICK);
 		recipe2.setIngredient('e', EMERALD);
 		recipe2.setIngredient('d', DIAMOND);
@@ -55,7 +69,7 @@ public class Harvester extends AbstractListener {
 			if (grass.contains(material)) {
 				for (int x = -radius; x <= radius; x++) {
 					for (int z = -radius; z <= radius; z++) {
-						if (world.getBlockAt(event.getBlock().getLocation().clone().add(new Vector(x, 0, z))).getType() == material) {
+						if (grass.contains(world.getBlockAt(event.getBlock().getLocation().clone().add(new Vector(x, 0, z))).getType())) {
 							world.getBlockAt(event.getBlock().getLocation().clone().add(new Vector(x, 0, z))).breakNaturally();
 						}
 					}
