@@ -47,6 +47,12 @@ publiques qui ne sont pas des Event (sauf si elle décrivent mal ce qu'elles fon
 classes de **common**.
 
 ## Prérequis
+Savoir coder en java, plutôt bien:  
+- maîtriser les fondamentaux: classes, méthodes static, énumérations, interfaces, programmation orientée objet, listes, ensembles et tables associatives (Map)  
+- savoir utiliser les spécificités: lambdas, interfaces fonctionnelles, streams  
+- connaître les trucs chelous de java: annotations, threads (c'est bien de savoir les utiliser mais ce n'est clairement pas un requis)  
+Si l'un de ces mots vous est inconnus ou peu familier, passer votre chemin pour l'instant et continuez d'apprendre le Java :) 
+
 *Tuto pour Windows + IntelliJ, pour les autres allez aussi sur le lien ci-dessous, tout est super bien documenté.*  
 Installation de Spigot : https://www.spigotmc.org/wiki/spigot-installation/  
   
