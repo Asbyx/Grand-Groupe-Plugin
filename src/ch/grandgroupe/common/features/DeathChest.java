@@ -1,4 +1,4 @@
-package ch.grandgroupe.common.listeners;
+package ch.grandgroupe.common.features;
 
 import ch.grandgroupe.common.utils.Coordinates;
 import org.bukkit.Material;

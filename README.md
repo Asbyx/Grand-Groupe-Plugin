@@ -32,9 +32,9 @@ Pour le plugin GrandGroupe en lui même, tout se passe dans **grandgroupe**.
 Dans **grandgroupe**, on divise les packages ainsi:
 1. common
     - Contient tout ce qui doit être accessible par n'importe quel mini-jeu (on y vient) et est commun à tout ce qui est contenu dans le plugin
-      > Un package util pour des classes qui sont utiles (thx captain obvious) et des méthodes utiles, dans la class Misc (on s'en sert aussi pour recréer des choses qui n'existent pas en Java 8).  
-      > Un package tabCompleter sur lequel on reviendra plus tard.  
-      > Un package listeners sur lequel on reviendra aussi plus tard.  
+      > Un package **util** pour des classes qui sont utiles (thx captain obvious) et des méthodes utiles, dans la class Misc (on s'en sert aussi pour recréer des choses qui n'existent pas en Java 8).  
+      > Un package **tabCompleter** sur lequel on reviendra plus tard.  
+      > Un package **features** sur lequel on reviendra aussi plus tard.  
     - La classe Main, qui lance le plugin (et qui doit être unique)
     - La classe rulesCommands, sur laquelle on reviendra plus tard
 2. minigames
@@ -76,12 +76,12 @@ Tu veux rajouter une épée custom ou n'importe quoi custom ? ou un évenement d
 un minijeu.
 
 D'abord, il faut savoir que ce genre de chose dépend d'évenements: un clic, un craft, la destruction d'un bloc, tout existe. On va donc commencer par créer une classe dans 
-**common.listeners** qui extends **AbstractListener**.  
+**common.features** qui extends **AbstractListener**.  
 Cette classe, qui implémente Listener, une interface de Spigot qui permet de recevoir des évenements de jeu, permet à ta feature d'être activée ou désactivée. Par conséquent, garde à l'esprit que toute ta feature ne doit être active que lorsque `isDisable()` de AbstractListener revoit false.
 On conseille de mettre `if(isDisable()) return;` au début de chaque méthode de ta classe.
-Tu peux aussi override `enable` et `disable` pour des comportements spécifiques.  
+Tu peux aussi override `enable` et `disable` pour des comportements spécifiques (exemple dans **Harvester**).  
 
-Ensuite, c'est à toi de fouiller dans la doc de spigot pour savoir quelles méthodes sont disponibles pour implémenter facilement ta feature ! Regarde dans les différentes classes de **listeners** pour avoir des exemples :)  
+Ensuite, c'est à toi de fouiller dans la doc de spigot pour savoir quelles méthodes sont disponibles pour implémenter facilement ta feature ! Regarde dans les différentes classes de **features** pour avoir des exemples :)  
 
 Si tu n'es un boomer comme Eugène, tu peux aller voir cette chaîne qui expliquer tout super bien: https://www.youtube.com/c/CodedRed
 
@@ -140,14 +140,14 @@ Et voilà ! On peut maintenant activer la feature avec la commande `/rules diama
 ### Étape 2: l'ajout de la commande dans le TabCompleter.
 Le tabCompleter permet d'ajouter l'auto-complétion de la commande avec `tab`. Pour ça, deux étapes:
 1. L'ajout de l'enumération dans **common.tabCompleter.Argument**
-> dans rules: ```DIAMAND_ZOMBIE("diamandZombie"),```
+> dans rules: ```DIAMAND_ZOMBIE("diamandZombie"),```: son nom d'énumération, selon la convention, et le nom dans le help
 2. L'ajout de la liste d'arguments possibles dans **common.tabCompleter.Commands**
 > dans rules:
 ```
 DIAMAND_ZOMBIE(true,  //on doit être op pour activer les rules
 "rules",              // la commande dépend de /rules
 "diamandZombie",      //on ajoute diamandZombie dans la liste d'argument qui peut arriver après /rules
-new ArgumentList("Enable or Disable the drop of diamand by zombies" /*description de la commande*/, Argument.DIAMAND_ZOMBIE, /*Argument initial*/, BOOLEAN /*Argument suivant*/)
+new ArgumentList(Argument.DIAMOND_ZOMBIE, "diamand zombie") //on utilise le constructeur des features, avec l'arguemnt et son nom aux yeux des joueurs
 ),
 ```
 

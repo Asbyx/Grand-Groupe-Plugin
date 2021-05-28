@@ -1,6 +1,6 @@
 package ch.grandgroupe.minigames.short_fallen_kingdom.Teams;
 
-import ch.grandgroupe.common.listeners.AbstractListener;
+import ch.grandgroupe.common.features.AbstractListener;
 import ch.grandgroupe.common.Main;
 import ch.grandgroupe.common.utils.Misc;
 import org.bukkit.*;

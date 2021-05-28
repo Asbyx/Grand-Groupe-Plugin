@@ -23,24 +23,29 @@ public enum Commands {
 	TNT_BOW(true,
 			"rules",
 			"tntBow",
-			new ArgumentList("Enable ort disable the tnt bow", Argument.TNT_BOW, BOOLEAN),
+			new ArgumentList(Argument.TNT_BOW, "tnt bow"),
 			new ArgumentList("Set the power of the tnt bow", Argument.TNT_BOW, FLOAT)
 	),
 	NUDE_BOW(true,
 			"rules",
 			"nudeBow",
-			new ArgumentList("Enable or disable the nude bow", Argument.NUDE_BOW, BOOLEAN)
+			new ArgumentList(Argument.NUDE_BOW, "nude bow")
 	),
 	DEATH_CHEST(true,
 			"rules",
 			"deathChest",
-			new ArgumentList("Enable or disable the nude bow", Argument.DEATH_CHEST, BOOLEAN)
+			new ArgumentList(Argument.DEATH_CHEST, "death chest")
 	),
 	HARVESTER(true,
 			"rules",
 			"harvester",
-			new ArgumentList("Enable or disable the harvester", Argument.HARVESTER, BOOLEAN),
+			new ArgumentList(Argument.HARVESTER, "harvester"),
 			new ArgumentList("Set the radius of action of the harvester", Argument.HARVESTER, INT)
+	),
+	GRAPPIN(true,
+			"rules",
+			"grappin",
+			new ArgumentList(Argument.GRAPPIN, "grappin")
 	),
 
 	/*#####################################################################################################################*/
@@ -116,8 +121,7 @@ public enum Commands {
 			"game",
 			new ArgumentList("Display the coordinated of the middle chest and respawn it if it was gone", Argument.GAME, Argument.MIDDLE_CHEST)
 	)
-	/*#####################################################################################################################*/
-	;
+	/*#####################################################################################################################*/;
 
 
 	Commands(

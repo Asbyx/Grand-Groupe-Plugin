@@ -1,6 +1,6 @@
 package ch.grandgroupe.common;
 
-import ch.grandgroupe.common.listeners.*;
+import ch.grandgroupe.common.features.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

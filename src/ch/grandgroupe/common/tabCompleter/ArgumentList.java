@@ -21,4 +21,14 @@ public class ArgumentList
 	{
 		this(description, Misc.list(args));
 	}
+
+	/**
+	 * Constructor for the features
+	 * @param arg the feature's argument
+	 * @param name the feature's name
+	 */
+	public ArgumentList(Argument arg, String name){
+		this.description = "Enable or disable the " + name;
+		this.arguments = Misc.list(arg, Argument.BOOLEAN);
+	}
 }

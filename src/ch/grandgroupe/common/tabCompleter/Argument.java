@@ -20,6 +20,7 @@ public enum Argument {
 	NUDE_BOW("nudeBow"),
 	DEATH_CHEST("deathChest"),
 	HARVESTER("harvester"),
+	GRAPPIN("grappin"),
 
 	/*MAIN ARGUMENTS*/
 	/*FK*/

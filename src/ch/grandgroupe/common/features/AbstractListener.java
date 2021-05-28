@@ -1,4 +1,4 @@
-package ch.grandgroupe.common.listeners;
+package ch.grandgroupe.common.features;
 
 import org.bukkit.event.Listener;
 
