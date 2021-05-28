@@ -4,6 +4,10 @@ import ch.grandgroupe.common.utils.Misc;
 
 import java.util.List;
 
+/**
+ * Class used for the Tab Completer
+ * Do not modify
+ */
 public class ArgumentList
 {
 	public final String description;

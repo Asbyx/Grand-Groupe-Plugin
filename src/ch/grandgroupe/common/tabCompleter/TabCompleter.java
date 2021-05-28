@@ -2,12 +2,16 @@ package ch.grandgroupe.common.tabCompleter;
 
 import org.bukkit.command.*;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static ch.grandgroupe.common.tabCompleter.Commands.*;
 
-
+/**
+ * The General tab completer for commands
+ * Do not modify or use
+ */
 public class TabCompleter implements org.bukkit.command.TabCompleter
 {
 	@Override

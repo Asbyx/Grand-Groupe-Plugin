@@ -11,8 +11,9 @@ import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.Objects;
 
-public class Main extends JavaPlugin
+public final class Main extends JavaPlugin
 {
+	//use those instead of Bukkit's ones !
 	public static JavaPlugin PLUGIN;
 	public static BukkitScheduler SCHEDULER;
 	
@@ -21,18 +22,24 @@ public class Main extends JavaPlugin
 		PLUGIN    = this;
 		SCHEDULER = getServer().getScheduler();
 		
-		registerCommand("fk", new FKExecutor(new EventsCommands(), new FKTeamCommands()));
-		registerCommand("rules", new RulesCommands());
+		registerMinigame("fk", new FKExecutor(new EventsCommands(), new FKTeamCommands()));
+		registerMinigame("rules", new RulesCommands());
 
 		FKTeam.loadTeamsFromConfig();
 	}
-	
-	private void registerCommand(String name, CommandExecutor executor) {
+
+	//register for the minigames: name = name of the command | executor = executor managing the minigame
+	private void registerMinigame(String name, CommandExecutor executor) {
 		PluginCommand command = Objects.requireNonNull(getCommand(name));
 		command.setExecutor(executor);
 		command.setTabCompleter(new TabCompleter());
 	}
-	
+
+	/**
+	 * 	DO NOT USE Bukkit.broadcastMessage(), USE THIS INSTEAD ! Main.broadcast()
+	 *
+	 * 	Broadcast a message to every player
+	 */
 	public static void broadcast(String arg) {
 		getPlugin(Main.class).getServer().broadcastMessage(ChatColor.BLUE + "[Server] " + arg + ChatColor.WHITE);
 	}

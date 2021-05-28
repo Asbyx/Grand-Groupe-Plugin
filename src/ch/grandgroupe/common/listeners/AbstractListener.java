@@ -2,6 +2,9 @@ package ch.grandgroupe.common.listeners;
 
 import org.bukkit.event.Listener;
 
+/**
+ * Basic class to be extended by any Listener implemented in rules
+ */
 public abstract class AbstractListener implements Listener {
 	private boolean isEnabled = false;
 

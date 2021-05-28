@@ -4,6 +4,9 @@ import com.google.common.collect.*;
 
 import java.util.*;
 
+/**
+ * Class containing all useful method: be free to add yours !
+ */
 public class Misc
 {
 	public static <T> List<T> list() {

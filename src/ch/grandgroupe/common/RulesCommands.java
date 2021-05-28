@@ -10,9 +10,15 @@ import org.bukkit.command.CommandSender;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RulesCommands implements CommandExecutor {
+/**
+ * Class which manages all the listeners and their commands.
+ */
+public final class RulesCommands implements CommandExecutor {
     private final List<AbstractListener> listeners = new ArrayList<>();
 
+    /**
+     * Default constructor: initiate all listeners, disabled by default
+     */
     public RulesCommands(){
         listeners.add(new TntBow());
         listeners.add(new DeathChest());
@@ -67,6 +73,7 @@ public class RulesCommands implements CommandExecutor {
         return true;
     }
 
+    //method to be called for basic enable/disable event: new value = enable value | index = index in the list | name = name of the Listener for the players
     private void enabler(boolean newValue, int index, String name){
         if (newValue) {
             listeners.get(index).enable();
@@ -77,10 +84,10 @@ public class RulesCommands implements CommandExecutor {
         }
     }
 
+    //do not use
     private void disable(String str){
         Main.broadcast(str + ChatColor.RED + " disabled");
     }
-
     private void enable(String str){
         Main.broadcast(str + ChatColor.GREEN + " enabled");
     }
