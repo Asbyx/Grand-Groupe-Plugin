@@ -7,10 +7,10 @@ import java.util.List;
 import static ch.grandgroupe.common.tabCompleter.Argument.*;
 
 /**
- * Enumeration of all commands available
- * Please add yours with respect of the convention, at the right place
+ * Enumeration of all commands available Please add yours with respect of the convention, at the right place
  */
-public enum Commands {
+public enum Commands
+{
 	//fixme make the help command global
 	HELP(false,
 			"fk",
@@ -18,7 +18,7 @@ public enum Commands {
 			new ArgumentList("Display the list of the commands", Argument.HELP),
 			new ArgumentList("Get the help about a command", Argument.HELP, COMMAND)
 	),
-
+	
 	/*RULES*/
 	TNT_BOW(true,
 			"rules",
@@ -47,7 +47,11 @@ public enum Commands {
 			"grappin",
 			new ArgumentList(Argument.GRAPPIN, "grappin")
 	),
-
+	DUEL(true,
+			"rules",
+			"duel",
+			new ArgumentList(Argument.DUEL, "duel")),
+	
 	/*#####################################################################################################################*/
 	/*FK*/
 	CREATE(true,
@@ -122,22 +126,22 @@ public enum Commands {
 			new ArgumentList("Display the coordinated of the middle chest and respawn it if it was gone", Argument.GAME, Argument.MIDDLE_CHEST)
 	)
 	/*#####################################################################################################################*/;
-
-
+	
+	
 	Commands(
 			boolean opRequired, String
 			commandLabel,
 			String commandName, List<ArgumentList> argumentsList) {
-		this.opRequired = opRequired;
-		this.commandLabel = commandLabel;
-		this.commandName = commandName;
+		this.opRequired    = opRequired;
+		this.commandLabel  = commandLabel;
+		this.commandName   = commandName;
 		this.argumentsList = argumentsList;
 	}
-
+	
 	Commands(boolean opRequired, String commandLabel, String commandName, ArgumentList... args) {
 		this(opRequired, commandLabel, commandName, Misc.list(args));
 	}
-
+	
 	public final boolean opRequired;
 	public final String commandLabel, commandName;
 	public final List<ArgumentList> argumentsList;

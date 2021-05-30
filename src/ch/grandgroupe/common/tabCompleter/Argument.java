@@ -21,6 +21,7 @@ public enum Argument {
 	DEATH_CHEST("deathChest"),
 	HARVESTER("harvester"),
 	GRAPPIN("grappin"),
+	DUEL("duel"),
 
 	/*MAIN ARGUMENTS*/
 	/*FK*/
