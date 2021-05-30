@@ -9,11 +9,14 @@ public class Duel extends AbstractListener
 {
 	Player player1, player2;
 	
+	public Duel() {
+	}
+	
 	@Override
 	public void enable() {
 		super.enable();
 		
-		if (Bukkit.getOnlinePlayers().size() != 2) throw new IllegalStateException();
+		if (Bukkit.getOnlinePlayers().size() != 2) return;
 		
 		Player[] players = Bukkit.getOnlinePlayers().toArray(new Player[0]);
 		player1 = players[0];
@@ -21,8 +24,7 @@ public class Duel extends AbstractListener
 	}
 	
 	@EventHandler
-	public void updateCompasses(PlayerMoveEvent event)
-	{
+	public void updateCompasses(PlayerMoveEvent event) {
 		if (isDisabled()) return;
 		
 		player1.setCompassTarget(player2.getLocation());
