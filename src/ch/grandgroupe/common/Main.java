@@ -5,8 +5,10 @@ import ch.grandgroupe.minigames.coop_defense.CoopCommands;
 import ch.grandgroupe.minigames.short_fallen_kingdom.Events.EventsCommands;
 import ch.grandgroupe.minigames.short_fallen_kingdom.FKExecutor;
 import ch.grandgroupe.minigames.short_fallen_kingdom.Teams.*;
-import org.bukkit.ChatColor;
+import org.bukkit.*;
 import org.bukkit.command.*;
+import org.bukkit.event.*;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
