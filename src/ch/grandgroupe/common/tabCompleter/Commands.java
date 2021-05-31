@@ -135,9 +135,22 @@ public enum Commands
 	SPEEDRUN_STOP(true,
 			"speedrun",
 			"speedrun",
-			new ArgumentList("Start the speedrun to a given objective", Argument.STOP_GAME));
+			new ArgumentList("Start the speedrun to a given objective", Argument.STOP_GAME)),
 	
-	/*#####################################################################################################################*/;
+	/*#####################################################################################################################*/
+
+	/*#####################################################################################################################*/
+	/*TRAINING PACK*/
+	TRAINING_START(true,
+						   "training",
+						   "start",
+						   new ArgumentList("Start the training, true for tryhard, false for practice", Argument.TRAINING_START, BOOLEAN)),
+	TRAINING_STOP(true,
+						  "training",
+						  "stop",
+						  new ArgumentList("Stop the training", Argument.TRAINING_STOP));
+
+	/*#####################################################################################################################*/
 	
 	
 	Commands(

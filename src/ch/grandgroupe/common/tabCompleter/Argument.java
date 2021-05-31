@@ -12,10 +12,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Enumeration of all possible Arguments Please add yours with respect of the convention, at the right place
+ * Enumeration of all possible Arguments
+ * Please add yours with respect of the convention, at the right place
  */
-public enum Argument
-{
+public enum Argument {
 	/*RULES*/
 	TNT_BOW("tntBow"),
 	NUDE_BOW("nudeBow"),
@@ -23,12 +23,12 @@ public enum Argument
 	HARVESTER("harvester"),
 	GRAPPIN("grappin"),
 	COMPASS_TARGETING("compassTargeting"),
-	
+
 	/*MAIN ARGUMENTS*/
 	/*FK*/
 	GAME("game"),
 	TEAMS("teams"),
-	
+
 	/*#####################################################################################################################*/
 	/*FK*/
 	/*TEAMS*/
@@ -44,13 +44,18 @@ public enum Argument
 	TEAM("Name of a team", c -> FKTeam.allTeams.stream()
 											   .map(FKTeam::getName)
 											   .collect(Collectors.toList())),
-	
+
 	/*GAME*/
 	START_GAME("startGame"),
 	STOP_GAME("stopGame"),
 	GET_GAME_PARAMETERS("getGameParameters", c -> Misc.list("getGameParameters", "getParameters", "parameters"), true),
 	MIDDLE_CHEST("middleChest"),
-	
+
+	/*#####################################################################################################################*/
+	/*TRAINING PACK*/
+	TRAINING_START("start"),
+	TRAINING_STOP("stop"),
+
 	/*#####################################################################################################################*/
 	/*SPEEDRUN*/
 	OBJECTIVE("The objective to achieve", c -> Arrays.stream(Objective.values())
@@ -59,7 +64,7 @@ public enum Argument
 																.replaceAll("([A-Z])", "\\L$1")
 																.replaceAll("_([a-z])", "\\u$1"))
 													 .collect(Collectors.toList())),
-	
+
 	/*#####################################################################################################################*/
 	/*GLOBAL*/
 	PLAYER("Name of a player", c -> Bukkit.getOnlinePlayers().stream()
@@ -77,21 +82,21 @@ public enum Argument
 	FLOAT("A float", c -> Misc.list()),
 	BOOLEAN("A boolean", c -> Misc.list("true", "false")),
 	DEFAULT("default", c -> Misc.list("default"));
-	
+	/*########################################################################################################################*/
 	public final String description;
 	public final Function<CommandSender, List<String>> tabCompletion;
 	public final boolean ignoredInHelp;
-	
+
 	Argument(String description, Function<CommandSender, List<String>> tabCompletion, boolean ignoredInHelp) {
 		this.description   = description;
 		this.tabCompletion = tabCompletion;
 		this.ignoredInHelp = ignoredInHelp;
 	}
-	
+
 	Argument(String description, Function<CommandSender, List<String>> tabCompletion) {
 		this(description, tabCompletion, false);
 	}
-	
+
 	Argument(String name) {
 		this(name, c -> Misc.list(name), true);
 	}

@@ -5,7 +5,6 @@ import ch.grandgroupe.common.utils.Timer;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -19,7 +18,7 @@ class SpeedrunScoreboard
 	private final Timer timer;
 	private final List<String> scores;
 	
-	public SpeedrunScoreboard(@NotNull Player player) {
+	public SpeedrunScoreboard(Player player) {
 		this.player = player;
 		scoreboard  = Objects.requireNonNull(Bukkit.getScoreboardManager()).getNewScoreboard();
 		objective   = scoreboard.registerNewObjective(player.getName(), "dummy", "Duel");
