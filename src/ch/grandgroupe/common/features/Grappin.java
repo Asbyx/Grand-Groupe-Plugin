@@ -11,12 +11,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.util.Vector;
 
-//todo !
+import java.util.Objects;
+
+//todo ! (unfinished feature)
 public class Grappin extends AbstractListener {
 	int id = -1;
 	double length;
 	private final ShapedRecipe recipe1; //todo
-	private final NamespacedKey key1 = new NamespacedKey(Main.PLUGIN, "harvester1");
+	private final NamespacedKey key1 = new NamespacedKey(Main.PLUGIN, "grappin");
 
 
 	public Grappin(){
@@ -26,7 +28,7 @@ public class Grappin extends AbstractListener {
 
 	@EventHandler
 	public void onHook(PlayerFishEvent event) {
-		if (isDisabled()) return;
+		if (isDisabled() || !Objects.requireNonNull(event.getPlayer().getInventory().getItemInMainHand().getItemMeta()).getDisplayName().equals("Grappin")) return;
 
 		if (id != -1) {
 			Main.SCHEDULER.cancelTask(id);
@@ -58,25 +60,14 @@ public class Grappin extends AbstractListener {
 		id = Main.SCHEDULER.runTaskTimer(Main.PLUGIN, () -> hang(player, finalBlocLoc), 0, 1).getTaskId();
 	}
 
-	@EventHandler
-	public void onGrappinActivated(PlayerInteractEvent event) {
-		if (isDisabled()) return;
-
-		if (event.getAction() == Action.RIGHT_CLICK_AIR && id != 1) { // fixme unworking but wtf
-			ItemStack item = event.getPlayer().getInventory().getItemInOffHand();
-			if (item.getType() == Material.FIREWORK_ROCKET) {
-				item.setAmount(item.getAmount() - 1);
-				//length /= 4;
-			}
-		}
-	}
+	//unfinished: the goal was to set up a boost with firework: if u press left click while holding one, u re tracked toward the grappin point
 
 	public void hang(Player player, Location blockLocation) {
 		Vector line = blockLocation.clone().subtract(player.getLocation().clone().toVector()).toVector();
-		double power = (line.length() - length) / 4.0; //fixme unworking
+		double power = (line.length() - length) / 4.0;
 
 		Vector vect = line.clone().normalize().multiply(power <= 0 ? 0 : power);
-		if (player.isSprinting()) vect.add(player.getLocation().getDirection().multiply(0.05));
+		if (player.isSprinting()) vect.add(player.getLocation().getDirection().multiply(0.025));
 		player.setVelocity(player.getVelocity().add(vect));
 	}
 }
