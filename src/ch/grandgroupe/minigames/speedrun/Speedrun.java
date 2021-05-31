@@ -42,8 +42,22 @@ public class Speedrun extends AbstractListener
 	
 	@EventHandler
 	public void checkVictory(PlayerDeathEvent event) {
-		if (objective.type != Objective.Types.KILL) return;
-		players.stream().filter(p -> p.getStatistic(Statistic.PLAYER_KILLS) >= 1).findAny().ifPresent(this::endGame);
+		Player killer = event.getEntity().getKiller();
+		switch (objective.type) {
+			case KILL:
+				if (killer != null) endGame(killer);
+				break;
+			
+			case POTION_KILL:
+				if (killer != null
+						&& (killer.getActivePotionEffects().stream().anyMatch(e -> Objective.bonusEffects.contains(e.getType()))
+						|| event.getEntity().getActivePotionEffects().stream().anyMatch(e -> Objective.malusEffects.contains(e.getType()))))
+					endGame(killer);
+				break;
+			
+			default:
+				break;
+		}
 	}
 	
 	@EventHandler
