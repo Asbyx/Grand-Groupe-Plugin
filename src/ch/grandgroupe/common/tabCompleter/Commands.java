@@ -47,10 +47,11 @@ public enum Commands
 			"grappin",
 			new ArgumentList(Argument.GRAPPIN, "grappin")
 	),
-	DUEL(true,
+	COMPASS_TARGETING(true,
 			"rules",
-			"duel",
-			new ArgumentList(Argument.DUEL, "duel")),
+			"compassTargeting",
+			new ArgumentList(Argument.COMPASS_TARGETING, "compassTargeting")
+	),
 	
 	/*#####################################################################################################################*/
 	/*FK*/
@@ -124,7 +125,18 @@ public enum Commands
 			"fk",
 			"game",
 			new ArgumentList("Display the coordinated of the middle chest and respawn it if it was gone", Argument.GAME, Argument.MIDDLE_CHEST)
-	)
+	),
+	/*#####################################################################################################################*/
+	/*SPEEDRUN*/
+	SPEEDRUN_START(true,
+			"speedrun",
+			"speedrun",
+			new ArgumentList("Start the speedrun to a given objective", Argument.START_GAME, OBJECTIVE)),
+	SPEEDRUN_STOP(true,
+			"speedrun",
+			"speedrun",
+			new ArgumentList("Start the speedrun to a given objective", Argument.STOP_GAME));
+	
 	/*#####################################################################################################################*/;
 	
 	

@@ -33,3 +33,11 @@ commands:
     teams:
       description: Execute action on teams
       usage: /<command> <action> <args>
+
+  speedrun:
+    start:
+      description: Start the game
+      permission: op
+    stop:
+      description: Stop the game
+      permission: op

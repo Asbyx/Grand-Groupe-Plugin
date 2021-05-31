@@ -4,6 +4,7 @@ import ch.grandgroupe.common.tabCompleter.TabCompleter;
 import ch.grandgroupe.minigames.short_fallen_kingdom.Events.EventsCommands;
 import ch.grandgroupe.minigames.short_fallen_kingdom.FKExecutor;
 import ch.grandgroupe.minigames.short_fallen_kingdom.Teams.*;
+import ch.grandgroupe.minigames.speedrun.SpeedrunExecutor;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,6 +25,7 @@ public final class Main extends JavaPlugin
 		
 		registerMinigame("fk", new FKExecutor(new EventsCommands(), new FKTeamCommands()));
 		registerMinigame("rules", new RulesCommands());
+		registerMinigame("speedrun", new SpeedrunExecutor());
 		
 		FKTeam.loadTeamsFromConfig();
 	}
@@ -41,6 +43,6 @@ public final class Main extends JavaPlugin
 	 * Broadcast a message to every player
 	 */
 	public static void broadcast(String arg) {
-		getPlugin(Main.class).getServer().broadcastMessage(ChatColor.BLUE + "[Server] " + arg + ChatColor.WHITE);
+		getPlugin(Main.class).getServer().broadcastMessage(ChatColor.BLUE + "[Server] " + arg);
 	}
 }
