@@ -2,21 +2,34 @@ package ch.grandgroupe.common.utils;
 
 import org.bukkit.World;
 
+import javax.annotation.Nonnull;
+
 public class Timer
 {
-	private final long startTime;
+	private long startTime;
 	private final World world;
 	
-	public Timer(World world) {
+	/**
+	 * Construct a Timer
+	 *
+	 * @param world the world for which the time will be measured
+	 */
+	public Timer(@Nonnull World world) {
 		startTime  = world.getGameTime();
 		this.world = world;
 	}
 	
+	/**
+	 * @return the time elapsed since the construction of the timer (in ticks)
+	 */
 	public long getElapsedTime() {
 		return world.getGameTime() - startTime;
 	}
 	
-	public final String getElapsedTimeAsString() {
+	/**
+	 * @return a String representing the time elapsed (format hh mm ss)
+	 */
+	public String getElapsedTimeAsString() {
 		long ticks = getElapsedTime();
 		long secs = (ticks / 20) % 60,
 				min = (ticks / 1200) % 60,
@@ -28,5 +41,12 @@ public class Timer
 			return String.format("%dm %ds", min, secs);
 		else
 			return String.format("%dh %dm %ds", hours, min, secs);
+	}
+	
+	/**
+	 * Restart the timer
+	 */
+	public void restart() {
+		startTime = world.getGameTime();
 	}
 }
