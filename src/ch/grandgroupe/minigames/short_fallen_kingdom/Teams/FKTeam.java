@@ -220,8 +220,8 @@ public class FKTeam
 	 */
 	public void eliminate() {
 		
-		String winCommand = "title %s title {\"text\":\"The team %s was eliminated\",\"color\":\"green\"}",
-				looseCommand = "title %s title {\"text\":\"Your team was eliminated\",\"color\":\"red\",\"bold\":true}";
+		String winCommand = "title %s title {\"text\":\"%s eliminated\",\"color\":\"green\"}",
+				looseCommand = "title %s title {\"text\":\"Eliminated\",\"color\":\"red\",\"bold\":true}";
 		
 		Bukkit.getOnlinePlayers().forEach(p -> {
 			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), contains(p)
