@@ -1,7 +1,7 @@
 package ch.grandgroupe.minigames.short_fallen_kingdom.Teams;
 
-import ch.grandgroupe.common.features.AbstractListener;
 import ch.grandgroupe.common.Main;
+import ch.grandgroupe.common.features.AbstractListener;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -56,11 +56,13 @@ public class FlagEvents extends AbstractListener
 	
 	@EventHandler
 	public void removeClockOnDeath(PlayerDeathEvent event) {
+		if (isDisabled()) return;
 		event.getDrops().removeIf(i -> i.getType() == Material.CLOCK);
 	}
 	
 	@EventHandler
 	public void addClockOnRespawn(PlayerRespawnEvent event) {
+		if (isDisabled()) return;
 		event.getPlayer().getInventory().addItem(new ItemStack(Material.CLOCK));
 	}
 	
