@@ -78,6 +78,7 @@ public final class RulesCommands implements CommandExecutor
 				
 				case "duel":
 					enabler(Boolean.parseBoolean(arg[1]), 5, "Duel");
+					enabler(Boolean.parseBoolean(arg[1]), 1, "Death chest");
 					break;
 			}
 		}
