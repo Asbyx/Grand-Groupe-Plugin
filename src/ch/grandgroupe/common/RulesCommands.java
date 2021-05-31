@@ -1,6 +1,7 @@
 package ch.grandgroupe.common;
 
 import ch.grandgroupe.common.features.*;
+import ch.grandgroupe.minigames.speedrun.Speedrun;
 import org.bukkit.*;
 import org.bukkit.command.*;
 
@@ -22,7 +23,7 @@ public final class RulesCommands implements CommandExecutor
 		listeners.add(new NudeBow());
 		listeners.add(new Harvester());
 		listeners.add(new Grappin());
-		listeners.add(new Duel());
+		listeners.add(new CompassTargeting());
 		
 		listeners.forEach(abstractListener -> {
 			abstractListener.disable();
@@ -76,9 +77,8 @@ public final class RulesCommands implements CommandExecutor
 					enabler(Boolean.parseBoolean(arg[1]), 4, "Grappin");
 					break;
 				
-				case "duel":
-					enabler(Boolean.parseBoolean(arg[1]), 5, "Duel");
-					enabler(Boolean.parseBoolean(arg[1]), 1, "Death chest");
+				case "compasstargeting":
+					enabler(Boolean.parseBoolean(arg[1]), 5, "Compass Targeting");
 					break;
 			}
 		}
