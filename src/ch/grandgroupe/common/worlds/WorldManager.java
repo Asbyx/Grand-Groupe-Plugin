@@ -32,13 +32,13 @@ public class WorldManager
 		Bukkit.getLogger().info("Finished load of " + name + ". Found " + (count + 1) + " worlds");
 	}
 	
-	private boolean hasSpecialGeneration() {
+	protected boolean hasSpecialGeneration() {
 		return false;
 	}
-	private void generate() {
+	protected void generate() {
 		throw new UnsupportedOperationException();
 	}
-	private boolean canBeRegenerated() {
+	protected boolean canBeRegenerated() {
 		return true;
 	}
 	
