@@ -15,7 +15,7 @@ class SpeedrunScoreboard
 	private final Player player;
 	private final Scoreboard scoreboard;
 	private final org.bukkit.scoreboard.Objective objective;
-	private final int taskId;
+	private int taskId;
 	private final Timer timer;
 	private final List<String> scores;
 	
@@ -23,12 +23,15 @@ class SpeedrunScoreboard
 		this.player = player;
 		scoreboard  = Objects.requireNonNull(Bukkit.getScoreboardManager()).getNewScoreboard();
 		objective   = scoreboard.registerNewObjective(player.getName(), "dummy", "Duel");
-		taskId      = Main.SCHEDULER.scheduleSyncRepeatingTask(Main.PLUGIN, this::update, 0, 20);
 		timer       = new Timer(Objects.requireNonNull(Worlds.OVERWORLD.get()));
 		scores      = new ArrayList<>();
 		
 		objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 		player.setScoreboard(scoreboard);
+	}
+	
+	public void start() {
+		taskId = Main.SCHEDULER.scheduleSyncRepeatingTask(Main.PLUGIN, this::update, 0, 20);
 	}
 	
 	void update() {

@@ -2,6 +2,7 @@ package ch.grandgroupe.minigames.speedrun;
 
 import ch.grandgroupe.common.Main;
 import ch.grandgroupe.common.features.AbstractListener;
+import ch.grandgroupe.common.worlds.Worlds;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,8 +30,24 @@ public class Speedrun extends AbstractListener
 		players     = new ArrayList<>(Bukkit.getOnlinePlayers());
 		scoreboards = players.stream().map(SpeedrunScoreboard::new).collect(Collectors.toList());
 		
-		Main.broadcast("Speedrun started ! The first to " + objective.description + " wins");
-		Main.broadcast("May the odds be with you !");
+		players.stream().filter(p -> p.getWorld() != Worlds.LOBBY.get()).forEach(Worlds::teleportToLobby);
+		Worlds.OVERWORLD.regenerate(WorldType.NORMAL, false, () ->
+		{
+			players.forEach(Worlds::teleportToOverworld);
+			players.forEach(p -> p.setGameMode(GameMode.SURVIVAL));
+			scoreboards.forEach(SpeedrunScoreboard::start);
+			
+			World ow = Worlds.OVERWORLD.get();
+			ow.setDifficulty(Difficulty.NORMAL);
+			ow.setPVP(true);
+			ow.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
+			ow.setGameRule(GameRule.DO_WEATHER_CYCLE, true);
+			ow.setGameRule(GameRule.KEEP_INVENTORY, false);
+			ow.setTime(0);
+			
+			Main.broadcast("Speedrun started ! The first to " + objective.description + " wins");
+			Main.broadcast("May the odds be with you !");
+		});
 	}
 	
 	public void stop() {
