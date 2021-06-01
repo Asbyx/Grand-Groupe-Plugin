@@ -19,12 +19,27 @@ public class WorldManager
 		
 		Bukkit.getLogger().info("Starting load of " + name);
 		
-		while (worldExists(getCurrentName())) ++count;
+		if (!worldExists(toString()) && hasSpecialGeneration()) {
+			generate();
+			return;
+		}
+		
+		while (worldExists(toString())) ++count;
 		--count;
-		loadWorld(getCurrentName());
-		world = Bukkit.getWorld(getCurrentName());
+		loadWorld(toString());
+		world = Bukkit.getWorld(toString());
 		
 		Bukkit.getLogger().info("Finished load of " + name + ". Found " + (count + 1) + " worlds");
+	}
+	
+	private boolean hasSpecialGeneration() {
+		return false;
+	}
+	private void generate() {
+		throw new UnsupportedOperationException();
+	}
+	private boolean canBeRegenerated() {
+		return true;
 	}
 	
 	public void regenerate() {
@@ -37,6 +52,8 @@ public class WorldManager
 		regenerate(type, structures, () -> {});
 	}
 	public void regenerate(WorldType type, boolean structures, Runnable onFinish) {
+		if (!canBeRegenerated()) throw new UnsupportedOperationException();
+		
 		++count;
 		
 		if (world != null) {
@@ -49,20 +66,20 @@ public class WorldManager
 			
 			Main.SCHEDULER.scheduleSyncDelayedTask(Main.PLUGIN, () ->
 			{
-				set(new WorldCreator(getCurrentName())
+				set(new WorldCreator(toString())
 						.environment(world.getEnvironment())
 						.type(type)
 						.generateStructures(structures)
 						.createWorld());
 				
 				players.forEach(p -> p.teleport(world.getSpawnLocation()));
-				onFinish.run();
+				Main.SCHEDULER.runTaskLater(Main.PLUGIN, onFinish, 0);
 			}, 50);
 		}
 		else
 			Main.SCHEDULER.runTask(Main.PLUGIN, () ->
 			{
-				set(new WorldCreator(getCurrentName())
+				set(new WorldCreator(toString())
 						.environment(world == null ? World.Environment.NORMAL : world.getEnvironment())
 						.type(type)
 						.generateStructures(structures)
@@ -75,7 +92,8 @@ public class WorldManager
 	private void set(World world) {
 		this.world = world;
 	}
-	private String getCurrentName() {
+	@Override
+	public String toString() {
 		String s = name + (count == 0 ? "" : "_" + Integer.toHexString(count));
 		Bukkit.getLogger().info(s);
 		return s;
