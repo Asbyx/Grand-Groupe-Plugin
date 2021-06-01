@@ -15,12 +15,12 @@ public class WorldCommands implements CommandExecutor
 				break;
 				
 			case "lobby":
-				if (commandSender instanceof Player)
+				if (commandSender instanceof Player && commandSender.isOp())
 					Worlds.teleportToLobby((Player) commandSender);
 				break;
 				
 			case "overworld":
-				if (commandSender instanceof Player)
+				if (commandSender instanceof Player && commandSender.isOp())
 					Worlds.teleportToOverworld(((Player) commandSender), Worlds.Type.NORMAL);
 				break;
 		}

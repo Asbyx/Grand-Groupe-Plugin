@@ -89,7 +89,7 @@ public class WorldManager
 		
 	}
 	
-	private void set(World world) {
+	protected void set(World world) {
 		this.world = world;
 	}
 	@Override

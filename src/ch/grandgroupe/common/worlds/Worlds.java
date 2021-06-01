@@ -1,6 +1,7 @@
 package ch.grandgroupe.common.worlds;
 
 import ch.grandgroupe.common.Main;
+import ch.grandgroupe.common.worlds.manager.LobbyManager;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -38,7 +39,7 @@ public class Worlds
 		OVERWORLD = new WorldManager("world");
 		NETHER    = new WorldManager("world_nether");
 		END       = new WorldManager("world_the_end");
-		LOBBY     = new WorldManager("world_lobby");
+		LOBBY     = new LobbyManager();
 		
 		if (LOBBY.get() == null) LOBBY.regenerate(WorldType.FLAT, false);
 		World lobby = LOBBY.get();
