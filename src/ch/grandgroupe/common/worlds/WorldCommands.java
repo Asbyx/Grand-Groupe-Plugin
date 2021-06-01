@@ -22,7 +22,7 @@ public class WorldCommands implements CommandExecutor
 				
 			case "overworld":
 				if (commandSender instanceof Player)
-					Worlds.teleportToWorld(((Player) commandSender), Worlds.Type.NORMAL);
+					Worlds.teleportToOverworld(((Player) commandSender), Worlds.Type.NORMAL);
 				break;
 		}
 		

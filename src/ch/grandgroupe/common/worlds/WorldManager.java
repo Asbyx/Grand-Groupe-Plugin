@@ -34,6 +34,9 @@ public class WorldManager
 		regenerate(WorldType.NORMAL, structures);
 	}
 	public void regenerate(WorldType type, boolean structures) {
+		regenerate(type, structures, () -> {});
+	}
+	public void regenerate(WorldType type, boolean structures, Runnable onFinish) {
 		++count;
 		
 		if (world != null) {
@@ -42,7 +45,7 @@ public class WorldManager
 			List<Player> players = oldWorld.getPlayers();
 			Bukkit.getLogger().info("Player count: " + players.size());
 			players.forEach(Worlds::teleportToLobby);
-			Bukkit.unloadWorld(oldWorld, true);
+			//Bukkit.unloadWorld(oldWorld, true);
 			
 			Main.SCHEDULER.scheduleSyncDelayedTask(Main.PLUGIN, () ->
 			{
@@ -53,14 +56,19 @@ public class WorldManager
 						.createWorld());
 				
 				players.forEach(p -> p.teleport(world.getSpawnLocation()));
+				onFinish.run();
 			}, 50);
 		}
 		else
-			Main.SCHEDULER.runTask(Main.PLUGIN, () -> set(new WorldCreator(getCurrentName())
-					.environment(world == null ? World.Environment.NORMAL : world.getEnvironment())
-					.type(type)
-					.generateStructures(structures)
-					.createWorld()));
+			Main.SCHEDULER.runTask(Main.PLUGIN, () ->
+			{
+				set(new WorldCreator(getCurrentName())
+						.environment(world == null ? World.Environment.NORMAL : world.getEnvironment())
+						.type(type)
+						.generateStructures(structures)
+						.createWorld());
+				onFinish.run();
+			});
 		
 	}
 	

@@ -24,7 +24,10 @@ public class Worlds
 		if (p.getGameMode() != GameMode.CREATIVE) p.setGameMode(GameMode.ADVENTURE);
 		p.teleport(LOBBY_LOCATION, PlayerTeleportEvent.TeleportCause.PLUGIN);
 	}
-	public static void teleportToWorld(Player p, Type t) {
+	public static void teleportToOverworld(Player p) {
+		teleportToOverworld(p, Type.NORMAL);
+	}
+	public static void teleportToOverworld(Player p, Type t) {
 		if (p.getGameMode() != GameMode.CREATIVE) p.setGameMode(GameMode.SURVIVAL);
 		p.teleport(getCorrespondingWorldManager(t).get().getSpawnLocation());
 	}
