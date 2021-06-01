@@ -17,14 +17,13 @@ public class TrainingExecutor implements CommandExecutor {
 		if(commandSender.getServer().getOnlinePlayers().size() != 1) commandSender.sendMessage(ChatColor.RED + "Impossible de lancer un entraînement si tu n'es pas seul !");
 
 		Player player = (Player) commandSender;
-		World world = ((Player) commandSender).getWorld();
 
 		switch (strings[0].toLowerCase()){
 			case "start":
 				TrainingMain main;
-				if (Boolean.parseBoolean(strings[1]) || strings[1].equals("false")) main = new TrainingMain(player, world, Boolean.parseBoolean(strings[1])); else {
+				if (Boolean.parseBoolean(strings[1]) || strings[1].equals("false")) main = new TrainingMain(player, Boolean.parseBoolean(strings[1])); else {
 					try{
-						main = new TrainingMain(player, world, strings[1]);
+						main = new TrainingMain(player, strings[1]);
 					} catch (IllegalArgumentException e){
 						return false;
 					}
