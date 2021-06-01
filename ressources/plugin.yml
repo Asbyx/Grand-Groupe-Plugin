@@ -44,3 +44,10 @@ commands:
     stop:
       description: Stop the game
       permission: op
+
+  training:
+    start:
+      description: Start the training
+
+    stop:
+      description: Stop the training

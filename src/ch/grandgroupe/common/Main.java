@@ -6,7 +6,8 @@ import ch.grandgroupe.minigames.short_fallen_kingdom.Events.EventsCommands;
 import ch.grandgroupe.minigames.short_fallen_kingdom.FKExecutor;
 import ch.grandgroupe.minigames.short_fallen_kingdom.Teams.*;
 import ch.grandgroupe.minigames.speedrun.SpeedrunExecutor;
-import org.bukkit.*;
+import ch.grandgroupe.minigames.trainingPack.TrainingExecutor;
+import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -29,6 +30,7 @@ public final class Main extends JavaPlugin
 		registerMinigame("fk", new FKExecutor(new EventsCommands(), new FKTeamCommands()));
 		registerMinigame("rules", new RulesCommands());
 		registerMinigame("speedrun", new SpeedrunExecutor());
+		registerMinigame("training", new TrainingExecutor());
 		registerMinigame("worlds", new WorldCommands());
 		
 		FKTeam.loadTeamsFromConfig();
