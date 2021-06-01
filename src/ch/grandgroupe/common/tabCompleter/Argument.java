@@ -55,6 +55,7 @@ public enum Argument {
 	/*TRAINING PACK*/
 	TRAINING_START("start"),
 	TRAINING_STOP("stop"),
+	TRAINING_TYPE("type of training", c -> Misc.list("hotbar", "parcours")),
 
 	/*#####################################################################################################################*/
 	/*SPEEDRUN*/

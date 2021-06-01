@@ -2,6 +2,9 @@ package ch.grandgroupe.minigames.trainingPack;
 
 import ch.grandgroupe.minigames.trainingPack.tests.AbstractTest;
 import ch.grandgroupe.minigames.trainingPack.tests.SlotBar;
+import ch.grandgroupe.minigames.trainingPack.tests.Parcours;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -21,11 +24,36 @@ public class TrainingMain {
 	List<AbstractTest> tests = new ArrayList<>();
 
 	public TrainingMain(Player player, World world, boolean tryhard){
+		player.setGameMode(GameMode.SURVIVAL);
 		this.player = player;
 		this.tryhard = tryhard;
 		TrainingMain.world = world;
 
 		tests.add(new SlotBar(rng, player, world));
+		tests.add(new Parcours(rng, player, world));
+	}
+
+	public TrainingMain(Player player, World world, String current){
+		this(player, world, false);
+		switch (current){
+			case "hotbar":
+				this.current = tests.get(0);
+				beginning("hot bar");
+				break;
+			case "parcours":
+				this.current = tests.get(1);
+				beginning("parcours");
+				break;
+
+			default:
+				player.sendMessage(ChatColor.RED + "Unknown training type: " + current);
+				throw new IllegalArgumentException();
+		}
+	}
+
+	private void beginning(String arg) {
+		player.sendMessage(ChatColor.GREEN + "Training " + arg + " started !" + ChatColor.GOLD + " Have Fun !");
+		current.init();
 	}
 
 	public void update(){

@@ -31,7 +31,7 @@ public final class Main extends JavaPlugin
 		registerMinigame("rules", new RulesCommands());
 		registerMinigame("speedrun", new SpeedrunExecutor());
 		registerMinigame("training", new TrainingExecutor());
-		registerMinigame("worlds", new WorldCommands());
+		//registerMinigame("worlds", new WorldCommands());
 		
 		FKTeam.loadTeamsFromConfig();
 	}

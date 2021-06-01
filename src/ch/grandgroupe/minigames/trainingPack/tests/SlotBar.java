@@ -2,10 +2,7 @@ package ch.grandgroupe.minigames.trainingPack.tests;
 
 import ch.grandgroupe.common.Main;
 import ch.grandgroupe.minigames.trainingPack.TrainingMain;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +26,7 @@ public class SlotBar extends AbstractTest{
 
 	@Override
 	public void init() {
-		TrainingMain.clearTerrain(4);
+		TrainingMain.clearTerrain(30);
 
 		for (int x = -9; x < 9; x++) {
 			for (int z = -9; z < 9; z++) {

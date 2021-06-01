@@ -2,12 +2,11 @@ package ch.grandgroupe.common.worlds;
 
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 public class WorldCommands implements CommandExecutor
 {
 	@Override
-	public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+	public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 		if (!s.equals("worlds")) return true;
 		
 		switch (strings[0]) {
