@@ -53,12 +53,12 @@ public enum Argument
 	
 	/*#####################################################################################################################*/
 	/*SPEEDRUN*/
-	OBJECTIVE("The objective to achieve", c -> Arrays.stream(Objective.values())
-													 .map(o -> o.name()
-																.toLowerCase()
-																.replaceAll("([A-Z])", "\\L$1")
-																.replaceAll("_([a-z])", "\\u$1"))
-													 .collect(Collectors.toList())),
+	OBJECTIVE("The objective to achieve", c -> Misc.list("kill",
+			"potionKill",
+			"diamond",
+			"potion",
+			"nether",
+			"end")),
 	
 	/*#####################################################################################################################*/
 	/*GLOBAL*/

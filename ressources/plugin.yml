@@ -5,6 +5,9 @@ description: Grand Plugin Plugin
 api-version: 1.16
 main: ch.grandgroupe.common.Main
 commands:
+  worlds:
+    description: test
+
   rules:
     tntBow:
       description: allow the TNT bow to be used

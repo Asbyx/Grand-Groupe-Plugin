@@ -2,6 +2,7 @@ package ch.grandgroupe.minigames.speedrun;
 
 import ch.grandgroupe.common.Main;
 import ch.grandgroupe.common.utils.Timer;
+import ch.grandgroupe.common.worlds.Worlds;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
@@ -24,7 +25,7 @@ class SpeedrunScoreboard
 		scoreboard  = Objects.requireNonNull(Bukkit.getScoreboardManager()).getNewScoreboard();
 		objective   = scoreboard.registerNewObjective(player.getName(), "dummy", "Duel");
 		taskId      = Main.SCHEDULER.scheduleSyncRepeatingTask(Main.PLUGIN, this::update, 0, 20);
-		timer       = new Timer(Objects.requireNonNull(Bukkit.getWorld("world")));
+		timer       = new Timer(Objects.requireNonNull(Worlds.OVERWORLD.get()));
 		scores      = new ArrayList<>();
 		
 		objective.setDisplaySlot(DisplaySlot.SIDEBAR);

@@ -3,6 +3,7 @@ package ch.grandgroupe.minigames.short_fallen_kingdom.Events;
 import ch.grandgroupe.common.features.AbstractListener;
 import ch.grandgroupe.common.Main;
 import ch.grandgroupe.common.utils.Coordinates;
+import ch.grandgroupe.common.worlds.Worlds;
 import org.bukkit.*;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.*;
@@ -31,7 +32,7 @@ public class EventsManager extends AbstractListener
 	 * @param timerOfBloodNight:     number of nights between 2 blood nights
 	 */
 	public EventsManager(long timerOfMiddleChest, long minTimeForRandomChest, long maxTimeForRandomChest, int timerOfBloodNight, int radius, int pvpAllowed) {
-		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
+		World world = Objects.requireNonNull(Worlds.OVERWORLD.get());
 		
 		this.lastMiddleChest       = this.lastRandomChest = world.getGameTime();
 		this.radius                = radius;
@@ -68,7 +69,7 @@ public class EventsManager extends AbstractListener
 	public void update(long now) {
 		if (isDisabled()) return;
 
-		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
+		World world = Objects.requireNonNull(Worlds.OVERWORLD.get());
 
 		if ((now - lastMiddleChest) >= timerOfMiddleChest) {
 			lastMiddleChest = now;
@@ -188,7 +189,7 @@ public class EventsManager extends AbstractListener
 	
 	
 	public long getTimerOfMiddleChest() {
-		return timerOfMiddleChest + lastMiddleChest - Objects.requireNonNull(Bukkit.getWorld("world")).getGameTime();
+		return timerOfMiddleChest + lastMiddleChest - Objects.requireNonNull(Worlds.OVERWORLD.get()).getGameTime();
 	}
 	
 	public int getTimerOfBloodNight() {
@@ -197,11 +198,11 @@ public class EventsManager extends AbstractListener
 	}
 	
 	public long getMaxTimerForRandomChest() {
-		return maxTimeForRandomChest + lastRandomChest - Objects.requireNonNull(Bukkit.getWorld("world")).getGameTime();
+		return maxTimeForRandomChest + lastRandomChest - Objects.requireNonNull(Worlds.OVERWORLD.get()).getGameTime();
 	}
 	
 	public boolean getPvpAllowed() {
-		return Objects.requireNonNull(Bukkit.getWorld("world")).getPVP();
+		return Objects.requireNonNull(Worlds.OVERWORLD.get()).getPVP();
 	}
 	
 	public int getTotalDays() {

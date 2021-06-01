@@ -1,7 +1,8 @@
 package ch.grandgroupe.minigames.short_fallen_kingdom.Teams;
 
-import ch.grandgroupe.common.tabCompleter.Commands;
 import ch.grandgroupe.common.Main;
+import ch.grandgroupe.common.tabCompleter.Commands;
+import ch.grandgroupe.common.worlds.Worlds;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.*;
 import org.bukkit.*;
@@ -17,10 +18,10 @@ public class FKTeamCommands implements CommandExecutor
 	@Override
 	public boolean onCommand(@Nonnull CommandSender commandSender, @Nonnull Command command, @Nonnull String s, String[] strings) {
 		String[] args = Arrays.copyOfRange(strings, 1, strings.length);
-
+		
 		switch (strings[1].toLowerCase()) {
 			case "create":
-				return create(commandSender,  args);
+				return create(commandSender, args);
 			case "terminate":
 				return terminate(commandSender, args);
 			case "revive":
@@ -49,7 +50,7 @@ public class FKTeamCommands implements CommandExecutor
 			Main.broadcast(ChatColor.RED + "You do not have the permission to use this command");
 			return true;
 		}
-
+		
 		if (strings.length != 2) return false;
 		
 		FKTeam team = FKTeam.registerNewTeam(strings[1]);
@@ -175,7 +176,7 @@ public class FKTeamCommands implements CommandExecutor
 			}
 			
 			location = new Location(
-					Bukkit.getWorld("world"),
+					Worlds.OVERWORLD.get(),
 					Double.parseDouble(strings[1]),
 					Double.parseDouble(strings[2]),
 					Double.parseDouble(strings[3])
@@ -189,7 +190,7 @@ public class FKTeamCommands implements CommandExecutor
 			}
 			
 			location = new Location(
-					Bukkit.getWorld("world"),
+					Worlds.OVERWORLD.get(),
 					Double.parseDouble(strings[2]),
 					Double.parseDouble(strings[3]),
 					Double.parseDouble(strings[4])

@@ -15,10 +15,12 @@ public class SpeedrunExecutor implements CommandExecutor
 		switch (strings[0]) {
 			case "startGame":
 				if (commandSender.isOp() && strings.length == 2) {
-					int index = Objective.strings.indexOf(strings[1].toLowerCase());
-					if (index == -1) commandSender.sendMessage(ChatColor.RED + "Unknown objective");
-					
-					speedrun = new Speedrun(Objective.values()[index]);
+					Objective o = Objective.fromCommandString(strings[1]);
+					if (o == null) {
+						commandSender.sendMessage(ChatColor.RED + "Unknown objective");
+						return true;
+					}
+					speedrun = new Speedrun(o);
 				}
 				break;
 			

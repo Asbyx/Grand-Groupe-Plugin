@@ -2,6 +2,7 @@ package ch.grandgroupe.minigames.short_fallen_kingdom.Teams;
 
 import ch.grandgroupe.common.utils.Coordinates;
 import ch.grandgroupe.common.Main;
+import ch.grandgroupe.common.worlds.Worlds;
 import org.bukkit.*;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.*;
@@ -103,7 +104,7 @@ public class FKTeam
 	public boolean isFlagDestroyed() {
 		if (flagLocation == null) return false;
 		
-		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
+		World world = Objects.requireNonNull(Worlds.OVERWORLD.get());
 		
 		int x = flagLocation.x,
 				y = flagLocation.y,
@@ -121,7 +122,7 @@ public class FKTeam
 	 * @return a value indicating whether a problem occurred, and if yes, which one it is
 	 */
 	public FlagPlacementProblems setFlagLocation(Location flagLocation) {
-		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
+		World world = Objects.requireNonNull(Worlds.OVERWORLD.get());
 		int x = flagLocation.getBlockX(),
 				y = flagLocation.getBlockY(),
 				z = flagLocation.getBlockZ();
@@ -148,7 +149,7 @@ public class FKTeam
 	}
 	
 	private void removeOldFlag() {
-		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
+		World world = Objects.requireNonNull(Worlds.OVERWORLD.get());
 		
 		int x = flagLocation.x,
 				y = flagLocation.y,
@@ -384,7 +385,7 @@ public class FKTeam
 	}
 	
 	private static void createBase(Coordinates baseCenter) {
-		World world = Objects.requireNonNull(Bukkit.getWorld("world"));
+		World world = Objects.requireNonNull(Worlds.OVERWORLD.get());
 		
 		int baseRad = (int) (BASE_SIDE_LENGTH / 2),
 				rad = baseRad + 5;

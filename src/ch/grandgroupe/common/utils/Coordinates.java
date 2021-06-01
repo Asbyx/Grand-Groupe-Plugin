@@ -1,5 +1,6 @@
 package ch.grandgroupe.common.utils;
 
+import ch.grandgroupe.common.worlds.Worlds;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 
@@ -62,7 +63,7 @@ public final class Coordinates
 	 * @return the location
 	 */
 	public Location toOverworldLocation() {
-		return new Location(Bukkit.getWorld("world"), x, y, z);
+		return new Location(Worlds.OVERWORLD.get(), x, y, z);
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package ch.grandgroupe.minigames.short_fallen_kingdom.Events;
 
 import ch.grandgroupe.common.Main;
+import ch.grandgroupe.common.worlds.Worlds;
 import ch.grandgroupe.minigames.short_fallen_kingdom.Scoreboards.*;
 import ch.grandgroupe.minigames.short_fallen_kingdom.Teams.*;
 import org.bukkit.*;
@@ -51,7 +52,7 @@ public class EventsCommands implements CommandExecutor
 				break;
 			
 			case "middlechest":
-				EventsManager.initMiddleChest(Objects.requireNonNull(Bukkit.getWorld("world")));
+				EventsManager.initMiddleChest(Objects.requireNonNull(Worlds.OVERWORLD.get()));
 				break;
 			
 			case "help":
@@ -71,7 +72,7 @@ public class EventsCommands implements CommandExecutor
 				else eventsManager = new EventsManager(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]), Integer.parseInt(args[6]));
 
 				Bukkit.getPluginManager().registerEvents(eventsManager, Main.PLUGIN);
-				eventsId = Main.SCHEDULER.runTaskTimer(Main.PLUGIN, () -> eventsManager.update(Objects.requireNonNull(Bukkit.getWorld("world")).getGameTime()), 0, 1).getTaskId();
+				eventsId = Main.SCHEDULER.runTaskTimer(Main.PLUGIN, () -> eventsManager.update(Objects.requireNonNull(Worlds.OVERWORLD.get()).getGameTime()), 0, 1).getTaskId();
 
 				flagEvents.enable();
 				buildEvents.enable();

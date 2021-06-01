@@ -1,16 +1,17 @@
 package ch.grandgroupe.common;
 
 import ch.grandgroupe.common.tabCompleter.TabCompleter;
+import ch.grandgroupe.common.worlds.*;
 import ch.grandgroupe.minigames.short_fallen_kingdom.Events.EventsCommands;
 import ch.grandgroupe.minigames.short_fallen_kingdom.FKExecutor;
 import ch.grandgroupe.minigames.short_fallen_kingdom.Teams.*;
 import ch.grandgroupe.minigames.speedrun.SpeedrunExecutor;
-import org.bukkit.ChatColor;
+import org.bukkit.*;
 import org.bukkit.command.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import java.util.Objects;
+import java.util.*;
 
 public final class Main extends JavaPlugin
 {
@@ -23,9 +24,12 @@ public final class Main extends JavaPlugin
 		PLUGIN    = this;
 		SCHEDULER = getServer().getScheduler();
 		
+		Worlds.init();
+		
 		registerMinigame("fk", new FKExecutor(new EventsCommands(), new FKTeamCommands()));
 		registerMinigame("rules", new RulesCommands());
 		registerMinigame("speedrun", new SpeedrunExecutor());
+		registerMinigame("worlds", new WorldCommands());
 		
 		FKTeam.loadTeamsFromConfig();
 	}

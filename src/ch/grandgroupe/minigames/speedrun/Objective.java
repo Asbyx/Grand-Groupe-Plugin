@@ -1,5 +1,6 @@
 package ch.grandgroupe.minigames.speedrun;
 
+import ch.grandgroupe.common.tabCompleter.Argument;
 import ch.grandgroupe.common.utils.Misc;
 import org.bukkit.potion.PotionEffectType;
 
@@ -53,5 +54,11 @@ public enum Objective
 		this.type        = type;
 		this.description = description;
 		data             = null;
+	}
+	
+	public static Objective fromCommandString(String s)
+	{
+		int index = Argument.OBJECTIVE.tabCompletion.apply(null).indexOf(s);
+		return index == -1 ? null : Objective.values()[index];
 	}
 }

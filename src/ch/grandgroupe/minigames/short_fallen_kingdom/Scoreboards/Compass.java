@@ -1,6 +1,7 @@
 package ch.grandgroupe.minigames.short_fallen_kingdom.Scoreboards;
 
 import ch.grandgroupe.common.features.AbstractListener;
+import ch.grandgroupe.common.worlds.Worlds;
 import ch.grandgroupe.minigames.short_fallen_kingdom.Events.EventsManager;
 import ch.grandgroupe.common.Main;
 import ch.grandgroupe.minigames.short_fallen_kingdom.Teams.FKTeam;
@@ -72,7 +73,7 @@ public class Compass extends AbstractListener
 		
 		List<Pair<ItemStack, Location>> list = new ArrayList<>();
 		
-		list.add(new Pair<>(middleChestItem, Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation()));
+		list.add(new Pair<>(middleChestItem, Objects.requireNonNull(Worlds.OVERWORLD.get()).getSpawnLocation()));
 		if (eventsManager.getRandomChestCenter() != null) list.add(new Pair<>(randomChestItem, eventsManager.getRandomChestCenter()));
 		
 		FKTeam.allTeams.forEach(t ->
