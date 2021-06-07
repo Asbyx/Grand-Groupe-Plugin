@@ -67,15 +67,17 @@ public class EventsCommands implements CommandExecutor
 			if (eventsId != -1) return;
 			try {
 				if (args.length != 7 && args.length != 2) throw new IllegalArgumentException();
-
+				
 				if (args[1].equals("default")) eventsManager = new EventsManager();
 				else eventsManager = new EventsManager(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]), Integer.parseInt(args[6]));
-
+				
 				Bukkit.getPluginManager().registerEvents(eventsManager, Main.PLUGIN);
 				eventsId = Main.SCHEDULER.runTaskTimer(Main.PLUGIN, () -> eventsManager.update(Objects.requireNonNull(Worlds.OVERWORLD.get()).getGameTime()), 0, 1).getTaskId();
-
+				
 				flagEvents.enable();
 				buildEvents.enable();
+				
+				FKTeam.allTeams.forEach(t -> Main.inGamePlayers.addAll(t.stream().map(Player::getUniqueId).collect(Collectors.toList())));
 				
 				scoreboards = Bukkit.getOnlinePlayers().stream().map(p -> new FKScoreboard(p, eventsManager)).collect(Collectors.toList());
 				scoreboards.forEach(FKScoreboard::start);
@@ -118,6 +120,8 @@ public class EventsCommands implements CommandExecutor
 			
 			flagEvents.disable();
 			buildEvents.disable();
+			
+			FKTeam.allTeams.forEach(t -> Main.inGamePlayers.removeAll(t.stream().map(Player::getUniqueId).collect(Collectors.toList())));
 			
 			if (scoreboards != null) scoreboards.forEach(FKScoreboard::stop);
 			if (compasses != null) compasses.forEach(Compass::disable);

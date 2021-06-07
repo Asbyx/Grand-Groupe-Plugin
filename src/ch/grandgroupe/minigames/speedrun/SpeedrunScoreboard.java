@@ -15,9 +15,9 @@ class SpeedrunScoreboard
 	private final Player player;
 	private final Scoreboard scoreboard;
 	private final org.bukkit.scoreboard.Objective objective;
-	private int taskId;
 	private final Timer timer;
 	private final List<String> scores;
+	private int taskId;
 	
 	public SpeedrunScoreboard(Player player) {
 		this.player = player;
@@ -48,5 +48,6 @@ class SpeedrunScoreboard
 	
 	void stop() {
 		Main.SCHEDULER.cancelTask(taskId);
+		objective.setDisplaySlot(null);
 	}
 }

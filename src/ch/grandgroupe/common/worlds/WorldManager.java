@@ -5,19 +5,17 @@ import org.bukkit.*;
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.FileUtils;
 import org.bukkit.entity.Player;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class WorldManager
 {
-	private World world;
 	private final String name;
+	private World world;
 	private int count = 0;
 	
 	public WorldManager(String name) {
 		this.name = name;
-		
-		Bukkit.getLogger().info("Starting load of " + name);
 		
 		if (!worldExists(toString()) && hasSpecialGeneration()) {
 			generate();
@@ -28,9 +26,45 @@ public class WorldManager
 		--count;
 		loadWorld(toString());
 		world = Bukkit.getWorld(toString());
-		
-		Bukkit.getLogger().info("Finished load of " + name + ". Found " + (count + 1) + " worlds");
 	}
+	
+	private static void deleteWorld(String name) {
+		try {
+			if (worldExists(name)) FileUtils.deleteDirectory(new File(Objects.requireNonNull(Bukkit.getWorldContainer().list((f, n) -> f.isDirectory() && n.equals(name)))[0]));
+			Bukkit.getLogger().info("World " + name + " deleted");
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	private static boolean loadWorld(String name) {
+		if (worldExists(name))
+			return Bukkit.getWorlds().add(new WorldCreator(name).createWorld());
+		
+		return false;
+	}
+	private static boolean worldExists(String name) {
+		return Objects.requireNonNull(Bukkit.getWorldContainer().list((f, n) -> f.isDirectory() && n.equals(name))).length == 1;
+	}
+	
+	/*
+	public void clearUselessWorlds() {
+		if (count == 0) return;
+		
+		Bukkit.getLogger().info(name + ": count=" + count);
+		
+		for (int i = 0; i < count; ++i)
+			 deleteWorld(name + (i == 0 ? "" : "_" + Integer.toHexString(i)));
+		
+		File f = world.getWorldFolder();
+		Bukkit.unloadWorld(world, false);
+		f.renameTo(new File(name));
+		loadWorld(name);
+		
+		//deleteWorld(toString());
+		count = 0;
+	}
+	*/
 	
 	protected boolean hasSpecialGeneration() {
 		return false;
@@ -60,7 +94,6 @@ public class WorldManager
 			World oldWorld = world;
 			
 			List<Player> players = oldWorld.getPlayers();
-			Bukkit.getLogger().info("Player count: " + players.size());
 			players.forEach(Worlds::teleportToLobby);
 			//Bukkit.unloadWorld(oldWorld, true);
 			
@@ -92,31 +125,11 @@ public class WorldManager
 	protected void set(World world) {
 		this.world = world;
 	}
+	
 	@Override
 	public String toString() {
-		String s = name + (count == 0 ? "" : "_" + Integer.toHexString(count));
-		Bukkit.getLogger().info(s);
-		return s;
+		return name + (count == 0 ? "" : "_" + Integer.toHexString(count));
 	}
-	
-	private static void deleteWorld(World world) {
-		try {
-			FileUtils.deleteDirectory(world.getWorldFolder());
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	private static boolean loadWorld(String name) {
-		if (worldExists(name))
-			return Bukkit.getWorlds().add(new WorldCreator(name).createWorld());
-		
-		return false;
-	}
-	private static boolean worldExists(String name) {
-		return Objects.requireNonNull(Bukkit.getWorldContainer().list((f, n) -> f.isDirectory() && n.equals(name))).length == 1;
-	}
-	
 	public World get() {
 		return world;
 	}

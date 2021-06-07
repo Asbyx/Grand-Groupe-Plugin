@@ -7,7 +7,7 @@ import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerAdvancementDoneEvent;
+import org.bukkit.event.player.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 public class Speedrun extends AbstractListener
 {
 	private final Objective objective;
-	private final List<Player> players;
 	private final List<SpeedrunScoreboard> scoreboards;
+	private final List<Player> players;
 	
 	public Speedrun(Objective objective) {
 		enable();
@@ -29,12 +29,13 @@ public class Speedrun extends AbstractListener
 		
 		players     = new ArrayList<>(Bukkit.getOnlinePlayers());
 		scoreboards = players.stream().map(SpeedrunScoreboard::new).collect(Collectors.toList());
+		Main.inGamePlayers.addAll(players.stream().map(Player::getUniqueId).collect(Collectors.toList()));
 		
 		players.stream().filter(p -> p.getWorld() != Worlds.LOBBY.get()).forEach(Worlds::teleportToLobby);
 		Worlds.OVERWORLD.regenerate(WorldType.NORMAL, false, () ->
 		{
 			players.forEach(Worlds::teleportToOverworld);
-			players.forEach(p -> p.setGameMode(GameMode.SURVIVAL));
+			players.forEach(this::initPlayer);
 			scoreboards.forEach(SpeedrunScoreboard::start);
 			
 			World ow = Worlds.OVERWORLD.get();
@@ -51,6 +52,8 @@ public class Speedrun extends AbstractListener
 	}
 	
 	public void stop() {
+		Main.inGamePlayers.removeIf(Main.inGamePlayers::contains);
+		scoreboards.forEach(SpeedrunScoreboard::stop);
 		Main.broadcast(ChatColor.RED + "Speedrun stopped");
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "rules deathChest false");
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "rules compassTargeting false");
@@ -85,7 +88,24 @@ public class Speedrun extends AbstractListener
 			endGame(event.getPlayer());
 	}
 	
+	@EventHandler
+	public void addPlayer(PlayerJoinEvent event) {
+		if (isDisabled()) return;
+		
+		Player p = event.getPlayer();
+		initPlayer(p);
+		Main.inGamePlayers.add(p.getUniqueId());
+		
+		SpeedrunScoreboard scoreboard = new SpeedrunScoreboard(p);
+		scoreboards.add(scoreboard);
+		scoreboard.start();
+		
+		Worlds.teleportToOverworld(p);
+	}
+	
 	private void endGame(Player winner) {
+		Main.inGamePlayers.removeIf(Main.inGamePlayers::contains);
+		
 		String winCommand = "title %s title {\"text\":\"You won\",\"color\":\"green\"}",
 				looseCommand = "title %s title {\"text\":\"%s won\",\"color\":\"red\",\"bold\":true}";
 		
@@ -98,5 +118,17 @@ public class Speedrun extends AbstractListener
 		});
 		
 		scoreboards.forEach(SpeedrunScoreboard::stop);
+	}
+	
+	private void initPlayer(Player p) {
+		p.setHealth(20);
+		p.setGameMode(GameMode.SURVIVAL);
+		p.getInventory().clear();
+		p.setFoodLevel(20);
+		p.setTotalExperience(0);
+		p.setLevel(0);
+		p.setStatistic(Statistic.PLAYER_KILLS, 0);
+		p.setStatistic(Statistic.DEATHS, 0);
+		p.setStatistic(Statistic.TIME_SINCE_DEATH, 0);
 	}
 }

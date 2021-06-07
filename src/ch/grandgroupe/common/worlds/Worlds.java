@@ -3,18 +3,13 @@ package ch.grandgroupe.common.worlds;
 import ch.grandgroupe.common.Main;
 import ch.grandgroupe.common.worlds.manager.LobbyManager;
 import org.bukkit.*;
+import org.bukkit.craftbukkit.libs.org.eclipse.sisu.Nullable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class Worlds
 {
-	public enum Type
-	{
-		NORMAL,
-		NETHER,
-		THE_END
-	}
-	
+	public static final Location LOBBY_LOCATION = new Location(null, 0.5, 64, 0.5);
 	public static WorldManager OVERWORLD;
 	public static WorldManager NETHER;
 	public static WorldManager END;
@@ -26,16 +21,19 @@ public class Worlds
 		p.teleport(LOBBY_LOCATION, PlayerTeleportEvent.TeleportCause.PLUGIN);
 	}
 	public static void teleportToOverworld(Player p) {
-		teleportToOverworld(p, Type.NORMAL);
+		teleportTo(p, Type.OVERWORLD);
 	}
-	public static void teleportToOverworld(Player p, Type t) {
+	public static void teleportTo(Player p, Type t) {
+		if (t == Type.LOBBY) {
+			teleportToLobby(p);
+			return;
+		}
+		
 		if (p.getGameMode() != GameMode.CREATIVE) p.setGameMode(GameMode.SURVIVAL);
 		p.teleport(getCorrespondingWorldManager(t).get().getSpawnLocation());
 	}
 	
-	public static final Location LOBBY_LOCATION = new Location(null, 0.5, 64, 0.5);
-	
-	public static void init() {
+	public static void init(/*boolean clear*/) {
 		OVERWORLD = new WorldManager("world");
 		NETHER    = new WorldManager("world_nether");
 		END       = new WorldManager("world_the_end");
@@ -50,22 +48,52 @@ public class Worlds
 		lobby.setSpawnLocation(LOBBY_LOCATION);
 		
 		Bukkit.getPluginManager().registerEvents(new WorldEvents(), Main.PLUGIN);
+		
+		/*
+		if (clear) {
+			OVERWORLD.clearUselessWorlds();
+			NETHER.clearUselessWorlds();
+			END.clearUselessWorlds();
+		}
+		*/
 	}
 	
 	private static void regenerate(Type type, boolean generateStructures) {
 		getCorrespondingWorldManager(type).regenerate(generateStructures);
 	}
 	
-	private static WorldManager getCorrespondingWorldManager(Type type) {
+	public static WorldManager getCorrespondingWorldManager(@Nullable Type type) {
 		switch (type) {
-			case NORMAL:
+			case OVERWORLD:
 				return OVERWORLD;
 			case NETHER:
 				return NETHER;
-			case THE_END:
+			case END:
 				return END;
 			default:
 				return LOBBY;
+		}
+	}
+	
+	public enum Type
+	{
+		LOBBY,
+		OVERWORLD,
+		NETHER,
+		END;
+		
+		public static Type fromString(String s) {
+			switch (s.toLowerCase()) {
+				case "lobby":
+					return LOBBY;
+				case "overworld":
+					return OVERWORLD;
+				case "nether":
+					return NETHER;
+				case "end":
+					return END;
+			}
+			return null;
 		}
 	}
 }

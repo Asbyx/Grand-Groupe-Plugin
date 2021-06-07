@@ -9,7 +9,8 @@ import static ch.grandgroupe.common.tabCompleter.Argument.*;
 /**
  * Enumeration of all commands available Please add yours with respect of the convention, at the right place
  */
-public enum Commands {
+public enum Commands
+{
 	//fixme make the help command global
 	HELP(false,
 			"fk",
@@ -17,7 +18,7 @@ public enum Commands {
 			new ArgumentList("Display the list of the commands", Argument.HELP),
 			new ArgumentList("Get the help about a command", Argument.HELP, COMMAND)
 	),
-
+	
 	/*RULES*/
 	TNT_BOW(true,
 			"rules",
@@ -51,7 +52,7 @@ public enum Commands {
 			"compassTargeting",
 			new ArgumentList(Argument.COMPASS_TARGETING, "compassTargeting")
 	),
-
+	
 	/*#####################################################################################################################*/
 	/*FK*/
 	CREATE(true,
@@ -135,9 +136,9 @@ public enum Commands {
 			"speedrun",
 			"speedrun",
 			new ArgumentList("Start the speedrun to a given objective", Argument.STOP_GAME)),
-
+	
 	/*#####################################################################################################################*/
-
+	
 	/*#####################################################################################################################*/
 	/*TRAINING PACK*/
 	TRAINING_START(true,
@@ -149,27 +150,37 @@ public enum Commands {
 	TRAINING_STOP(true,
 			"training",
 			"stop",
-			new ArgumentList("Stop the current training", Argument.TRAINING_STOP));
-
+			new ArgumentList("Stop the current training", Argument.TRAINING_STOP)),
+	
 	/*#####################################################################################################################*/
-
-
+	
+	/*#####################################################################################################################*/
+	/*WORLDS*/
+	
+	TP(true,
+			"worlds",
+			"tp",
+			new ArgumentList("Teleport you to the world", Argument.TP, WORLD),
+			new ArgumentList("Teleport a player to the world", Argument.TP, WORLD, PLAYER)
+			);
+	
+	/*#####################################################################################################################*/
+	
+	
+	public static final List<Commands> ALL = Misc.list(values());
+	public final boolean opRequired;
+	public final String commandLabel, commandName;
+	public final List<ArgumentList> argumentsList;
 	Commands(
 			boolean opRequired, String
 			commandLabel,
 			String commandName, List<ArgumentList> argumentsList) {
-		this.opRequired = opRequired;
-		this.commandLabel = commandLabel;
-		this.commandName = commandName;
+		this.opRequired    = opRequired;
+		this.commandLabel  = commandLabel;
+		this.commandName   = commandName;
 		this.argumentsList = argumentsList;
 	}
-
 	Commands(boolean opRequired, String commandLabel, String commandName, ArgumentList... args) {
 		this(opRequired, commandLabel, commandName, Misc.list(args));
 	}
-
-	public final boolean opRequired;
-	public final String commandLabel, commandName;
-	public final List<ArgumentList> argumentsList;
-	public static final List<Commands> ALL = Misc.list(values());
 }
