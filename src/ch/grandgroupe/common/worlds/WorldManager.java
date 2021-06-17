@@ -90,6 +90,15 @@ public class WorldManager
 		
 		++count;
 		
+		File serverPacks = new File("datapacks"), worldPacks = new File(this + "/datapacks");
+		
+		try {
+			FileUtils.copyDirectory(serverPacks, worldPacks);
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		if (world != null) {
 			World oldWorld = world;
 			
