@@ -2,7 +2,7 @@ name : LeGrandGroupePlugin
 authors: [Asbyx, TheChi2000]
 version: 0.3
 description: Grand Plugin Plugin
-api-version: 1.16
+api-version: 1.17
 main: ch.grandgroupe.common.Main
 commands:
   worlds:

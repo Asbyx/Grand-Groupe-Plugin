@@ -24,6 +24,7 @@ public final class RulesCommands implements CommandExecutor
 		listeners.add(new Harvester());
 		listeners.add(new Grappin());
 		listeners.add(new CompassTargeting());
+		listeners.add(new Tomb());
 		
 		listeners.forEach(abstractListener -> {
 			abstractListener.disable();
@@ -79,6 +80,10 @@ public final class RulesCommands implements CommandExecutor
 				
 				case "compasstargeting":
 					enabler(Boolean.parseBoolean(arg[1]), 5, "Compass Targeting");
+					break;
+				
+				case "tomb":
+					enabler(Boolean.parseBoolean(arg[1]), 6, "Tomb");
 					break;
 			}
 		}

@@ -52,6 +52,11 @@ public enum Commands
 			"compassTargeting",
 			new ArgumentList(Argument.COMPASS_TARGETING, "compassTargeting")
 	),
+	TOMB(true,
+			"rules",
+			"tomb",
+			new ArgumentList(Argument.TOMB, "tomb")
+	),
 	
 	/*#####################################################################################################################*/
 	/*FK*/

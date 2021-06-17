@@ -24,6 +24,7 @@ public enum Argument
 	HARVESTER("harvester"),
 	GRAPPIN("grappin"),
 	COMPASS_TARGETING("compassTargeting"),
+	TOMB("tomb"),
 	
 	/*MAIN ARGUMENTS*/
 	/*FK*/

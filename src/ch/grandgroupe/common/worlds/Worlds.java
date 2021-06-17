@@ -39,7 +39,7 @@ public class Worlds
 		END       = new WorldManager("world_the_end");
 		LOBBY     = new LobbyManager();
 		
-		if (LOBBY.get() == null) LOBBY.regenerate(WorldType.FLAT, false);
+		if (LOBBY.get() == null) LOBBY.generate();
 		World lobby = LOBBY.get();
 		lobby.setPVP(false);
 		lobby.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);

@@ -24,7 +24,7 @@ public class Speedrun extends AbstractListener
 		this.objective = objective;
 		Bukkit.getPluginManager().registerEvents(this, Main.PLUGIN);
 		
-		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "rules deathChest true");
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "rules tomb true");
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "rules compassTargeting true");
 		
 		players     = new ArrayList<>(Bukkit.getOnlinePlayers());
@@ -55,7 +55,7 @@ public class Speedrun extends AbstractListener
 		Main.inGamePlayers.removeIf(Main.inGamePlayers::contains);
 		scoreboards.forEach(SpeedrunScoreboard::stop);
 		Main.broadcast(ChatColor.RED + "Speedrun stopped");
-		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "rules deathChest false");
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "rules tomb false");
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "rules compassTargeting false");
 		disable();
 	}
@@ -130,5 +130,7 @@ public class Speedrun extends AbstractListener
 		p.setStatistic(Statistic.PLAYER_KILLS, 0);
 		p.setStatistic(Statistic.DEATHS, 0);
 		p.setStatistic(Statistic.TIME_SINCE_DEATH, 0);
+		
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "advancement revoke " + p.getName() + " everything");
 	}
 }
