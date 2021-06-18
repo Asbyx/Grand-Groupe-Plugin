@@ -130,7 +130,6 @@ public class Speedrun extends AbstractListener
 		{
 			String command = String.format(looseCommand, p.getName(), winner.getName());
 			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
-			Main.broadcast("dispatching command " + command);
 		});
 		
 		scoreboards.forEach(SpeedrunScoreboard::stop);
