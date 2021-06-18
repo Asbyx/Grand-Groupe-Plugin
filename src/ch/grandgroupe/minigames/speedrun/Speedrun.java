@@ -10,13 +10,14 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 public class Speedrun extends AbstractListener
 {
 	private final Objective objective;
 	private final List<SpeedrunScoreboard> scoreboards;
-	private final List<Player> players;
+	private final List<UUID> playersId;
+	private long startTime;
 	
 	public Speedrun(Objective objective) {
 		enable();
@@ -27,15 +28,15 @@ public class Speedrun extends AbstractListener
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "rules tomb true");
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "rules compassTargeting true");
 		
-		players     = new ArrayList<>(Bukkit.getOnlinePlayers());
-		scoreboards = players.stream().map(SpeedrunScoreboard::new).collect(Collectors.toList());
-		Main.inGamePlayers.addAll(players.stream().map(Player::getUniqueId).collect(Collectors.toList()));
+		playersId   = Bukkit.getOnlinePlayers().stream().map(Player::getUniqueId).collect(Collectors.toList());
+		scoreboards = onlinePlayers().map(SpeedrunScoreboard::new).collect(Collectors.toList());
+		Main.inGamePlayers.addAll(playersId);
 		
-		players.stream().filter(p -> p.getWorld() != Worlds.LOBBY.get()).forEach(Worlds::teleportToLobby);
+		onlinePlayers().filter(p -> p.getWorld() != Worlds.LOBBY.get()).forEach(Worlds::teleportToLobby);
 		Worlds.OVERWORLD.regenerate(WorldType.NORMAL, false, () ->
 		{
-			players.forEach(Worlds::teleportToOverworld);
-			players.forEach(this::initPlayer);
+			onlinePlayers().forEach(Worlds::teleportToOverworld);
+			onlinePlayers().forEach(this::initPlayer);
 			scoreboards.forEach(SpeedrunScoreboard::start);
 			
 			World ow = Worlds.OVERWORLD.get();
@@ -45,6 +46,8 @@ public class Speedrun extends AbstractListener
 			ow.setGameRule(GameRule.DO_WEATHER_CYCLE, true);
 			ow.setGameRule(GameRule.KEEP_INVENTORY, false);
 			ow.setTime(0);
+			
+			startTime = ow.getGameTime();
 			
 			Main.broadcast("Speedrun started ! The first to " + objective.description + " wins");
 			Main.broadcast("May the odds be with you !");
@@ -60,18 +63,27 @@ public class Speedrun extends AbstractListener
 		disable();
 	}
 	
+	public Stream<? extends Player> onlinePlayers() {
+		return Bukkit.getOnlinePlayers().stream().filter(p -> playersId.contains(p.getUniqueId()));
+	}
+	
 	@EventHandler
 	public void checkVictory(PlayerDeathEvent event) {
 		Player killer = event.getEntity().getKiller();
+		if (killer == null) return;
+		
 		switch (objective.type) {
 			case KILL:
-				if (killer != null) endGame(killer);
+				endGame(killer);
+				break;
+			
+			case HOUR_KILL:
+				if (Worlds.OVERWORLD.get().getGameTime() > 72000)
+					endGame(killer);
 				break;
 			
 			case POTION_KILL:
-				if (killer != null
-						&& (killer.getActivePotionEffects().stream().anyMatch(e -> Objective.bonusEffects.contains(e.getType()))
-						|| event.getEntity().getActivePotionEffects().stream().anyMatch(e -> Objective.malusEffects.contains(e.getType()))))
+				if (killer.getActivePotionEffects().stream().anyMatch(e -> Objective.bonusEffects.contains(e.getType())) || event.getEntity().getActivePotionEffects().stream().anyMatch(e -> Objective.malusEffects.contains(e.getType())))
 					endGame(killer);
 				break;
 			
@@ -93,14 +105,18 @@ public class Speedrun extends AbstractListener
 		if (isDisabled()) return;
 		
 		Player p = event.getPlayer();
-		initPlayer(p);
-		Main.inGamePlayers.add(p.getUniqueId());
 		
-		SpeedrunScoreboard scoreboard = new SpeedrunScoreboard(p);
+		if (!playersId.contains(p.getUniqueId())) {
+			initPlayer(p);
+			playersId.add(p.getUniqueId());
+			Main.inGamePlayers.add(p.getUniqueId());
+			
+			Worlds.teleportToOverworld(p);
+		}
+		
+		SpeedrunScoreboard scoreboard = new SpeedrunScoreboard(p, startTime);
 		scoreboards.add(scoreboard);
 		scoreboard.start();
-		
-		Worlds.teleportToOverworld(p);
 	}
 	
 	private void endGame(Player winner) {
@@ -110,7 +126,7 @@ public class Speedrun extends AbstractListener
 				looseCommand = "title %s title {\"text\":\"%s won\",\"color\":\"red\",\"bold\":true}";
 		
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), String.format(winCommand, winner.getName()));
-		players.stream().filter(p -> p != winner).forEach(p ->
+		onlinePlayers().filter(p -> p != winner).forEach(p ->
 		{
 			String command = String.format(looseCommand, p.getName(), winner.getName());
 			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);

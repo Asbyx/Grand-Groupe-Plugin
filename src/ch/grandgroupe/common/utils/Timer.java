@@ -6,8 +6,8 @@ import javax.annotation.Nonnull;
 
 public class Timer
 {
-	private long startTime;
 	private final World world;
+	private long startTime;
 	
 	/**
 	 * Construct a Timer
@@ -15,8 +15,18 @@ public class Timer
 	 * @param world the world for which the time will be measured
 	 */
 	public Timer(@Nonnull World world) {
-		startTime  = world.getGameTime();
-		this.world = world;
+		this(world.getGameTime(), world);
+	}
+	
+	/**
+	 * Construct a Timer
+	 *
+	 * @param startTime the time on which the timer started
+	 * @param world the world for which the time will be measured
+	 */
+	public Timer(long startTime, @Nonnull World world) {
+		this.startTime = startTime;
+		this.world     = world;
 	}
 	
 	/**
