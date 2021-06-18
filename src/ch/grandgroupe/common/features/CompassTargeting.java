@@ -1,5 +1,6 @@
 package ch.grandgroupe.common.features;
 
+import ch.grandgroupe.common.Main;
 import ch.grandgroupe.common.features.targeting.*;
 import ch.grandgroupe.common.features.targeting.targets.*;
 import org.bukkit.Bukkit;
@@ -22,6 +23,7 @@ public class CompassTargeting extends AbstractListener
 	private List<Target> availableTargets;
 	private Map<Player, Inventory> inventories;
 	private List<Player> players;
+	private int taskId;
 	
 	@Override
 	public void enable() {
@@ -43,14 +45,15 @@ public class CompassTargeting extends AbstractListener
 							 .collect(HashMap::new,
 									 (map, player) -> map.put(player, generateInventory(player)),
 									 HashMap::putAll);
+		
+		taskId = Main.SCHEDULER.scheduleSyncRepeatingTask(Main.PLUGIN, () -> playerTargets.values().forEach(TargetManager::update), 0, 0);
 	}
 	
-	@EventHandler
-	public void updateCompasses(PlayerMoveEvent event) {
-		if (isDisabled()) return;
-		playerTargets.values().forEach(TargetManager::update);
+	@Override
+	public void disable() {
+		super.disable();
+		Main.SCHEDULER.cancelTask(taskId);
 	}
-	
 	@EventHandler
 	public void openGUI(PlayerInteractEvent event) {
 		if (isDisabled()) return;
