@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 public class NetherFortress extends Target
 {
 	public NetherFortress() {
-		super(new ItemStack(Material.NETHER_BRICK, 1));
+		super(new ItemStack(Material.NETHER_BRICKS, 1));
 	}
 	
 	@Override
@@ -16,5 +16,15 @@ public class NetherFortress extends Target
 		return player.getWorld().getEnvironment() == World.Environment.NETHER
 			   ? player.getWorld().locateNearestStructure(player.getLocation(), StructureType.NETHER_FORTRESS, 50, false)
 			   : null;
+	}
+	
+	@Override
+	public boolean canBeSetFor(Player player) {
+		return player.getWorld().getEnvironment() == World.Environment.NETHER;
+	}
+	
+	@Override
+	public String getErrorMessage(Player player) {
+		return canBeSetFor(player) ? null : "You are not in the correct dimension";
 	}
 }

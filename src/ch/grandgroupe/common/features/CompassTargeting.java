@@ -18,20 +18,18 @@ public class CompassTargeting extends AbstractListener
 {
 	private static final int INVENTORY_SIZE = 18;
 	
-	private final Map<Player, TargetManager> playerTargets;
-	private final List<Target> availableTargets;
+	private Map<Player, TargetManager> playerTargets;
+	private List<Target> availableTargets;
 	private Map<Player, Inventory> inventories;
 	private List<Player> players;
-	
-	public CompassTargeting() {
-		playerTargets    = new HashMap<>();
-		inventories      = new HashMap<>();
-		availableTargets = new ArrayList<>();
-	}
 	
 	@Override
 	public void enable() {
 		super.enable();
+		
+		playerTargets    = new HashMap<>();
+		inventories      = new HashMap<>();
+		availableTargets = new ArrayList<>();
 		
 		players = new ArrayList<>(Bukkit.getOnlinePlayers());
 		

@@ -24,7 +24,27 @@ public abstract class Target
 	/**
 	 * @return the ItemStack representing the target
 	 */
-	public ItemStack getRepresentativeItem() {
+	public final ItemStack getRepresentativeItem() {
 		return itemStack;
+	}
+	
+	/**
+	 * Indicates whether this target is valid for a given player
+	 *
+	 * @param player the player who wants to choose this target
+	 *
+	 * @return whether the target is valid
+	 */
+	public boolean canBeSetFor(Player player) {
+		return true;
+	}
+	
+	/**
+	 * @param player the player who wants to choose this target
+	 *
+	 * @return the message indicating why the target was not valid (null if the target is valid)
+	 */
+	public String getErrorMessage(Player player) {
+		return null;
 	}
 }
