@@ -61,8 +61,13 @@ public class CompassTargeting extends AbstractListener
 		if (players.size() != 2
 				&& players.contains(event.getPlayer())
 				&& (event.getAction() == Action.RIGHT_CLICK_BLOCK
-				|| event.getAction() == Action.RIGHT_CLICK_AIR))
-			event.getPlayer().openInventory(inventories.get(event.getPlayer()));
+				|| event.getAction() == Action.RIGHT_CLICK_AIR)) {
+			final Player player = event.getPlayer();
+			
+			Inventory inv = generateInventory(player);
+			inventories.put(player, inv);
+			player.openInventory(inv);
+		}
 	}
 	
 	@EventHandler
@@ -95,8 +100,10 @@ public class CompassTargeting extends AbstractListener
 	
 	private Inventory generateInventory(Player player) {
 		Inventory inv = Bukkit.createInventory(player, INVENTORY_SIZE, "Choose a target");
+		
 		AtomicInteger i = new AtomicInteger(0);
-		availableTargets.forEach(t -> inv.setItem(i.getAndIncrement(), t.getRepresentativeItem()));
+		availableTargets.stream().filter(t -> t.canBeSetFor(player)).forEach(t -> inv.setItem(i.getAndIncrement(), t.getRepresentativeItem()));
+		
 		return inv;
 	}
 }

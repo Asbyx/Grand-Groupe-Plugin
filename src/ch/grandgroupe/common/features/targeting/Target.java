@@ -38,13 +38,4 @@ public abstract class Target
 	public boolean canBeSetFor(Player player) {
 		return true;
 	}
-	
-	/**
-	 * @param player the player who wants to choose this target
-	 *
-	 * @return the message indicating why the target was not valid (null if the target is valid)
-	 */
-	public String getErrorMessage(Player player) {
-		return null;
-	}
 }

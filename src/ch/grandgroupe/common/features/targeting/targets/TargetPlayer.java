@@ -32,4 +32,9 @@ public class TargetPlayer extends Target
 	public Location getLocation(org.bukkit.entity.Player player) {
 		return this.player.getLocation();
 	}
+	
+	@Override
+	public boolean canBeSetFor(Player player) {
+		return player != this.player;
+	}
 }

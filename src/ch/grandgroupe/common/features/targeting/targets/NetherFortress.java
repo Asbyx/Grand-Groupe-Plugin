@@ -22,9 +22,4 @@ public class NetherFortress extends Target
 	public boolean canBeSetFor(Player player) {
 		return player.getWorld().getEnvironment() == World.Environment.NETHER;
 	}
-	
-	@Override
-	public String getErrorMessage(Player player) {
-		return canBeSetFor(player) ? null : "You are not in the correct dimension";
-	}
 }
