@@ -42,10 +42,10 @@ public enum Commands
 			new ArgumentList(Argument.HARVESTER, "harvester"),
 			new ArgumentList("Set the radius of action of the harvester", Argument.HARVESTER, INT)
 	),
-	GRAPPIN(true,
+	HOOK(true,
 			"rules",
-			"grappin",
-			new ArgumentList(Argument.GRAPPIN, "grappin")
+			"hook",
+			new ArgumentList(Argument.HOOK, "hook")
 	),
 	COMPASS_TARGETING(true,
 			"rules",
@@ -90,8 +90,8 @@ public enum Commands
 			"teams",
 			new ArgumentList("Set the location of your base at your feet", Argument.TEAMS, Argument.SET_BASE_LOCATION),
 			new ArgumentList("Set the location of a given team at your feet", Argument.TEAMS, Argument.SET_BASE_LOCATION, TEAM),
-			new ArgumentList("Set the location of your team at the given coordinates", Argument.TEAMS, Argument.SET_BASE_LOCATION, COORD_X, COORD_Y, COORD_Z),
-			new ArgumentList("Set the location of the given team at the given coordinates", Argument.TEAMS, Argument.SET_BASE_LOCATION, TEAM, COORD_X, COORD_Y, COORD_Z)
+			new ArgumentList("Set the location of your team at the given coordinates", Argument.TEAMS, Argument.SET_BASE_LOCATION, COORDINATE_X, COORDINATE_Y, COORDINATE_Z),
+			new ArgumentList("Set the location of the given team at the given coordinates", Argument.TEAMS, Argument.SET_BASE_LOCATION, TEAM, COORDINATE_X, COORDINATE_Y, COORDINATE_Z)
 	),
 	GET_BASE_LOCATION(false,
 			"fk",

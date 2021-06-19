@@ -2,7 +2,7 @@ package ch.grandgroupe.common.tabCompleter;
 
 import ch.grandgroupe.common.utils.Misc;
 import ch.grandgroupe.common.worlds.Worlds;
-import ch.grandgroupe.minigames.short_fallen_kingdom.Teams.FKTeam;
+import ch.grandgroupe.minigames.short_fallen_kingdom.teams.FKTeam;
 import ch.grandgroupe.minigames.speedrun.Objective;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -22,7 +22,7 @@ public enum Argument
 	NUDE_BOW("nudeBow"),
 	DEATH_CHEST("deathChest"),
 	HARVESTER("harvester"),
-	GRAPPIN("grappin"),
+	HOOK("hook"),
 	COMPASS_TARGETING("compassTargeting"),
 	TOMB("tomb"),
 	
@@ -57,7 +57,7 @@ public enum Argument
 	/*TRAINING PACK*/
 	TRAINING_START("start"),
 	TRAINING_STOP("stop"),
-	TRAINING_TYPE("type of training", c -> Misc.list("hotbar", "parcours")),
+	TRAINING_TYPE("type of training", c -> Misc.list("hotbar", "parkour")),
 	
 	/*#####################################################################################################################*/
 	/*SPEEDRUN*/
@@ -68,12 +68,12 @@ public enum Argument
 	PLAYER("Name of a player", c -> Bukkit.getOnlinePlayers().stream()
 										  .map(Player::getName)
 										  .collect(Collectors.toList())),
-	COORD_X("X-axis coordinate", c -> c instanceof Player ? Misc.list(String.valueOf(((Player) c).getLocation().getX()), "~")
-														  : Misc.list()),
-	COORD_Y("Y-axis coordinate", c -> c instanceof Player ? Misc.list(String.valueOf(((Player) c).getLocation().getY()), "~")
-														  : Misc.list()),
-	COORD_Z("Z-axis coordinate", c -> c instanceof Player ? Misc.list(String.valueOf(((Player) c).getLocation().getZ()), "~")
-														  : Misc.list()),
+	COORDINATE_X("X-axis coordinate", c -> c instanceof Player ? Misc.list(String.valueOf(((Player) c).getLocation().getX()), "~")
+															   : Misc.list()),
+	COORDINATE_Y("Y-axis coordinate", c -> c instanceof Player ? Misc.list(String.valueOf(((Player) c).getLocation().getY()), "~")
+															   : Misc.list()),
+	COORDINATE_Z("Z-axis coordinate", c -> c instanceof Player ? Misc.list(String.valueOf(((Player) c).getLocation().getZ()), "~")
+															   : Misc.list()),
 	WORLD("A world", Worlds.Type.class),
 	TP("tp"),
 	

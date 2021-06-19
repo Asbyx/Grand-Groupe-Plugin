@@ -36,17 +36,14 @@ public class WorldManager extends WorldAdapter
 			e.printStackTrace();
 		}
 	}
-	private static boolean loadWorld(String name) {
+	private static void loadWorld(String name) {
 		if (worldExists(name))
-			return Bukkit.getWorlds().add(new WorldCreator(name).createWorld());
-		
-		return false;
+			Bukkit.getWorlds().add(new WorldCreator(name).createWorld());
 	}
 	private static boolean worldExists(String name) {
 		return Objects.requireNonNull(Bukkit.getWorldContainer().list((f, n) -> f.isDirectory() && n.equals(name))).length == 1;
 	}
 	
-	/*
 	public void clearUselessWorlds() {
 		if (count == 0) return;
 		
@@ -57,13 +54,14 @@ public class WorldManager extends WorldAdapter
 		
 		File f = world.getWorldFolder();
 		Bukkit.unloadWorld(world, false);
-		f.renameTo(new File(name));
+		
+		if (!f.renameTo(new File(name))) throw new Error("Could not rename world folder");
+		
 		loadWorld(name);
 		
 		//deleteWorld(toString());
 		count = 0;
 	}
-	*/
 	
 	protected boolean hasSpecialGeneration() {
 		return false;

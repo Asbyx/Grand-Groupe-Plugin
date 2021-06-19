@@ -13,8 +13,8 @@ public class ConcreteListener implements Listener {
     public void onDiamondMined(BlockBreakEvent event){
         if(event.getBlock().getType() == Material.DIAMOND_ORE && event.getPlayer().getStatistic(Statistic.MINE_BLOCK, Material.DIAMOND_ORE) == 0){
             Bukkit.broadcastMessage(
-                    event.getPlayer().getDisplayName() + " a miné du diamand aux coordonnées " + new Coordinates(event.getBlock().getLocation()) + ".\n" +
-                    "Après vous faites ce que vous voulez mais on vous conseille de lui péter la gueule. "
+                    event.getPlayer().getDisplayName() + " mined diamonds at " + new Coordinates(event.getBlock().getLocation()) + ".\n" +
+                    "You can do whatever you want, but we advised you to kick his asses. "
             );
         }
     }
@@ -30,7 +30,7 @@ public class ConcreteListener implements Listener {
             world.getBlockAt(event.getPlayer().getLocation().add(new Vector(1, 2, 1))).setType(Material.DIAMOND_BLOCK);
             world.getBlockAt(event.getPlayer().getLocation().add(new Vector(1, 2, -1))).setType(Material.DIAMOND_BLOCK);
 
-            Bukkit.broadcastMessage(event.getPlayer().getDisplayName() + " est maintenant riche !");
+            Bukkit.broadcastMessage(event.getPlayer().getDisplayName() + " is now rich !");
         }
     }
 }

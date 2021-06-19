@@ -1,4 +1,4 @@
-package ch.grandgroupe.minigames.short_fallen_kingdom.Events;
+package ch.grandgroupe.minigames.short_fallen_kingdom.events;
 
 import ch.grandgroupe.common.features.AbstractListener;
 import ch.grandgroupe.common.Main;

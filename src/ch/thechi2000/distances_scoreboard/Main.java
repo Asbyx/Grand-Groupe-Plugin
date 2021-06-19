@@ -13,11 +13,4 @@ public class Main extends JavaPlugin
 		manager = new DistanceBoardsManager();
 		getServer().getPluginManager().registerEvents(manager, this);
 	}
-	
-	
-	@Override
-	public void onDisable()
-	{
-		super.onDisable();
-	}
 }

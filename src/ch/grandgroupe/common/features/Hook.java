@@ -4,9 +4,7 @@ import ch.grandgroupe.common.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerFishEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.util.Vector;
@@ -14,7 +12,7 @@ import org.bukkit.util.Vector;
 import java.util.Objects;
 
 //todo ! (unfinished feature)
-public class Hook extends AbstractListener {
+@SuppressWarnings("ALL") public class Hook extends AbstractListener {
 	int id = -1;
 	double length;
 	private final ShapedRecipe recipe1; //todo

@@ -1,4 +1,4 @@
-package ch.grandgroupe.minigames.short_fallen_kingdom.Teams;
+package ch.grandgroupe.minigames.short_fallen_kingdom.teams;
 
 import ch.grandgroupe.common.features.AbstractListener;
 import ch.grandgroupe.common.Main;

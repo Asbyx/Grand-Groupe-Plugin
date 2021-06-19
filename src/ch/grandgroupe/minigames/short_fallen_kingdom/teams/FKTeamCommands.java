@@ -1,4 +1,4 @@
-package ch.grandgroupe.minigames.short_fallen_kingdom.Teams;
+package ch.grandgroupe.minigames.short_fallen_kingdom.teams;
 
 import ch.grandgroupe.common.Main;
 import ch.grandgroupe.common.tabCompleter.Commands;
@@ -15,36 +15,6 @@ import java.util.stream.Collectors;
 
 public class FKTeamCommands implements CommandExecutor
 {
-	@Override
-	public boolean onCommand(@Nonnull CommandSender commandSender, @Nonnull Command command, @Nonnull String s, String[] strings) {
-		String[] args = Arrays.copyOfRange(strings, 1, strings.length);
-		
-		switch (strings[1].toLowerCase()) {
-			case "create":
-				return create(commandSender, args);
-			case "terminate":
-				return terminate(commandSender, args);
-			case "revive":
-				return revive(commandSender, args);
-			case "addplayer":
-				return addPlayer(commandSender, args);
-			case "removeplayer":
-				return removePlayer(commandSender, args);
-			case "setbaselocation":
-				return setBaseLocation(commandSender, args);
-			case "getbaselocation":
-				return getBaseLocation(commandSender, args);
-			case "teams":
-				return teams(commandSender, args);
-			case "players":
-				return players(commandSender, args);
-			case "help":
-				return help(commandSender, args);
-		}
-		
-		return false;
-	}
-	
 	private static boolean create(CommandSender commandSender, String[] strings) {
 		if (!commandSender.isOp()) {
 			Main.broadcast(ChatColor.RED + "You do not have the permission to use this command");
@@ -244,6 +214,8 @@ public class FKTeamCommands implements CommandExecutor
 		commandSender.sendMessage(team.stream().map(Player::getName).collect(Collectors.joining(", ")));
 		return true;
 	}
+	
+	@SuppressWarnings("SpellCheckingInspection")
 	private static boolean help(CommandSender commandSender, String[] strings) {
 		if (strings.length == 1) {
 			commandSender.sendMessage("Choose a command for help :");
@@ -277,6 +249,37 @@ public class FKTeamCommands implements CommandExecutor
 		else
 			return false;
 		return true;
+	}
+	
+	@SuppressWarnings("SpellCheckingInspection")
+	@Override
+	public boolean onCommand(@Nonnull CommandSender commandSender, @Nonnull Command command, @Nonnull String s, String[] strings) {
+		String[] args = Arrays.copyOfRange(strings, 1, strings.length);
+		
+		switch (strings[1].toLowerCase()) {
+			case "create":
+				return create(commandSender, args);
+			case "terminate":
+				return terminate(commandSender, args);
+			case "revive":
+				return revive(commandSender, args);
+			case "addplayer":
+				return addPlayer(commandSender, args);
+			case "removeplayer":
+				return removePlayer(commandSender, args);
+			case "setbaselocation":
+				return setBaseLocation(commandSender, args);
+			case "getbaselocation":
+				return getBaseLocation(commandSender, args);
+			case "teams":
+				return teams(commandSender, args);
+			case "players":
+				return players(commandSender, args);
+			case "help":
+				return help(commandSender, args);
+		}
+		
+		return false;
 	}
 }
 

@@ -39,7 +39,7 @@ public class Worlds
 						END.regenerate(WorldType.NORMAL, true, onFinish)));
 	}
 	
-	public static void init(/*boolean clear*/) {
+	public static void init(boolean clear) {
 		OVERWORLD = new WorldManager("world");
 		NETHER    = new WorldManager("world_nether");
 		END       = new WorldManager("world_the_end");
@@ -55,13 +55,11 @@ public class Worlds
 		
 		Bukkit.getPluginManager().registerEvents(new WorldEvents(), Main.PLUGIN);
 		
-		/*
 		if (clear) {
 			OVERWORLD.clearUselessWorlds();
 			NETHER.clearUselessWorlds();
 			END.clearUselessWorlds();
 		}
-		*/
 	}
 	
 	private static void regenerate(Type type, boolean generateStructures) {

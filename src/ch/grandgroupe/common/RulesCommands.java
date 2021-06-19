@@ -31,6 +31,7 @@ public final class RulesCommands implements CommandExecutor
 		});
 	}
 	
+	@SuppressWarnings("SpellCheckingInspection")
 	@Override
 	public boolean onCommand(CommandSender sender, @Nonnull Command command,@Nonnull String label, String[] arg) {
 		if (sender.isOp()) {

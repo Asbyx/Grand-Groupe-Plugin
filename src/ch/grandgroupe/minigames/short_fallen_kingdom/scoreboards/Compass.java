@@ -1,10 +1,10 @@
-package ch.grandgroupe.minigames.short_fallen_kingdom.Scoreboards;
+package ch.grandgroupe.minigames.short_fallen_kingdom.scoreboards;
 
 import ch.grandgroupe.common.features.AbstractListener;
 import ch.grandgroupe.common.worlds.Worlds;
-import ch.grandgroupe.minigames.short_fallen_kingdom.Events.EventsManager;
+import ch.grandgroupe.minigames.short_fallen_kingdom.events.EventsManager;
 import ch.grandgroupe.common.Main;
-import ch.grandgroupe.minigames.short_fallen_kingdom.Teams.FKTeam;
+import ch.grandgroupe.minigames.short_fallen_kingdom.teams.FKTeam;
 import com.mojang.datafixers.util.Pair;
 import org.bukkit.*;
 import org.bukkit.entity.Player;

@@ -33,7 +33,7 @@ public class Harvester extends AbstractListener {
 	public Harvester() {
 		ItemStack harvester = new ItemStack(DIAMOND_HOE);
 		ItemMeta meta = harvester.getItemMeta();
-		meta.setDisplayName(ChatColor.RESET + "Harvester");
+		Objects.requireNonNull(meta).setDisplayName(ChatColor.RESET + "Harvester");
 		meta.setLocalizedName("Harvester");
 		harvester.setItemMeta(meta);
 

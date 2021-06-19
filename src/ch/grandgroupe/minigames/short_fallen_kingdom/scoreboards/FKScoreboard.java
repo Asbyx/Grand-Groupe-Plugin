@@ -1,9 +1,8 @@
-package ch.grandgroupe.minigames.short_fallen_kingdom.Scoreboards;
+package ch.grandgroupe.minigames.short_fallen_kingdom.scoreboards;
 
 import ch.grandgroupe.common.features.AbstractListener;
-import ch.grandgroupe.minigames.short_fallen_kingdom.Events.EventsManager;
+import ch.grandgroupe.minigames.short_fallen_kingdom.events.EventsManager;
 import ch.grandgroupe.common.Main;
-import ch.grandgroupe.minigames.short_fallen_kingdom.Teams.FKTeam;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -18,7 +17,6 @@ public class FKScoreboard extends AbstractListener
 {
 	private static int count = 0;
 	
-	private final FKTeam ownerTeam;
 	private final Player owner;
 	private EventsManager eventsManager;
 	private final Objective objective;
@@ -40,7 +38,6 @@ public class FKScoreboard extends AbstractListener
 		
 		scoreboard = Objects.requireNonNull(Bukkit.getScoreboardManager()).getNewScoreboard();
 		objective  = scoreboard.registerNewObjective("side_bar_" + count, "dummy", "Fallen Kingdom - CTF");
-		ownerTeam  = FKTeam.getTeam(owner);
 		++count;
 		
 		objective.setDisplaySlot(DisplaySlot.SIDEBAR);

@@ -37,7 +37,7 @@ public enum Objective
 	public final String description;
 	public final Object[] data;
 	
-	Objective(Types type, String description, Object... data) {
+	Objective(@SuppressWarnings("SameParameterValue") Types type, String description, Object... data) {
 		this.type        = type;
 		this.description = description;
 		this.data        = data;

@@ -17,7 +17,7 @@ import java.util.Objects;
 
 /**
  * Nude Bow: if a player use a bow and have an emerald in his left hand, the arrow he will throw will downgrade all the armor of the player who has been hit and the emerald will be consumed.
- * Downgrade: if the armor have enchantement it is removed, if not, it does likes this: Netherite -> Diamond -> Iron -> Leather -> Nude :D
+ * Downgrade: if the armor have enchantment it is removed, if not, it does likes this: Netherite -> Diamond -> Iron -> Leather -> Nude :D
  */
 public class NudeBow extends AbstractListener {
 	@EventHandler

@@ -1,11 +1,10 @@
 package ch.grandgroupe.common;
 
 import ch.grandgroupe.common.tabCompleter.TabCompleter;
-import ch.grandgroupe.common.tabCompleter.*;
 import ch.grandgroupe.common.worlds.*;
-import ch.grandgroupe.minigames.short_fallen_kingdom.Events.EventsCommands;
+import ch.grandgroupe.minigames.short_fallen_kingdom.events.EventsCommands;
 import ch.grandgroupe.minigames.short_fallen_kingdom.FKExecutor;
-import ch.grandgroupe.minigames.short_fallen_kingdom.Teams.*;
+import ch.grandgroupe.minigames.short_fallen_kingdom.teams.*;
 import ch.grandgroupe.minigames.speedrun.SpeedrunExecutor;
 import org.bukkit.*;
 import org.bukkit.command.*;
@@ -35,7 +34,7 @@ public final class Main extends JavaPlugin
 		PLUGIN    = this;
 		SCHEDULER = getServer().getScheduler();
 		
-		Worlds.init();
+		Worlds.init(false);
 		
 		registerMinigame("fk", new FKExecutor(new EventsCommands(), new FKTeamCommands()));
 		registerMinigame("rules", new RulesCommands());

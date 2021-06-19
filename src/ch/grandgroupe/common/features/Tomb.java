@@ -1,6 +1,5 @@
 package ch.grandgroupe.common.features;
 
-import ch.grandgroupe.common.Main;
 import ch.grandgroupe.common.utils.Coordinates;
 import ch.grandgroupe.common.worlds.Worlds;
 import org.bukkit.*;
@@ -120,7 +119,7 @@ public class Tomb extends AbstractListener
 		}
 		
 		void spawn() {
-			glowingCube = (MagmaCube) loc.getWorld().spawnEntity(loc.clone().subtract(0, 1, 0), EntityType.MAGMA_CUBE);
+			glowingCube = (MagmaCube) Objects.requireNonNull(loc.getWorld()).spawnEntity(loc.clone().subtract(0, 1, 0), EntityType.MAGMA_CUBE);
 			
 			glowingCube.setAI(false);
 			glowingCube.setGlowing(true);

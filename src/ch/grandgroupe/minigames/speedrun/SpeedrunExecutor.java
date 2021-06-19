@@ -2,6 +2,7 @@ package ch.grandgroupe.minigames.speedrun;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
+import org.jetbrains.annotations.NotNull;
 
 
 public class SpeedrunExecutor implements CommandExecutor
@@ -9,7 +10,7 @@ public class SpeedrunExecutor implements CommandExecutor
 	private Speedrun speedrun;
 	
 	@Override
-	public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+	public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, String s, String[] strings) {
 		if (!s.equals("speedrun") || strings.length == 0) return true;
 		
 		switch (strings[0]) {

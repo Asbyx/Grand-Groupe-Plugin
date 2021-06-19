@@ -1,13 +1,14 @@
-package ch.grandgroupe.minigames.short_fallen_kingdom.Events;
+package ch.grandgroupe.minigames.short_fallen_kingdom.events;
 
 import ch.grandgroupe.common.Main;
 import ch.grandgroupe.common.worlds.Worlds;
-import ch.grandgroupe.minigames.short_fallen_kingdom.Scoreboards.*;
-import ch.grandgroupe.minigames.short_fallen_kingdom.Teams.*;
+import ch.grandgroupe.minigames.short_fallen_kingdom.scoreboards.*;
+import ch.grandgroupe.minigames.short_fallen_kingdom.teams.*;
 import org.bukkit.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,8 +35,9 @@ public class EventsCommands implements CommandExecutor
 		Bukkit.getPluginManager().registerEvents(buildEvents, Main.PLUGIN);
 	}
 	
+	@SuppressWarnings("SpellCheckingInspection")
 	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 		switch (args[1].toLowerCase()) {
 			case "startgame":
 				startGame(sender, Arrays.copyOfRange(args, 1, args.length));
@@ -121,7 +123,7 @@ public class EventsCommands implements CommandExecutor
 			flagEvents.disable();
 			buildEvents.disable();
 			
-			FKTeam.allTeams.forEach(t -> Main.inGamePlayers.removeAll(t.stream().map(Player::getUniqueId).collect(Collectors.toList())));
+			FKTeam.allTeams.forEach(t -> t.stream().map(Player::getUniqueId).collect(Collectors.toList()).forEach(Main.inGamePlayers::remove));
 			
 			if (scoreboards != null) scoreboards.forEach(FKScoreboard::stop);
 			if (compasses != null) compasses.forEach(Compass::disable);
@@ -129,6 +131,8 @@ public class EventsCommands implements CommandExecutor
 			Main.broadcast("The game is over !");
 		}
 	}
+	
+	@SuppressWarnings("SpellCheckingInspection")
 	private void help(CommandSender sender) {
 		if (sender.isOp()) sender.sendMessage(
 				"startgame : start the game (use default as argument to use default parameters)\n" +
@@ -136,6 +140,7 @@ public class EventsCommands implements CommandExecutor
 		);
 		sender.sendMessage("parameters : display the current game parameters\n" + "middlechest : show the coordinates of the middle chest");
 	}
+	
 	private void initPlayer(Player player) {
 		player.setGameMode(GameMode.SURVIVAL);
 		player.getInventory().clear();
