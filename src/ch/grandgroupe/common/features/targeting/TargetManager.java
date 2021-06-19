@@ -18,7 +18,7 @@ public class TargetManager
 	}
 	
 	public void update() {
-		if (target.getLocation(player) == null) return;
+		if (!target.isValidFor(player)) return;
 		
 		Location targetLocation = target.getLocation(player).clone();
 		targetLocation.setY(0);
