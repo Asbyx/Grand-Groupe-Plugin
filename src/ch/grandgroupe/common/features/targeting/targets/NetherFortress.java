@@ -14,7 +14,7 @@ public class NetherFortress extends Target
 	@Override
 	public Location getLocation(Player player) {
 		return player.getWorld().getEnvironment() == World.Environment.NETHER
-			   ? player.getWorld().locateNearestStructure(player.getLocation(), StructureType.NETHER_FORTRESS, 50, true)
+			   ? player.getWorld().locateNearestStructure(player.getLocation(), StructureType.NETHER_FORTRESS, 50, false)
 			   : null;
 	}
 	
