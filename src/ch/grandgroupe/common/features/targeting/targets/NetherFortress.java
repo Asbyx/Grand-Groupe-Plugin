@@ -19,7 +19,7 @@ public class NetherFortress extends Target
 	}
 	
 	@Override
-	public boolean canBeSetFor(Player player) {
+	public boolean isValidFor(Player player) {
 		return player.getWorld().getEnvironment() == World.Environment.NETHER;
 	}
 }

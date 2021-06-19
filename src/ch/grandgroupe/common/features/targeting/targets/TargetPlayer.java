@@ -34,7 +34,7 @@ public class TargetPlayer extends Target
 	}
 	
 	@Override
-	public boolean canBeSetFor(Player player) {
+	public boolean isValidFor(Player player) {
 		return player != this.player && player.getWorld() == this.player.getWorld();
 	}
 }

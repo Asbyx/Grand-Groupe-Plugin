@@ -38,7 +38,7 @@ public class TargetManager
 	}
 	
 	public void setTarget(Target target) {
-		if (target.canBeSetFor(player))
+		if (target.isValidFor(player))
 			this.target = target;
 	}
 }

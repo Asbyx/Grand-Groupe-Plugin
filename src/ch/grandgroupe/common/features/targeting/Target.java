@@ -35,7 +35,7 @@ public abstract class Target
 	 *
 	 * @return whether the target is valid
 	 */
-	public boolean canBeSetFor(Player player) {
+	public boolean isValidFor(Player player) {
 		return true;
 	}
 }

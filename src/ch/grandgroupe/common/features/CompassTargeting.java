@@ -102,10 +102,10 @@ public class CompassTargeting extends AbstractListener
 	}
 	
 	private Inventory generateInventory(Player player) {
-		Inventory inv = Bukkit.createInventory(player, (int) (Math.ceil(availableTargets.stream().filter(t -> t.canBeSetFor(player)).count() / 9f) * 9), "Choose a target");
+		Inventory inv = Bukkit.createInventory(player, (int) (Math.ceil(availableTargets.stream().filter(t -> t.isValidFor(player)).count() / 9f) * 9), "Choose a target");
 		
 		AtomicInteger i = new AtomicInteger(0);
-		availableTargets.stream().filter(t -> t.canBeSetFor(player)).forEach(t -> inv.setItem(i.getAndIncrement(), t.getRepresentativeItem()));
+		availableTargets.stream().filter(t -> t.isValidFor(player)).forEach(t -> inv.setItem(i.getAndIncrement(), t.getRepresentativeItem()));
 		
 		return inv;
 	}
