@@ -14,14 +14,14 @@ import org.bukkit.util.Vector;
 import java.util.Objects;
 
 //todo ! (unfinished feature)
-public class Grappin extends AbstractListener {
+public class Hook extends AbstractListener {
 	int id = -1;
 	double length;
 	private final ShapedRecipe recipe1; //todo
 	private final NamespacedKey key1 = new NamespacedKey(Main.PLUGIN, "grappin");
 
 
-	public Grappin(){
+	public Hook(){
 		ItemStack item = new ItemStack(Material.FISHING_ROD);
 		recipe1 = null;
 	}
