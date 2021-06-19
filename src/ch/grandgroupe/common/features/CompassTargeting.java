@@ -17,8 +17,6 @@ import java.util.stream.Collectors;
 
 public class CompassTargeting extends AbstractListener
 {
-	private static final int INVENTORY_SIZE = 18;
-	
 	private Map<Player, TargetManager> playerTargets;
 	private List<Target> availableTargets;
 	private Map<Player, Inventory> inventories;
