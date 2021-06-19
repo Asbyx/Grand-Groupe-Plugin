@@ -18,6 +18,8 @@ public class TargetManager
 	}
 	
 	public void update() {
+		if (target.getLocation(player) == null) return;
+		
 		Location targetLocation = target.getLocation(player).clone();
 		targetLocation.setY(0);
 		//targetLocation.getBlock().setType(Material.LODESTONE);
@@ -38,7 +40,5 @@ public class TargetManager
 	public void setTarget(Target target) {
 		if (target.canBeSetFor(player))
 			this.target = target;
-		else
-			player.sendMessage(ChatColor.RED + target.getErrorMessage(player));
 	}
 }

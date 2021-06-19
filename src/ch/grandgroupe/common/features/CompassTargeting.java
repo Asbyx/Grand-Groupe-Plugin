@@ -3,7 +3,7 @@ package ch.grandgroupe.common.features;
 import ch.grandgroupe.common.Main;
 import ch.grandgroupe.common.features.targeting.*;
 import ch.grandgroupe.common.features.targeting.targets.*;
-import org.bukkit.Bukkit;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
@@ -54,14 +54,15 @@ public class CompassTargeting extends AbstractListener
 		super.disable();
 		Main.SCHEDULER.cancelTask(taskId);
 	}
+	
 	@EventHandler
 	public void openGUI(PlayerInteractEvent event) {
 		if (isDisabled()) return;
 		
-		if (players.size() != 2
-				&& players.contains(event.getPlayer())
-				&& (event.getAction() == Action.RIGHT_CLICK_BLOCK
-				|| event.getAction() == Action.RIGHT_CLICK_AIR)) {
+		if ((event.getAction() == Action.RIGHT_CLICK_BLOCK
+				|| event.getAction() == Action.RIGHT_CLICK_AIR)
+				&& event.getItem() != null
+				&& event.getItem().getType() == Material.COMPASS) {
 			final Player player = event.getPlayer();
 			
 			Inventory inv = generateInventory(player);
@@ -81,11 +82,13 @@ public class CompassTargeting extends AbstractListener
 				   .filter(e -> e.getValue() == event.getClickedInventory())
 				   .map(Map.Entry::getKey)
 				   .findFirst()
-				   .ifPresent(player ->
-				   {
-					   player.closeInventory();
-					   availableTargets.stream().filter(t -> t.getRepresentativeItem().equals(item)).findAny().ifPresent(playerTargets.get(player)::setTarget);
-				   });
+				   .ifPresent(player -> availableTargets.stream()
+														.filter(t -> t.getRepresentativeItem().equals(item))
+														.findAny()
+														.ifPresent(target -> {
+															playerTargets.get(player).setTarget(target);
+															player.closeInventory();
+														}));
 	}
 	
 	@EventHandler
@@ -95,11 +98,11 @@ public class CompassTargeting extends AbstractListener
 		Player player = event.getPlayer();
 		
 		players.add(player);
-		players.forEach(p -> inventories.put(p, generateInventory(p)));
+		playerTargets.put(player, new TargetManager(player));
 	}
 	
 	private Inventory generateInventory(Player player) {
-		Inventory inv = Bukkit.createInventory(player, INVENTORY_SIZE, "Choose a target");
+		Inventory inv = Bukkit.createInventory(player, (int) (Math.ceil(availableTargets.stream().filter(t -> t.canBeSetFor(player)).count() / 9f) * 9), "Choose a target");
 		
 		AtomicInteger i = new AtomicInteger(0);
 		availableTargets.stream().filter(t -> t.canBeSetFor(player)).forEach(t -> inv.setItem(i.getAndIncrement(), t.getRepresentativeItem()));
