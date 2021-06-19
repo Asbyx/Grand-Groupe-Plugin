@@ -30,11 +30,11 @@ public class TargetPlayer extends Target
 	
 	@Override
 	public Location getLocation(org.bukkit.entity.Player player) {
-		return this.player.getLocation();
+		return player.getWorld() == this.player.getWorld() ? this.player.getLocation() : null;
 	}
 	
 	@Override
 	public boolean canBeSetFor(Player player) {
-		return player != this.player;
+		return player != this.player && player.getWorld() == this.player.getWorld();
 	}
 }
