@@ -4,10 +4,13 @@ import org.bukkit.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nonnull;
+import java.util.Objects;
+
 public class WorldCommands implements CommandExecutor
 {
 	@Override
-	public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+	public boolean onCommand(@Nonnull CommandSender commandSender, @Nonnull Command command, String s, String[] strings) {
 		if (!s.equals("worlds")) return true;
 		
 		if (!commandSender.isOp()) {
@@ -35,14 +38,14 @@ public class WorldCommands implements CommandExecutor
 			
 			case "regenerate":
 				if (strings.length == 2 || strings.length == 3) {
-					WorldManager manager = Worlds.getCorrespondingWorldManager(Worlds.Type.fromString(strings[1]));
+					WorldManager manager = Worlds.getCorrespondingWorldManager(Objects.requireNonNull(Worlds.Type.fromString(strings[1])));
 					
 					if (manager == null) {
 						commandSender.sendMessage(ChatColor.RED + "No corresponding world");
 						return true;
 					}
 					
-					if (!manager.canBeRegenerated()) {
+					if (manager.cannotBeRegenerated()) {
 						commandSender.sendMessage(ChatColor.RED + "This world cannot be regenerated");
 						return true;
 					}

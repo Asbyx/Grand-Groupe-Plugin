@@ -8,10 +8,9 @@ import org.bukkit.entity.Player;
 import java.io.*;
 import java.util.*;
 
-public class WorldManager
+public class WorldManager extends WorldAdapter
 {
 	private final String name;
-	private World world;
 	private int count = 0;
 	
 	public WorldManager(String name) {
@@ -72,8 +71,8 @@ public class WorldManager
 	protected void generate() {
 		throw new UnsupportedOperationException();
 	}
-	protected boolean canBeRegenerated() {
-		return true;
+	protected boolean cannotBeRegenerated() {
+		return false;
 	}
 	
 	public void regenerate() {
@@ -86,7 +85,7 @@ public class WorldManager
 		regenerate(type, structures, () -> {});
 	}
 	public void regenerate(WorldType type, boolean structures, Runnable onFinish) {
-		if (!canBeRegenerated()) throw new UnsupportedOperationException();
+		if (cannotBeRegenerated()) throw new UnsupportedOperationException();
 		
 		++count;
 		

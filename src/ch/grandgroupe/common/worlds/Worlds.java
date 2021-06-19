@@ -33,6 +33,12 @@ public class Worlds
 		p.teleport(getCorrespondingWorldManager(t).get().getSpawnLocation());
 	}
 	
+	public static void regenerateAll(boolean generateStructures, Runnable onFinish) {
+		OVERWORLD.regenerate(WorldType.NORMAL, generateStructures, () ->
+				NETHER.regenerate(WorldType.NORMAL, true, () ->
+						END.regenerate(WorldType.NORMAL, true, onFinish)));
+	}
+	
 	public static void init(/*boolean clear*/) {
 		OVERWORLD = new WorldManager("world");
 		NETHER    = new WorldManager("world_nether");

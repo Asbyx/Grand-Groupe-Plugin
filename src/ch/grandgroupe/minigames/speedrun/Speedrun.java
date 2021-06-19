@@ -33,7 +33,7 @@ public class Speedrun extends AbstractListener
 		Main.inGamePlayers.addAll(playersId);
 		
 		onlinePlayers().filter(p -> p.getWorld() != Worlds.LOBBY.get()).forEach(Worlds::teleportToLobby);
-		Worlds.OVERWORLD.regenerate(WorldType.NORMAL, false, () ->
+		Worlds.regenerateAll(true, () ->
 		{
 			onlinePlayers().forEach(Worlds::teleportToOverworld);
 			onlinePlayers().forEach(this::initPlayer);

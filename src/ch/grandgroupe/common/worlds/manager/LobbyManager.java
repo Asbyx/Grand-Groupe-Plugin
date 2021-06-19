@@ -15,8 +15,8 @@ public class LobbyManager extends WorldManager
 		return true;
 	}
 	@Override
-	protected boolean canBeRegenerated() {
-		return false;
+	protected boolean cannotBeRegenerated() {
+		return true;
 	}
 	@Override
 	protected void generate() {
