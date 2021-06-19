@@ -1,10 +1,10 @@
 package ch.grandgroupe.common;
 
 import ch.grandgroupe.common.features.*;
-import ch.grandgroupe.minigames.speedrun.Speedrun;
 import org.bukkit.*;
 import org.bukkit.command.*;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 /**
@@ -12,37 +12,36 @@ import java.util.*;
  */
 public final class RulesCommands implements CommandExecutor
 {
-	private final List<AbstractListener> listeners = new ArrayList<>();
+	private final Map<String, AbstractListener> listeners = new TreeMap<>();
 	
 	/**
 	 * Default constructor: initiate all listeners, disabled by default
 	 */
 	public RulesCommands() {
-		listeners.add(new TntBow());
-		listeners.add(new DeathChest());
-		listeners.add(new NudeBow());
-		listeners.add(new Harvester());
-		listeners.add(new Grappin());
-		listeners.add(new CompassTargeting());
-		listeners.add(new Tomb());
+		listeners.put("tntBow", new TntBow());
+		listeners.put("nudeBow", new NudeBow());
+		listeners.put("harvester", new Harvester());
+		listeners.put("hook", new Hook());
+		listeners.put("compassTargeting", new CompassTargeting());
+		listeners.put("tomb", new Tomb());
 		
-		listeners.forEach(abstractListener -> {
+		listeners.values().forEach(abstractListener -> {
 			abstractListener.disable();
 			Bukkit.getPluginManager().registerEvents(abstractListener, Main.PLUGIN);
 		});
 	}
 	
 	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] arg) {
+	public boolean onCommand(CommandSender sender, @Nonnull Command command,@Nonnull String label, String[] arg) {
 		if (sender.isOp()) {
 			switch (arg[0].toLowerCase()) {
 				case "tntbow":
 					if (arg[1].equalsIgnoreCase("true") || arg[1].equalsIgnoreCase("false")) {
-						enabler(Boolean.parseBoolean(arg[1]), 0, "Tnt Bow");
+						enabler(Boolean.parseBoolean(arg[1]), "tntBow", "Tnt Bow");
 					}
 					else {
 						try {
-							((TntBow) listeners.get(0)).setPower(Float.parseFloat(arg[1]));
+							((TntBow) listeners.get("tntBow")).setPower(Float.parseFloat(arg[1]));
 							Main.broadcast("Power of Tnt bow set to: " + ChatColor.GOLD + Float.parseFloat(arg[1]));
 						}
 						catch (NumberFormatException e) {
@@ -51,21 +50,17 @@ public final class RulesCommands implements CommandExecutor
 					}
 					break;
 				
-				case "deathchest":
-					enabler(Boolean.parseBoolean(arg[1]), 1, "Death chest");
-					break;
-				
 				case "nudebow":
-					enabler(Boolean.parseBoolean(arg[1]), 2, "Nude Bow");
+					enabler(Boolean.parseBoolean(arg[1]), "nudeBow", "Nude Bow");
 					break;
 				
 				case "harvester":
 					if (arg[1].equalsIgnoreCase("true") || arg[1].equalsIgnoreCase("false")) {
-						enabler(Boolean.parseBoolean(arg[1]), 3, "Harvester");
+						enabler(Boolean.parseBoolean(arg[1]), "harvester", "Harvester");
 					}
 					else {
 						try {
-							((Harvester) listeners.get(3)).setRadius(Integer.parseInt(arg[1]));
+							((Harvester) listeners.get("harvester")).setRadius(Integer.parseInt(arg[1]));
 							Main.broadcast("Radius of action of the harvester set to: " + ChatColor.GOLD + Integer.parseInt(arg[1]));
 						}
 						catch (NumberFormatException e) {
@@ -74,16 +69,16 @@ public final class RulesCommands implements CommandExecutor
 					}
 					break;
 				
-				case "grappin":
-					enabler(Boolean.parseBoolean(arg[1]), 4, "Grappin");
+				case "hook":
+					enabler(Boolean.parseBoolean(arg[1]), "hook", "Hook");
 					break;
 				
 				case "compasstargeting":
-					enabler(Boolean.parseBoolean(arg[1]), 5, "Compass Targeting");
+					enabler(Boolean.parseBoolean(arg[1]), "compassTargeting", "Compass Targeting");
 					break;
 				
 				case "tomb":
-					enabler(Boolean.parseBoolean(arg[1]), 6, "Tomb");
+					enabler(Boolean.parseBoolean(arg[1]), "tomb", "Tomb");
 					break;
 			}
 		}
@@ -91,13 +86,13 @@ public final class RulesCommands implements CommandExecutor
 	}
 	
 	//method to be called for basic enable/disable event: new value = enable value | index = index in the list | name = name of the Listener for the players
-	private void enabler(boolean newValue, int index, String name) {
+	private void enabler(boolean newValue, String key, String name) {
 		if (newValue) {
-			listeners.get(index).enable();
+			listeners.get(key).enable();
 			enable(name);
 		}
 		else {
-			listeners.get(index).disable();
+			listeners.get(key).disable();
 			disable(name);
 		}
 	}
