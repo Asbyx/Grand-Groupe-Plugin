@@ -32,6 +32,5 @@ public class WorldEvents implements Listener
 		to.setWorld(Objects.requireNonNull(to.getWorld()).getEnvironment() == World.Environment.NORMAL
 					? Worlds.OVERWORLD.get()
 					: Worlds.NETHER.get());
-		event.setTo(to);
 	}
 }
