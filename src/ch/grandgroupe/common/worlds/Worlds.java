@@ -7,6 +7,8 @@ import org.bukkit.craftbukkit.libs.org.eclipse.sisu.Nullable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import java.util.Objects;
+
 public class Worlds
 {
 	public static final Location LOBBY_LOCATION = new Location(null, 0.5, 64, 0.5);
@@ -45,7 +47,6 @@ public class Worlds
 		END       = new WorldManager("world_the_end");
 		LOBBY     = new LobbyManager();
 		
-		if (LOBBY.get() == null) LOBBY.generate();
 		World lobby = LOBBY.get();
 		lobby.setPVP(false);
 		lobby.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
@@ -66,6 +67,9 @@ public class Worlds
 		getCorrespondingWorldManager(type).regenerate(generateStructures);
 	}
 	
+	public static WorldManager getCorrespondingWorldManager(World.Environment environment) {
+		return getCorrespondingWorldManager(Objects.requireNonNull(Type.fromEnvironment(environment)));
+	}
 	public static WorldManager getCorrespondingWorldManager(@Nullable Type type) {
 		switch (type) {
 			case OVERWORLD:
@@ -98,6 +102,18 @@ public class Worlds
 					return END;
 			}
 			return null;
+		}
+		public static Type fromEnvironment(World.Environment environment) {
+			switch (environment) {
+				case NORMAL:
+					return OVERWORLD;
+				case NETHER:
+					return NETHER;
+				case THE_END:
+					return END;
+				default:
+					return null;
+			}
 		}
 	}
 }

@@ -8,10 +8,11 @@ import org.bukkit.entity.Player;
 import java.io.*;
 import java.util.*;
 
-public class WorldManager extends WorldAdapter
+public class WorldManager
 {
 	private final String name;
 	private int count = 0;
+	private World world;
 	
 	public WorldManager(String name) {
 		this.name = name;

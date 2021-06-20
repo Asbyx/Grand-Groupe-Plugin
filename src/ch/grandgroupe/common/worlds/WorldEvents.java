@@ -29,8 +29,6 @@ public class WorldEvents implements Listener
 	@EventHandler
 	public void teleport(PlayerPortalEvent event) {
 		Location to = Objects.requireNonNull(event.getTo());
-		to.setWorld(Objects.requireNonNull(to.getWorld()).getEnvironment() == World.Environment.NORMAL
-					? Worlds.OVERWORLD.get()
-					: Worlds.NETHER.get());
+		to.setWorld(Worlds.getCorrespondingWorldManager(Objects.requireNonNull(to.getWorld()).getEnvironment()).get());
 	}
 }
