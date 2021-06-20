@@ -22,7 +22,6 @@ public class TargetManager
 		
 		Location targetLocation = target.getLocation(player).clone();
 		targetLocation.setY(0);
-		//targetLocation.getBlock().setType(Material.LODESTONE);
 		
 		Arrays.stream(player.getInventory().getContents())
 			  .filter(itemStack -> itemStack != null && itemStack.getType() == Material.COMPASS)
@@ -38,7 +37,9 @@ public class TargetManager
 	}
 	
 	public void setTarget(Target target) {
-		if (target.isValidFor(player))
+		if (target.isValidFor(player)) {
 			this.target = target;
+			player.sendMessage(ChatColor.GREEN + "This target is " + ((int) Math.ceil(target.getLocation(player).distance(player.getLocation()))) + " blocks away");
+		}
 	}
 }
